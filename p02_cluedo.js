@@ -4,6 +4,11 @@ let controls
 // 3D MODELS
 let board
 
+//Keys
+let keyboard = {};
+
+let player = { height: 1, speed: 0.2 }
+
 const textDoor = new THREE.TextureLoader().load('./textures/door.jpg');
 const normalDoor = new THREE.TextureLoader().load('./textures/door_normal.jpg');
 
@@ -40,11 +45,11 @@ function createScene() {
     scene.add(axes);
 
     // create a camera, which defines where we're looking at
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
 
     // position the camera
-    camera.position.set(0, 10, 10);
-    camera.lookAt(scene.position);
+    camera.position.set(0, player.height, -1);
+    camera.lookAt(new THREE.Vector3(0, player.height, 0));
 
 
     // create a render and set the size
@@ -58,9 +63,6 @@ function createScene() {
     // add the output of the renderer to the DIV with id "world"
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-    //Controls
-    controls = new THREE.OrbitControls(camera);
-    controls.addEventListener('change', function () { renderer.render(scene, camera); });
 }
 
 function createLights() {
@@ -251,7 +253,7 @@ function createBallroom() {
 
     let wall2 = new THREE.Mesh(geomWall2, matWall);
     let wall2_2 = new THREE.Mesh(geomWall2, matWall);
-    wall2.position.set(-1.8,0.6, 3.5);
+    wall2.position.set(-1.8, 0.6, 3.5);
     wall2_2.position.set(2.3, 0.6, 3.5);
     scene.add(wall2, wall2_2);
 
@@ -297,7 +299,7 @@ function createConservatory() {
     // let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
     // let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
 
-     //Material Wall
+    //Material Wall
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
     // matWall.map = textWall;
     // matWall.normalMap = normalWall;
@@ -696,8 +698,35 @@ function createDiningroom() {
 
 
 function animate() {
+    requestAnimationFrame(animate);
 
     // render
     renderer.render(scene, camera);
-    requestAnimationFrame(animate);
+
+    /* ---------------------- TECLADO / MOVIMENTO ---------------------- */
+
+    if (keyboard[87]) {     //W key
+        camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
+        camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
+    }
+    if (keyboard[83]) {     //S key
+        camera.position.x += Math.sin(camera.rotation.y) * player.speed;
+        camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
+    }
+    if (keyboard[65]) {     //A key
+        camera.rotation.y -= Math.PI * 0.01
+    }
+    if (keyboard[68]) {     //D key
+        camera.rotation.y += Math.PI * 0.01
+    }
 }
+function keyDown(e) {
+    keyboard[e.keyCode] = true;
+}
+
+function keyUp(e) {
+    keyboard[e.keyCode] = false;
+}
+
+window.addEventListener('keydown', keyDown);
+window.addEventListener('keyup', keyUp);
