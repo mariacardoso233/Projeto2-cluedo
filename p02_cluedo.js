@@ -123,7 +123,7 @@ function createKitchen() {
 
     /* ----------------------------- FLOOR ----------------------------- */
     //GEOMETRY
-    let geomFloor1 = new THREE.BoxGeometry(5, 0.2, 5);
+    let geomFloor1 = new THREE.BoxGeometry(4.9, 0.1, 4.9);
 
     //TEXTURES
     let textFloor1 = new THREE.TextureLoader().load('./textures/floor.jpg');
@@ -136,54 +136,71 @@ function createKitchen() {
 
     //Mesh floor
     let floor1 = new THREE.Mesh(geomFloor1, matFloor1);
-    floor1.position.set(7, 0, 7);
+    floor1.position.set(7.2, 0.1, 6.7);
     scene.add(floor1);
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(5, 5, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(4, 5, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 5, 5);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 5, 4);
-    let geomDoor = new THREE.BoxGeometry(0.1, 5, 1);
-    let geomDoor2 = new THREE.BoxGeometry(1, 5, 0.1);
+    let geomWall = new THREE.BoxGeometry(5, 1.2, 0.1);
+    let geomWall2 = new THREE.BoxGeometry(3, 1.2, 0.1);
+    let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 5.1);
+    let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 3);
+    //let geomDoor = new THREE.BoxGeometry(0.1, 1, 1);
+    //let geomDoor2 = new THREE.BoxGeometry(0.75, 1.2, 0.1);
 
-    //TEXTURES
-    let textWall = new THREE.TextureLoader().load('./textures/wall.jpg');
-    let normalWall = new THREE.TextureLoader().load('./textures/wall_normal.jpg');
+    //Mobilia
+    let geomBalcao = new THREE.BoxGeometry(2, 0.3, 0.3);
 
-    //Material Wall
+    //Mobilia
+    let geomTable = new THREE.BoxGeometry(2, 0.1, 1.3);
+
+    // //Material Wall
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    matWall.map = textWall;
-    matWall.normalMap = normalWall;
 
-    let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    matDoor.map = textDoor;
-    matDoor.normalMap = normalDoor;
+    // //Material Wall
+    let matTable = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
 
-    //WallsKitchen
+    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
+    // matDoor.map = textDoor;
+    // matDoor.normalMap = normalDoor;
+
+    // //WallsKitchen
     let wall1 = new THREE.Mesh(geomWall, matWall);
-    wall1.position.set(7, 2.4, 9.5);
+    wall1.position.set(7.2, 0.6, 9.2);
     scene.add(wall1);
 
     let wall2 = new THREE.Mesh(geomWall2, matWall);
-    wall2.position.set(7.5, 2.4, 4.5);
+    wall2.position.set(8.25, 0.6, 4.2);
     scene.add(wall2);
 
     let wall3 = new THREE.Mesh(geomWall3, matWall);
-    wall3.position.set(9.5, 2.4, 7);
+    wall3.position.set(9.7, 0.6, 6.7);
     scene.add(wall3);
 
     let wall4 = new THREE.Mesh(geomWall4, matWall);
-    wall4.position.set(4.5, 2.4, 7.5);
+    wall4.position.set(4.72, 0.6, 7.75);
     scene.add(wall4);
 
+    let balcao = new THREE.Mesh(geomBalcao, matWall);
+    balcao.position.set(7.2, 0.3, 9);
+    scene.add(balcao);
+
+    let table = new THREE.Mesh(geomTable, matTable);
+    table.position.set(7.2, 0.3, 6.7);
+    scene.add(table);
+
     //DoorsKitchen
-    let door1 = new THREE.Mesh(geomDoor, matDoor);
-    let door2 = new THREE.Mesh(geomDoor2, matDoor);
-    door1.position.set(4.5, 2.4, 5);
-    door2.position.set(5, 2.4, 4.5);
-    scene.add(door1, door2);
+    //let door1 = new THREE.Mesh(geomDoor, matDoor);
+    //let door2 = new THREE.Mesh(geomDoor2, matDoor);
+    // door1.position.set(4.5, 2.4, 5);
+    //door2.position.set(5.18, 0.6, 4.3);
+    //scene.add(door2);
+
+    /*
+    let geomWall = new THREE.BoxGeometry(5, 1.2, 0.1);
+    let geomWall2 = new THREE.BoxGeometry(4.2, 1.2, 0.1);
+    let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 4.9);
+    let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 5);*/
 }
 
 function createBallroom() {
@@ -196,60 +213,52 @@ function createBallroom() {
     let textFloor2 = new THREE.TextureLoader().load('./textures/floor2.jpg');
     let normalFloor2 = new THREE.TextureLoader().load('./textures/floor2_normal.jpg');
 
-    //Material
-    let matFloor2 = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
-    matFloor2.map = textFloor2;
-    matFloor2.normalMap = normalFloor2;
-
-    //Mesh
-    let floor2 = new THREE.Mesh(geomFloor2, matFloor2);
-    floor2.position.set(0, 0, 6.5);
-    scene.add(floor2);
+  
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(6, 5, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(2, 5, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 5, 6);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 5, 6);
-    let geomDoor = new THREE.BoxGeometry(2, 5, 0.1);
+    // let geomWall = new THREE.BoxGeometry(6, 5, 0.1);
+    // let geomWall2 = new THREE.BoxGeometry(2, 5, 0.1);
+    // let geomWall3 = new THREE.BoxGeometry(0.1, 5, 6);
+    // let geomWall4 = new THREE.BoxGeometry(0.1, 5, 6);
+    // let geomDoor = new THREE.BoxGeometry(2, 5, 0.1);
 
-    // //TEXTURES
-    let textWall = new THREE.TextureLoader().load('./textures/wall2.jpg');
-    let normalWall = new THREE.TextureLoader().load('./textures/wall2_normal.jpg');
+    // // //TEXTURES
+    // let textWall = new THREE.TextureLoader().load('./textures/wall2.jpg');
+    // let normalWall = new THREE.TextureLoader().load('./textures/wall2_normal.jpg');
 
-    // //Material Wall
-    let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    matWall.map = textWall;
-    matWall.normalMap = normalWall;
+    // // //Material Wall
+    // let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+    // matWall.map = textWall;
+    // matWall.normalMap = normalWall;
 
-    let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    matDoor.map = textDoor;
-    matDoor.normalMap = normalDoor;
+    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
+    // matDoor.map = textDoor;
+    // matDoor.normalMap = normalDoor;
 
-    //Walls Ballroom
-    let wall1 = new THREE.Mesh(geomWall, matWall);
-    wall1.position.set(0, 2.4, 9.5);
-    scene.add(wall1);
+    // //Walls Ballroom
+    // let wall1 = new THREE.Mesh(geomWall, matWall);
+    // wall1.position.set(0, 2.4, 9.5);
+    // scene.add(wall1);
 
-    let wall2 = new THREE.Mesh(geomWall2, matWall);
-    let wall2_2 = new THREE.Mesh(geomWall2, matWall);
-    wall2.position.set(-2, 2.4, 3.5);
-    wall2_2.position.set(2, 2.4, 3.5);
-    scene.add(wall2, wall2_2);
+    // let wall2 = new THREE.Mesh(geomWall2, matWall);
+    // let wall2_2 = new THREE.Mesh(geomWall2, matWall);
+    // wall2.position.set(-2, 2.4, 3.5);
+    // wall2_2.position.set(2, 2.4, 3.5);
+    // scene.add(wall2, wall2_2);
 
-    let wall3 = new THREE.Mesh(geomWall3, matWall);
-    wall3.position.set(-3, 2.4, 6.5);
-    scene.add(wall3);
+    // let wall3 = new THREE.Mesh(geomWall3, matWall);
+    // wall3.position.set(-3, 2.4, 6.5);
+    // scene.add(wall3);
 
-    let wall4 = new THREE.Mesh(geomWall4, matWall);
-    wall4.position.set(3, 2.4, 6.5);
-    scene.add(wall4);
+    // let wall4 = new THREE.Mesh(geomWall4, matWall);
+    // wall4.position.set(3, 2.4, 6.5);
+    // scene.add(wall4);
 
-    //Doors Ballroom
-    let door = new THREE.Mesh(geomDoor, matDoor);
-    door.position.set(0, 2.4, 3.5);
-    scene.add(door);
+    // //Doors Ballroom
+    // let door = new THREE.Mesh(geomDoor, matDoor);
+    // door.position.set(0, 2.4, 3.5);
+    // scene.add(door);
 }
 
 function createConservatory() {
@@ -269,49 +278,49 @@ function createConservatory() {
 
     // /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(5, 5, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(4, 5, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 5, 4.5);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 5, 3.5);
-    let geomDoor = new THREE.BoxGeometry(0.1, 5, 1.1);
-    let geomDoor2 = new THREE.BoxGeometry(1, 5, 0.1);
+    // let geomWall = new THREE.BoxGeometry(5, 5, 0.1);
+    // let geomWall2 = new THREE.BoxGeometry(4, 5, 0.1);
+    // let geomWall3 = new THREE.BoxGeometry(0.1, 5, 4.5);
+    // let geomWall4 = new THREE.BoxGeometry(0.1, 5, 3.5);
+    // let geomDoor = new THREE.BoxGeometry(0.1, 5, 1.1);
+    // let geomDoor2 = new THREE.BoxGeometry(1, 5, 0.1);
 
-    // // //TEXTURES
-    let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
-    let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
+    // // // //TEXTURES
+    // let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
+    // let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
 
-    // // //Material Wall
-    let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    matWall.map = textWall;
-    matWall.normalMap = normalWall;
+    // // // //Material Wall
+    // let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+    // matWall.map = textWall;
+    // matWall.normalMap = normalWall;
 
-    let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    matDoor.map = textDoor;
-    matDoor.normalMap = normalDoor;
+    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
+    // matDoor.map = textDoor;
+    // matDoor.normalMap = normalDoor;
 
-    //Walls Conservatory
-    let wall1 = new THREE.Mesh(geomWall, matWall);
-    wall1.position.set(-7, 2.4, 9.3);
-    scene.add(wall1);
+    // //Walls Conservatory
+    // let wall1 = new THREE.Mesh(geomWall, matWall);
+    // wall1.position.set(-7, 2.4, 9.3);
+    // scene.add(wall1);
 
-    let wall2 = new THREE.Mesh(geomWall2, matWall);
-    wall2.position.set(-7.5, 2.4, 4.7);
-    scene.add(wall2);
+    // let wall2 = new THREE.Mesh(geomWall2, matWall);
+    // wall2.position.set(-7.5, 2.4, 4.7);
+    // scene.add(wall2);
 
-    let wall3 = new THREE.Mesh(geomWall3, matWall);
-    wall3.position.set(-9.5, 2.4, 7);
-    scene.add(wall3);
+    // let wall3 = new THREE.Mesh(geomWall3, matWall);
+    // wall3.position.set(-9.5, 2.4, 7);
+    // scene.add(wall3);
 
-    let wall4 = new THREE.Mesh(geomWall4, matWall);
-    wall4.position.set(-4.5, 2.4, 7.5);
-    scene.add(wall4);
+    // let wall4 = new THREE.Mesh(geomWall4, matWall);
+    // wall4.position.set(-4.5, 2.4, 7.5);
+    // scene.add(wall4);
 
-    // //Doors Conservatory
-    let door1 = new THREE.Mesh(geomDoor, matDoor);
-    let door2 = new THREE.Mesh(geomDoor2, matDoor);
-    door1.position.set(-4.5, 2.4, 5.2);
-    door2.position.set(-5, 2.4, 4.7);
-    scene.add(door1, door2);
+    // // //Doors Conservatory
+    // let door1 = new THREE.Mesh(geomDoor, matDoor);
+    // let door2 = new THREE.Mesh(geomDoor2, matDoor);
+    // door1.position.set(-4.5, 2.4, 5.2);
+    // door2.position.set(-5, 2.4, 4.7);
+    // scene.add(door1, door2);
 }
 
 function createBilliardroom() {
@@ -331,7 +340,7 @@ function createBilliardroom() {
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(5, 5, 0.1);
+    /*let geomWall = new THREE.BoxGeometry(5, 5, 0.1);
     let geomWall2 = new THREE.BoxGeometry(5, 5, 0.1);
     let geomWall3 = new THREE.BoxGeometry(0.1, 5, 3.5);
     let geomWall4 = new THREE.BoxGeometry(0.1, 5, 1.5);
@@ -370,7 +379,7 @@ function createBilliardroom() {
     //Doors Billiardroom
     let door1 = new THREE.Mesh(geomDoor, matDoor);
     door1.position.set(-4, 2.4, 2.2);
-    scene.add(door1);
+    scene.add(door1);*/
 }
 
 function createLibrary() {
@@ -389,7 +398,7 @@ function createLibrary() {
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(5, 5, 0.1);
+    /*let geomWall = new THREE.BoxGeometry(5, 5, 0.1);
     let geomWall2 = new THREE.BoxGeometry(5, 5, 0.1);
     let geomWall3 = new THREE.BoxGeometry(0.1, 5, 3.5);
     let geomWall4 = new THREE.BoxGeometry(0.1, 5, 1.5);
@@ -427,7 +436,7 @@ function createLibrary() {
     //Doors Library
     let door1 = new THREE.Mesh(geomDoor, matDoor);
     door1.position.set(-3.5, 2.4, -2.3);
-    scene.add(door1);
+    scene.add(door1);*/
 }
 
 function createStudy() {
@@ -447,7 +456,7 @@ function createStudy() {
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(4.9, 5, 0.1);
+    /*let geomWall = new THREE.BoxGeometry(4.9, 5, 0.1);
     let geomWall2 = new THREE.BoxGeometry(4.8, 5, 0.1);
     let geomWall3 = new THREE.BoxGeometry(0.1, 5, 3.3);
     let geomWall4 = new THREE.BoxGeometry(0.1, 5, 1);
@@ -488,7 +497,7 @@ function createStudy() {
     //Doors Study
     let door1 = new THREE.Mesh(geomDoor, matDoor);
     door1.position.set(-4.1, 2.4, -7.7);
-    scene.add(door1);
+    scene.add(door1);*/
 }
 
 function createHall() {
@@ -508,49 +517,49 @@ function createHall() {
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(4.5, 5, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(1.5, 5, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 5, 5);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 5, 5);
-    let geomDoor = new THREE.BoxGeometry(1.7, 5, 0.1);
+    // let geomWall = new THREE.BoxGeometry(4.5, 5, 0.1);
+    // let geomWall2 = new THREE.BoxGeometry(1.5, 5, 0.1);
+    // let geomWall3 = new THREE.BoxGeometry(0.1, 5, 5);
+    // let geomWall4 = new THREE.BoxGeometry(0.1, 5, 5);
+    // let geomDoor = new THREE.BoxGeometry(1.7, 5, 0.1);
 
-    //TEXTURES
-    // let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
-    // let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
+    // //TEXTURES
+    // // let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
+    // // let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
 
 
-    //Material Wall
-    let matWall = new THREE.MeshPhongMaterial({ color: 0x53733C });
-    // matWall.map = textWall;
-    // matWall.normalMap = normalWall;
+    // //Material Wall
+    // let matWall = new THREE.MeshPhongMaterial({ color: 0x53733C });
+    // // matWall.map = textWall;
+    // // matWall.normalMap = normalWall;
 
-    let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    matDoor.map = textDoor;
-    matDoor.normalMap = normalDoor;
+    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
+    // matDoor.map = textDoor;
+    // matDoor.normalMap = normalDoor;
 
-    //Walls Hall
-    let wall1 = new THREE.Mesh(geomWall, matWall);
-    wall1.position.set(0.3, 2.4, -9);
-    scene.add(wall1);
+    // //Walls Hall
+    // let wall1 = new THREE.Mesh(geomWall, matWall);
+    // wall1.position.set(0.3, 2.4, -9);
+    // scene.add(wall1);
 
-    let wall2 = new THREE.Mesh(geomWall2, matWall);
-    let wall2_2 = new THREE.Mesh(geomWall2, matWall);
-    wall2.position.set(1.8, 2.4, -4);
-    wall2_2.position.set(-1.3, 2.4, -4);
-    scene.add(wall2, wall2_2);
+    // let wall2 = new THREE.Mesh(geomWall2, matWall);
+    // let wall2_2 = new THREE.Mesh(geomWall2, matWall);
+    // wall2.position.set(1.8, 2.4, -4);
+    // wall2_2.position.set(-1.3, 2.4, -4);
+    // scene.add(wall2, wall2_2);
 
-    let wall3 = new THREE.Mesh(geomWall3, matWall);
-    wall3.position.set(2.5, 2.4, -6.5);
-    scene.add(wall3);
+    // let wall3 = new THREE.Mesh(geomWall3, matWall);
+    // wall3.position.set(2.5, 2.4, -6.5);
+    // scene.add(wall3);
 
-    let wall4 = new THREE.Mesh(geomWall4, matWall);
-    wall4.position.set(-2, 2.4, -6.5);
-    scene.add(wall4);
+    // let wall4 = new THREE.Mesh(geomWall4, matWall);
+    // wall4.position.set(-2, 2.4, -6.5);
+    // scene.add(wall4);
 
-    //Doors Hall
-    let door = new THREE.Mesh(geomDoor, matDoor);
-    door.position.set(0.3, 2.4, -4);
-    scene.add(door);
+    // //Doors Hall
+    // let door = new THREE.Mesh(geomDoor, matDoor);
+    // door.position.set(0.3, 2.4, -4);
+    // scene.add(door);
 }
 
 function createLounge() {
@@ -570,50 +579,50 @@ function createLounge() {
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(5.1, 5, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(3.5, 5, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 5, 3.5);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 5, 5.5);
-    let geomDoor = new THREE.BoxGeometry(0.1, 5, 2);
-    let geomDoor2 = new THREE.BoxGeometry(1.5, 5, 0.1);
+    // let geomWall = new THREE.BoxGeometry(5.1, 5, 0.1);
+    // let geomWall2 = new THREE.BoxGeometry(3.5, 5, 0.1);
+    // let geomWall3 = new THREE.BoxGeometry(0.1, 5, 3.5);
+    // let geomWall4 = new THREE.BoxGeometry(0.1, 5, 5.5);
+    // let geomDoor = new THREE.BoxGeometry(0.1, 5, 2);
+    // let geomDoor2 = new THREE.BoxGeometry(1.5, 5, 0.1);
 
-    //TEXTURES
-    // let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
-    // let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
+    // //TEXTURES
+    // // let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
+    // // let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
 
 
-    //Material Lounge
-    let matWall = new THREE.MeshPhongMaterial({ color: 0xD6D68B});
-    // matWall.map = textWall;
-    // matWall.normalMap = normalWall;
+    // //Material Lounge
+    // let matWall = new THREE.MeshPhongMaterial({ color: 0xD6D68B});
+    // // matWall.map = textWall;
+    // // matWall.normalMap = normalWall;
 
-    let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    matDoor.map = textDoor;
-    matDoor.normalMap = normalDoor;
+    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
+    // matDoor.map = textDoor;
+    // matDoor.normalMap = normalDoor;
 
-    //Walls Lounge
-    let wall1 = new THREE.Mesh(geomWall, matWall);
-    wall1.position.set(7, 2.4, -9.5);
-    scene.add(wall1);
+    // //Walls Lounge
+    // let wall1 = new THREE.Mesh(geomWall, matWall);
+    // wall1.position.set(7, 2.4, -9.5);
+    // scene.add(wall1);
 
-    let wall2 = new THREE.Mesh(geomWall2, matWall);
-    wall2.position.set(7.8, 2.4, -4);
-    scene.add(wall2);
+    // let wall2 = new THREE.Mesh(geomWall2, matWall);
+    // wall2.position.set(7.8, 2.4, -4);
+    // scene.add(wall2);
 
-    let wall3 = new THREE.Mesh(geomWall3, matWall);
-    wall3.position.set(4.5, 2.4, -7.7);
-    scene.add(wall3);
+    // let wall3 = new THREE.Mesh(geomWall3, matWall);
+    // wall3.position.set(4.5, 2.4, -7.7);
+    // scene.add(wall3);
 
-    let wall4 = new THREE.Mesh(geomWall4, matWall);
-    wall4.position.set(9.5, 2.4, -6.8);
-    scene.add(wall4);
+    // let wall4 = new THREE.Mesh(geomWall4, matWall);
+    // wall4.position.set(9.5, 2.4, -6.8);
+    // scene.add(wall4);
 
-    //Doors Lounge
-    let door1 = new THREE.Mesh(geomDoor, matDoor);
-    let door2 = new THREE.Mesh(geomDoor2, matDoor);
-    door1.position.set(4.5, 2.4, -5);
-    door2.position.set(5.3, 2.4, -4);
-    scene.add(door1, door2);
+    // //Doors Lounge
+    // let door1 = new THREE.Mesh(geomDoor, matDoor);
+    // let door2 = new THREE.Mesh(geomDoor2, matDoor);
+    // door1.position.set(4.5, 2.4, -5);
+    // door2.position.set(5.3, 2.4, -4);
+    // scene.add(door1, door2);
 }
 
 function createDiningroom() {
@@ -633,46 +642,46 @@ function createDiningroom() {
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(6.4, 5, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(6.4, 5, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 5, 5);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 5, 3);
-    let geomDoor = new THREE.BoxGeometry(0.1, 5, 2.2);
+    // let geomWall = new THREE.BoxGeometry(6.4, 5, 0.1);
+    // let geomWall2 = new THREE.BoxGeometry(6.4, 5, 0.1);
+    // let geomWall3 = new THREE.BoxGeometry(0.1, 5, 5);
+    // let geomWall4 = new THREE.BoxGeometry(0.1, 5, 3);
+    // let geomDoor = new THREE.BoxGeometry(0.1, 5, 2.2);
 
-    // //TEXTURES
-    // let textWall = new THREE.TextureLoader().load('./textures/wall.jpg');
-    // let normalWall = new THREE.TextureLoader().load('./textures/wall_normal.jpg');
+    // // //TEXTURES
+    // // let textWall = new THREE.TextureLoader().load('./textures/wall.jpg');
+    // // let normalWall = new THREE.TextureLoader().load('./textures/wall_normal.jpg');
 
-    //Material Wall
-    let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    // matWall.map = textWall;
-    // matWall.normalMap = normalWall;
+    // //Material Wall
+    // let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+    // // matWall.map = textWall;
+    // // matWall.normalMap = normalWall;
 
-    let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    matDoor.map = textDoor;
-    matDoor.normalMap = normalDoor;
+    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
+    // matDoor.map = textDoor;
+    // matDoor.normalMap = normalDoor;
 
-    //Walls Diningroom
-    let wall1 = new THREE.Mesh(geomWall, matWall);
-    wall1.position.set(6.5, 2.4, 2.5);
-    scene.add(wall1);
+    // //Walls Diningroom
+    // let wall1 = new THREE.Mesh(geomWall, matWall);
+    // wall1.position.set(6.5, 2.4, 2.5);
+    // scene.add(wall1);
 
-    let wall2 = new THREE.Mesh(geomWall2, matWall);
-    wall2.position.set(6.5, 2.4, -2.5);
-    scene.add(wall2);
+    // let wall2 = new THREE.Mesh(geomWall2, matWall);
+    // wall2.position.set(6.5, 2.4, -2.5);
+    // scene.add(wall2);
 
-    let wall3 = new THREE.Mesh(geomWall3, matWall);
-    wall3.position.set(9.7, 2.4, 0);
-    scene.add(wall3);
+    // let wall3 = new THREE.Mesh(geomWall3, matWall);
+    // wall3.position.set(9.7, 2.4, 0);
+    // scene.add(wall3);
 
-    let wall4 = new THREE.Mesh(geomWall4, matWall);
-    wall4.position.set(3.3, 2.4, -1);
-    scene.add(wall4);
+    // let wall4 = new THREE.Mesh(geomWall4, matWall);
+    // wall4.position.set(3.3, 2.4, -1);
+    // scene.add(wall4);
 
-    //Doors Diningroom
-    let door1 = new THREE.Mesh(geomDoor, matDoor);
-    door1.position.set(3.3, 2.4, 1.4);
-    scene.add(door1);
+    // //Doors Diningroom
+    // let door1 = new THREE.Mesh(geomDoor, matDoor);
+    // door1.position.set(3.3, 2.4, 1.4);
+    // scene.add(door1);
 }
 
 
