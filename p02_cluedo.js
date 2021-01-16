@@ -167,9 +167,24 @@ function createScene() {
     function (gltf) {
         console.log(gltf)
         mesh = gltf.scene;
-        mesh.scale.set(0.8, 0.8, 0.8);
-        mesh.position.set(8.4, 0, -0.2)
-        mesh.rotation.set(0,3.1,0)
+        mesh.scale.set(0.001, 0.001, 0.001);
+        mesh.position.set(7.7, 0, -7.7)
+        mesh.rotation.set(0,0.7,0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
+
+    loader.load('sofa.glb',
+
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.001, 0.001, 0.001);
+        mesh.position.set(8.5, 0, -6.5)
+        mesh.rotation.set(0,-0.9,0)
         scene.add(mesh);
     }, 
     undefined,
