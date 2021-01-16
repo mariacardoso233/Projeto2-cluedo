@@ -47,14 +47,10 @@ function createScene() {
     let axes = new THREE.AxesHelper(600);
     scene.add(axes);
 
-<<<<<<< HEAD
-    // // create a camera, which defines where we're looking at
-=======
     /**********************
      * CAMERA PARA MOVIMENTOS 
      ***********************/
     // create a camera, which defines where we're looking at
->>>>>>> 3744736df00188c0c1c6471c4b23a1b262725307
     // camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
 
     // // position the camera
@@ -164,7 +160,6 @@ function createBoard() {
 
 }
 
-<<<<<<< HEAD
 function createBorder() {
 
     //GEOMETRY
@@ -195,33 +190,6 @@ function createBorder() {
 
 }
 
-=======
-// function createBorder() {
-
-//     //GEOMETRY
-//     let geomBorder1 = new THREE.BoxGeometry(24, 6, 0.1);
-//     let geomBorder2 = new THREE.BoxGeometry(24, 6, 0.1);
-//     let geomBorder3 = new THREE.BoxGeometry(0.1, 6, 24);
-//     let geomBorder4 = new THREE.BoxGeometry(0.1, 6, 24);
-
-//     //Material Board
-//     let matBoard = new THREE.MeshPhongMaterial({ color: 0xf0e0d0 });
-
-//     //Border positions
-//     let border1 = new THREE.Mesh(geomBorder1, matBoard);
-//     border1.position.set(0, 3, 12);
-//     let border2 = new THREE.Mesh(geomBorder2, matBoard);
-//     border2.position.set(0, 3, -12);
-//     let border3 = new THREE.Mesh(geomBorder3, matBoard);
-//     border3.position.set(-12, 3, 0);
-//     let border4 = new THREE.Mesh(geomBorder4, matBoard);
-//     border4.position.set(12, 3, 0);
-
-//     scene.add(border1, border2, border3, border4);
-
-// }
-
->>>>>>> 3744736df00188c0c1c6471c4b23a1b262725307
 function createKitchen() {
 
     /* ----------------------------- FLOOR ----------------------------- */
