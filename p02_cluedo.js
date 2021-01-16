@@ -7,7 +7,7 @@ let board
 //Keys
 let keyboard = {};
 
-let player = { height: 1, speed: 0.2 }
+let player = { height: 1, speed: 0.1 }
 
 const textDoor = new THREE.TextureLoader().load('./textures/door.jpg');
 const normalDoor = new THREE.TextureLoader().load('./textures/door_normal.jpg');
@@ -45,11 +45,17 @@ function createScene() {
     scene.add(axes);
 
     // create a camera, which defines where we're looking at
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
+    // camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
 
-    // position the camera
-    camera.position.set(0, player.height, -1);
-    camera.lookAt(new THREE.Vector3(0, player.height, 0));
+    // // position the camera
+    // camera.position.set(0, player.height, -1);
+    // camera.lookAt(new THREE.Vector3(0, player.height, 0));
+
+
+    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
+    //set the camera's view transformation
+    camera.position.set(0, 20, 20); // eye
+    camera.lookAt(0, 0, 0);
 
 
     // create a render and set the size
@@ -63,13 +69,16 @@ function createScene() {
     // add the output of the renderer to the DIV with id "world"
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
+    let controls = new THREE.OrbitControls(camera);
+    controls.addEventListener('change', function () { renderer.render(scene, camera); });
+
 }
 
 function createLights() {
-    let light = new THREE.DirectionalLight();
-
-    light.position.set(0, 9, 2)
+    const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+    light.position.set(0, 2, 0)
     scene.add(light);
+
 }
 
 function createBoard() {
@@ -705,28 +714,28 @@ function animate() {
 
     /* ---------------------- TECLADO / MOVIMENTO ---------------------- */
 
-    if (keyboard[87]) {     //W key
-        camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
-        camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
-    }
-    if (keyboard[83]) {     //S key
-        camera.position.x += Math.sin(camera.rotation.y) * player.speed;
-        camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
-    }
-    if (keyboard[65]) {     //A key
-        camera.rotation.y -= Math.PI * 0.01
-    }
-    if (keyboard[68]) {     //D key
-        camera.rotation.y += Math.PI * 0.01
-    }
+    // if (keyboard[87]) {     //W key
+    //     camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
+    //     camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
+    // }
+    // if (keyboard[83]) {     //S key
+    //     camera.position.x += Math.sin(camera.rotation.y) * player.speed;
+    //     camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
+    // }
+    // if (keyboard[65]) {     //A key
+    //     camera.rotation.y -= Math.PI * 0.01
+    // }
+    // if (keyboard[68]) {     //D key
+    //     camera.rotation.y += Math.PI * 0.01
+    // }
 }
-function keyDown(e) {
-    keyboard[e.keyCode] = true;
-}
+// function keyDown(e) {
+//     keyboard[e.keyCode] = true;
+// }
 
-function keyUp(e) {
-    keyboard[e.keyCode] = false;
-}
+// function keyUp(e) {
+//     keyboard[e.keyCode] = false;
+// }
 
-window.addEventListener('keydown', keyDown);
-window.addEventListener('keyup', keyUp);
+// window.addEventListener('keydown', keyDown);
+// window.addEventListener('keyup', keyUp);
