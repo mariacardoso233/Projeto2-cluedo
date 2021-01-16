@@ -245,7 +245,7 @@ function createScene() {
         mesh = gltf.scene;
         mesh.scale.set(0.2, 0.2, 0.2);
         mesh.position.set(-1.35, 0, -0.5)
-        mesh.rotation.set(0, 1.6, 0)
+        mesh.rotation.set(0, 1.58, 0)
         scene.add(mesh);
     }, 
     undefined,
@@ -259,8 +259,38 @@ function createScene() {
         console.log(gltf)
         mesh = gltf.scene;
         mesh.scale.set(0.2, 0.2, 0.2);
-        mesh.position.set(-1.35, 0, -0.5)
-        mesh.rotation.set(0, 1.6, 0)
+        mesh.position.set(-1.36, 0, -1.34)
+        mesh.rotation.set(0, 1.58, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
+
+    loader.load('handrail.glb',
+
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.2, 0.2, 0.2);
+        mesh.position.set(1.01, 0, -0.5)
+        mesh.rotation.set(0, 1.58, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
+
+    loader.load('handrail.glb',
+
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.2, 0.2, 0.2);
+        mesh.position.set(1, 0, -1.34)
+        mesh.rotation.set(0, 1.58, 0)
         scene.add(mesh);
     }, 
     undefined,
