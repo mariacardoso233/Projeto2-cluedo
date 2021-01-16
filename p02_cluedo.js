@@ -12,6 +12,9 @@ let player = { height: 1, speed: 0.1 }
 const textDoor = new THREE.TextureLoader().load('./textures/door.jpg');
 const normalDoor = new THREE.TextureLoader().load('./textures/door_normal.jpg');
 
+
+const loader = new THREE.GLTFLoader().setPath('models/GLTF/');
+
 // once everything is loaded, we run our Three.js stuff
 window.onload = function init() {
     // set up the scene, the camera and the renderer
@@ -44,6 +47,9 @@ function createScene() {
     let axes = new THREE.AxesHelper(600);
     scene.add(axes);
 
+    /**********************
+     * CAMERA PARA MOVIMENTOS 
+     ***********************/
     // create a camera, which defines where we're looking at
     // camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
 
@@ -69,6 +75,7 @@ function createScene() {
     // add the output of the renderer to the DIV with id "world"
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
+
     let controls = new THREE.OrbitControls(camera);
     controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
@@ -83,7 +90,9 @@ function createLights() {
 
 function createBoard() {
 
-    /* ----------------------------- BOARD ----------------------------- */
+    /**********************
+     * TABULEIRO 
+     ***********************/
     //GEOMETRY
     let geomBoard = new THREE.BoxGeometry(20, 0.1, 20);
 
@@ -103,32 +112,30 @@ function createBoard() {
 
 }
 
+// function createBorder() {
 
-function createBorder() {
+//     //GEOMETRY
+//     let geomBorder1 = new THREE.BoxGeometry(24, 6, 0.1);
+//     let geomBorder2 = new THREE.BoxGeometry(24, 6, 0.1);
+//     let geomBorder3 = new THREE.BoxGeometry(0.1, 6, 24);
+//     let geomBorder4 = new THREE.BoxGeometry(0.1, 6, 24);
 
-    //GEOMETRY
-    let geomBorder1 = new THREE.BoxGeometry(24, 6, 0.1);
-    let geomBorder2 = new THREE.BoxGeometry(24, 6, 0.1);
-    let geomBorder3 = new THREE.BoxGeometry(0.1, 6, 24);
-    let geomBorder4 = new THREE.BoxGeometry(0.1, 6, 24);
+//     //Material Board
+//     let matBoard = new THREE.MeshPhongMaterial({ color: 0xf0e0d0 });
 
-    //Material Board
-    let matBoard = new THREE.MeshPhongMaterial({ color: 0xf0e0d0 });
+//     //Border positions
+//     let border1 = new THREE.Mesh(geomBorder1, matBoard);
+//     border1.position.set(0, 3, 12);
+//     let border2 = new THREE.Mesh(geomBorder2, matBoard);
+//     border2.position.set(0, 3, -12);
+//     let border3 = new THREE.Mesh(geomBorder3, matBoard);
+//     border3.position.set(-12, 3, 0);
+//     let border4 = new THREE.Mesh(geomBorder4, matBoard);
+//     border4.position.set(12, 3, 0);
 
-    //Border positions
-    let border1 = new THREE.Mesh(geomBorder1, matBoard);
-    border1.position.set(0, 3, 12);
-    let border2 = new THREE.Mesh(geomBorder2, matBoard);
-    border2.position.set(0, 3, -12);
-    let border3 = new THREE.Mesh(geomBorder3, matBoard);
-    border3.position.set(-12, 3, 0);
-    let border4 = new THREE.Mesh(geomBorder4, matBoard);
-    border4.position.set(12, 3, 0);
+//     scene.add(border1, border2, border3, border4);
 
-    scene.add(border1, border2, border3, border4);
-
-}
-
+// }
 
 function createKitchen() {
 
@@ -348,9 +355,15 @@ function createBilliardroom() {
     //GEOMETRY
     let geomFloor4 = new THREE.BoxGeometry(5, 0.2, 3.5);
 
-    // //TEXTURES
-    // //Material
+    //TEXTURES
+    //TEXTURES
+    let textFloor4 = new THREE.TextureLoader().load('./textures/floor4.jpg');
+    let normalFloor4 = new THREE.TextureLoader().load('./textures/floor4_normal.jpg');
+
+    //Material
     let matFloor4 = new THREE.MeshPhongMaterial({ color: 0xA57301 });
+    matFloor4.map = textFloor4;
+    matFloor4.normalMap = normalFloor4;
 
     // //Mesh
     let floor4 = new THREE.Mesh(geomFloor4, matFloor4);
@@ -359,46 +372,49 @@ function createBilliardroom() {
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    /*let geomWall = new THREE.BoxGeometry(5, 5, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(5, 5, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 5, 3.5);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 5, 1.5);
-    let geomDoor = new THREE.BoxGeometry(0.1, 5, 2.2);
+    let geomWall = new THREE.BoxGeometry(5, 1.2, 0.1);
+    let geomWall2 = new THREE.BoxGeometry(5, 1.2, 0.1);
+    let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 3.7);
+    let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 1.5);
+    // let geomDoor = new THREE.BoxGeometry(0.1, 5, 2.2);
 
-    //TEXTURES
-    let textWall = new THREE.TextureLoader().load('./textures/wall.jpg');
-    let normalWall = new THREE.TextureLoader().load('./textures/wall_normal.jpg');
+    // //TEXTURES
+    // let textWall = new THREE.TextureLoader().load('./textures/wall.jpg');
+    // let normalWall = new THREE.TextureLoader().load('./textures/wall_normal.jpg');
 
     //Material Wall
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    matWall.map = textWall;
-    matWall.normalMap = normalWall;
+    // matWall.map = textWall;
+    // matWall.normalMap = normalWall;
 
-    let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    matDoor.map = textDoor;
-    matDoor.normalMap = normalDoor;
+    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
+    // matDoor.map = textDoor;
+    // matDoor.normalMap = normalDoor;
 
     //Walls Billiardroom
     let wall1 = new THREE.Mesh(geomWall, matWall);
-    wall1.position.set(-6.5, 2.4, -0.3);
+    wall1.position.set(-6.5, 0.6, -0.3);
     scene.add(wall1);
 
     let wall2 = new THREE.Mesh(geomWall2, matWall);
-    wall2.position.set(-6.5, 2.4, 3.3);
+    wall2.position.set(-6.5, 0.6, 3.3);
     scene.add(wall2);
 
     let wall3 = new THREE.Mesh(geomWall3, matWall);
-    wall3.position.set(-9, 2.4, 1.5);
+    wall3.position.set(-9, 0.6, 1.5);
     scene.add(wall3);
 
     let wall4 = new THREE.Mesh(geomWall4, matWall);
-    wall4.position.set(-4, 2.4, 0.4);
+    wall4.position.set(-4, 0.6, 0.4);
     scene.add(wall4);
 
-    //Doors Billiardroom
-    let door1 = new THREE.Mesh(geomDoor, matDoor);
-    door1.position.set(-4, 2.4, 2.2);
-    scene.add(door1);*/
+    // //Doors Billiardroom
+    // let door1 = new THREE.Mesh(geomDoor, matDoor);
+    // door1.position.set(-4, 2.4, 2.2);
+    // scene.add(door1);
+
+
+
 }
 
 function createLibrary() {
@@ -712,8 +728,9 @@ function animate() {
     // render
     renderer.render(scene, camera);
 
-    /* ---------------------- TECLADO / MOVIMENTO ---------------------- */
-
+    /********************************************
+     * MOVIMENTO DA VISÃO COM AS TECLAS "WASD"
+     *********************************************/
     // if (keyboard[87]) {     //W key
     //     camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
     //     camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
