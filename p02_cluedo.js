@@ -112,14 +112,14 @@ function createScene() {
         console.log(err);
     });
 
-    loader.load('table-football.glb',
+    
+    loader.load('Pool-table.glb',
 
     function (gltf) {
         console.log(gltf)
         mesh = gltf.scene;
-        mesh.scale.set(0.05, 0.05, 0.05);
-        mesh.position.set(-6.5, 0, 1.5)
-        mesh.rotation.set(0,1.55,0)
+        mesh.scale.set(0.5, 0.5, 0.5);
+        mesh.position.set(-6.5, 0.6, 1.5)
         scene.add(mesh);
     }, 
     undefined,
@@ -148,6 +148,21 @@ function createScene() {
         console.log(gltf)
         mesh = gltf.scene;
         mesh.scale.set(0.08, 0.08, 0.08);
+        mesh.position.set(8.4, 0, -0.2)
+        mesh.rotation.set(0,3.1,0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
+
+    loader.load('sofa.glb',
+
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.8, 0.8, 0.8);
         mesh.position.set(8.4, 0, -0.2)
         mesh.rotation.set(0,3.1,0)
         scene.add(mesh);
