@@ -31,7 +31,7 @@ window.onload = function init() {
     createBilliardroom();
     createBedroom();
     createHall();
-    Livingroom();
+    createLivingroom();
     createDiningroom();
 
     // start a loop that will update the objects' positions 
