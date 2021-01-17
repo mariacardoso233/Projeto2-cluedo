@@ -5,7 +5,8 @@ let clicked = false
 let floor1
 
 let spheres = []
-let selectedObject, plane, offset
+let selectedObject, plane;
+let offset = new THREE.Vector3();
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -85,8 +86,8 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    let controls = new THREE.OrbitControls(camera);
-    controls.addEventListener('change', function () { renderer.render(scene, camera); });
+    // let controls = new THREE.OrbitControls(camera);
+    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
     /**********************
      * OBJETOS 
@@ -1118,8 +1119,8 @@ function animate() {
         }
         //Click Billiardroom
         if (intersects[0].object.id == 42 && clicked == true) {
-            camera.position.set(-6.5, 1.1, 0.8)
-            camera.lookAt(-6.5, 1, 0);
+            camera.position.set(-6.5, 1.8, -1)
+            camera.lookAt(-6.5, -1, 0.5);
             clicked = false
         }
         //Click Bedroom
@@ -1146,13 +1147,43 @@ function animate() {
             tvScreenOn.position.set(-4.45)
             clicked = false
         }
-
     }
 
     if (key == 'Escape') {     //ESC key
         camera.position.set(0, 20, 20); // eye
         camera.lookAt(0, 0, 0);
         key = ''
+    }
+
+    // add event listener to highlight dragged objects
+    for (let i = 0; i < spheres.length; i++) {
+        const sphere = spheres[i];
+        console.log(sphere.position.z);
+
+        if (sphere.position.x < -7.5) {
+            sphere.position.x = -7.5
+        }
+
+        if (sphere.position.x > -5.5) {
+            sphere.position.x = -5.5
+        }
+
+        if (sphere.position.y > 0.65) {
+            sphere.position.y = 0.65
+        }
+
+        if (sphere.position.y < 0.65) {
+            sphere.position.y = 0.65
+        }
+
+        if (sphere.position.z > -0.03) {
+            sphere.position.z = -0.03
+        }
+
+        if (sphere.position.z < -0.97) {
+            sphere.position.z = -0.97
+        }
+        
     }
 
     requestAnimationFrame(animate);
@@ -1216,31 +1247,29 @@ function cluedoLetters(){
         scene.add(meshU)
     } );
 
-    // invisible helper plane (big enough)
-    // for example, aligned with the XY-plane (Z=0)
-    plane = new THREE.Mesh(
-        new THREE.PlaneGeometry(2, 1, 10, 10),
-        new THREE.MeshBasicMaterial({
-        opacity: 0.1,
-        transparent: false,
-        visible: true
-        })
-    );
-    plane.position.set(-6.5, 0.65, -0.5)
-    plane.rotation.set(-1.58, 0, 0)
-    scene.add(plane);
+    // // invisible helper plane (big enough)
+    // // for example, aligned with the XY-plane (Z=0)
+    // plane = new THREE.Mesh(
+    //     new THREE.PlaneGeometry(2, 1, 10, 10),
+    //     new THREE.MeshBasicMaterial({
+    //     opacity: 0.1,
+    //     transparent: false,
+    //     visible: true
+    //     })
+    // );
+    // plane.position.set(-6.5, 0.65, -0.5)
+    // plane.rotation.set(-1.58, 0, 0)
+    // scene.add(plane);
 
-    // const controls = new THREE.DragControls( spheres, camera, renderer.domElement );
+    const controls = new THREE.DragControls( spheres, camera, renderer.domElement );
 
-    // // add event listener to highlight dragged objects
+    controls.addEventListener( 'dragstart', function ( event ) {
 
-    // controls.addEventListener( 'dragstart', function ( event ) {
+    } );
 
-    // } );
+    controls.addEventListener( 'dragend', function ( event ) {
 
-    // controls.addEventListener( 'dragend', function ( event ) {
-
-    // } );
+    } );
 }
 
 function onMouseMove(event) {
@@ -1253,11 +1282,18 @@ function onMouseMove(event) {
     clicked = true
 
     if (selectedObject) {
-        // gets (again) the new ray intersection with the helper plane
+        //drag an object around if we've already clicked on one
         let intersects = raycaster.intersectObject(plane);
-        // drag the intersect object around
         selectedObject.position.copy(intersects[0].point.sub(offset));
     }
+    //OPTIONAL: reposition the plane to the center of the object to be dragged
+    //on the next call of the mouse move event
+    else {
+        let intersects = raycaster.intersectObjects(spheres);
+        if (intersects.length > 0)
+            plane.position.copy(intersects[0].object.position);
+    }
+        
 }
 
 function onMouseDown() {
@@ -1269,8 +1305,6 @@ function onMouseDown() {
         selectedObject = intersects[0].object;
         // gets ray intersection with the helper plane
         let intersectsPlane = raycaster.intersectObject(plane);
-        // calculates the offset (also a global variable):
-        // plane ray intersection – intersected object center
         offset.copy(intersectsPlane[0].point).sub(selectedObject.position);
     }
 }
