@@ -81,8 +81,8 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    // let controls = new THREE.OrbitControls(camera);
-    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
+    let controls = new THREE.OrbitControls(camera);
+    controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
 
 
@@ -668,7 +668,7 @@ function createBilliardroom() {
         let matBlue = new THREE.MeshPhongMaterial({color: 0x332CF0});
         let matPurple = new THREE.MeshPhongMaterial({color: 0x50126B});
         let matOrange = new THREE.MeshPhongMaterial({color: 0xF7640B});
-        let matDarkPink = new THREE.MeshPhongMaterial({color: 0x50126B});
+        let matDarkPink = new THREE.MeshPhongMaterial({color: 0xCC1D37});
         let matWhite = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
         let matBlack = new THREE.MeshPhongMaterial({color: 0x000000});
 
@@ -710,8 +710,19 @@ function createBilliardroom() {
         let ball12 = new THREE.Mesh(geomBall, matDarkPink);
         ball12.position.set(-6.40, 0.65, -0.44);
 
+        let ball13 = new THREE.Mesh(geomBall, matPurple);
+        ball13.position.set(-6.45, 0.65, -0.52);
 
-        scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
+        let ball14 = new THREE.Mesh(geomBall, matOrange);
+        ball14.position.set(-6.45, 0.65, -0.46);
+
+        let ball15 = new THREE.Mesh(geomBall, matDarkPink);
+        ball15.position.set(-6.50, 0.65, -0.49);
+
+        let ballWhite = new THREE.Mesh(geomBall, matWhite);
+        ballWhite.position.set(-6.9, 0.65, -0.49);
+
+        scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12, ball13, ball14, ball15, ballWhite);
     }
 
     createBalls();
