@@ -346,6 +346,36 @@ function createScene() {
     function (err) {
         console.log(err);
     });
+
+    loader.load('Bookshelf.glb',
+
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.02, 0.04 , 0.05);
+        mesh.position.set(-2.5, 0, 8)
+        mesh.rotation.set(0, 1.58, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
+
+    loader.load('Bookshelf.glb',
+
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.02, 0.04 , 0.05);
+        mesh.position.set(-2.5, 0, 7)
+        mesh.rotation.set(0, 1.58, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
 }
 
 function createLights() {
