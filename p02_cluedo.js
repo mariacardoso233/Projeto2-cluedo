@@ -4,6 +4,12 @@ let clicked = false
 
 let floor1
 
+let spheres = []
+let selectedObject, plane, offset
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
 // 3D MODELS
 let board
 
@@ -34,7 +40,10 @@ window.onload = function init() {
     createKitchen();
     createBallroom();
     createConservatory();
+
     createBilliardroom();
+    createBalls();
+
     createBedroom();
     createHall();
     createLivingroom();
@@ -55,17 +64,6 @@ function createScene() {
     let axes = new THREE.AxesHelper(600);
     scene.add(axes);
 
-    /**********************
-     * CAMERA PARA MOVIMENTOS 
-     ***********************/
-    // // create a camera, which defines where we're looking at
-    // camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
-
-    // // position the camera
-    // camera.position.set(0, player.height, -1);
-    // camera.lookAt(new THREE.Vector3(0, player.height, 0));
-
-
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
     //set the camera's view transformation
     camera.position.set(0, 20, 20); // eye
@@ -84,10 +82,8 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    let controls = new THREE.OrbitControls(camera);
-    controls.addEventListener('change', function () { renderer.render(scene, camera); });
-
-
+    // let controls = new THREE.OrbitControls(camera);
+    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
     /**********************
      * OBJETOS 
@@ -114,9 +110,7 @@ function createScene() {
 
     loader.load('plant.glb',
 
-        // called when the resource is loaded
         function (gltf) {
-            //console.log('model loaded: ' + gltf.scene.children.length + ' scene children meshes');
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.6, 0.6, 0.6);
@@ -124,16 +118,14 @@ function createScene() {
             mesh.rotation.set(0, 2, 0)
             scene.add(mesh);
         },
-        undefined, // called while loading is progressing
-        function (err) { // called when loading has errors
+        undefined,
+        function (err) {
             console.log(err);
         });
 
     loader.load('piano.glb',
 
-        // called when the resource is loaded
         function (gltf) {
-            //console.log('model loaded: ' + gltf.scene.children.length + ' scene children meshes');
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.1, 0.1, 0.1);
@@ -141,8 +133,8 @@ function createScene() {
             mesh.rotation.set(0, 2, 0)
             scene.add(mesh);
         },
-        undefined, // called while loading is progressing
-        function (err) { // called when loading has errors
+        undefined,
+        function (err) {
             console.log(err);
         });
 
@@ -255,7 +247,7 @@ function createScene() {
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.05, 0.05, 0.05);
-            mesh.position.set(-9, 0.2, -8)
+            mesh.position.set(-9, 0, -8)
             scene.add(mesh);
         },
         undefined,
@@ -658,6 +650,7 @@ function createBilliardroom() {
     let door1 = new THREE.Mesh(geomDoor, matDoor);
     door1.position.set(-3.7, 0.6, -0.5);
     scene.add(door1);
+}
 
     //Bolas mesa de bilhar
     function createBalls() {
@@ -689,47 +682,58 @@ function createBilliardroom() {
         let ball4 = new THREE.Mesh(geomBall, matRed);
         ball4.position.set(-6.3, 0.65, -0.62);
 
-        let ball5 = new THREE.Mesh(geomBall, matBlue);
-        ball5.position.set(-6.3, 0.65, -0.38);
+    //MESH
+    let matRed = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
+    let matYellow = new THREE.MeshPhongMaterial({ color: 0xffff00 });
+    let matGreen = new THREE.MeshPhongMaterial({ color: 0x31A336 });
+    let matBlue = new THREE.MeshPhongMaterial({color: 0x332CF0});
+    let matPurple = new THREE.MeshPhongMaterial({color: 0x50126B});
+    let matOrange = new THREE.MeshPhongMaterial({color: 0xF7640B});
+    let matDarkPink = new THREE.MeshPhongMaterial({color: 0x50126B});
+    let matWhite = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
+    let matBlack = new THREE.MeshPhongMaterial({color: 0x000000});
 
-        let ball6 = new THREE.Mesh(geomBall, matBlue);
-        ball6.position.set(-6.35, 0.65, -0.59);
 
-        let ball7 = new THREE.Mesh(geomBall, matGreen);
-        ball7.position.set(-6.35, 0.65, -0.53);
+    //BALLS
+    let ball1 = new THREE.Mesh(geomBall, matRed);
+    ball1.position.set(-6.3, 0.65, -0.5);
 
-        let ball8 = new THREE.Mesh(geomBall, matPurple);
-        ball8.position.set(-6.35, 0.65, -0.47);
+    let ball2 = new THREE.Mesh(geomBall, matYellow);
+    ball2.position.set(-6.3, 0.65, -0.56);
 
-        let ball9 = new THREE.Mesh(geomBall, matYellow);
-        ball9.position.set(-6.35, 0.65, -0.41);
+    let ball3 = new THREE.Mesh(geomBall, matGreen);
+    ball3.position.set(-6.3, 0.65, -0.44);
+    
+    let ball4 = new THREE.Mesh(geomBall, matRed);
+    ball4.position.set(-6.3, 0.65, -0.62);
 
-        let ball10 = new THREE.Mesh(geomBall, matOrange);
-        ball10.position.set(-6.40, 0.65, -0.56);
+    let ball5 = new THREE.Mesh(geomBall, matBlue);
+    ball5.position.set(-6.3, 0.65, -0.38);
 
-        let ball11 = new THREE.Mesh(geomBall, matBlack);
-        ball11.position.set(-6.40, 0.65, -0.50);
+    let ball6 = new THREE.Mesh(geomBall, matBlue);
+    ball6.position.set(-6.35, 0.65, -0.59);
 
-        let ball12 = new THREE.Mesh(geomBall, matDarkPink);
-        ball12.position.set(-6.40, 0.65, -0.44);
+    let ball7 = new THREE.Mesh(geomBall, matGreen);
+    ball7.position.set(-6.35, 0.65, -0.53);
 
-        let ball13 = new THREE.Mesh(geomBall, matPurple);
-        ball13.position.set(-6.45, 0.65, -0.52);
+    let ball8 = new THREE.Mesh(geomBall, matPurple);
+    ball8.position.set(-6.35, 0.65, -0.47);
 
-        let ball14 = new THREE.Mesh(geomBall, matOrange);
-        ball14.position.set(-6.45, 0.65, -0.46);
+    let ball9 = new THREE.Mesh(geomBall, matYellow);
+    ball9.position.set(-6.35, 0.65, -0.41);
 
-        let ball15 = new THREE.Mesh(geomBall, matDarkPink);
-        ball15.position.set(-6.50, 0.65, -0.49);
+    let ball10 = new THREE.Mesh(geomBall, matOrange);
+    ball10.position.set(-6.40, 0.65, -0.56);
 
-        let ballWhite = new THREE.Mesh(geomBall, matWhite);
-        ballWhite.position.set(-6.9, 0.65, -0.49);
+    let ball11 = new THREE.Mesh(geomBall, matBlack);
+    ball11.position.set(-6.40, 0.65, -0.50);
 
-        scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12, ball13, ball14, ball15, ballWhite);
-    }
+    let ball12 = new THREE.Mesh(geomBall, matDarkPink);
+    ball12.position.set(-6.40, 0.65, -0.44);
 
-    createBalls();
 
+    scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
+    spheres.push(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
 }
 
 function createBedroom() {
@@ -1027,7 +1031,8 @@ function animate() {
 
     for (let i = 0; i < intersects.length; i++) {
 
-        //console.log(intersects[0]);
+        // console.log(intersects[0]);
+        // console.log(intersects[0].object.id);
 
         //Click Kitchen
         if (intersects[0].object.id == 22 && clicked == true) {
@@ -1051,7 +1056,7 @@ function animate() {
         //Click Billiardroom
         if (intersects[0].object.id == 35 && clicked == true) {
             camera.position.set(-6.5, 1.1, 0.8)
-            camera.lookAt(20, 0, 12.5);
+            camera.lookAt(-6.5, 1, 0);
             clicked = false
         }
         //Click Bedroom
@@ -1060,19 +1065,13 @@ function animate() {
             camera.lookAt(-10.5, 1, -7.9);
             clicked = false
         }
-        //Click Hall
-        if (intersects[0].object.id == 6 && clicked == true) {
-            camera.position.set(0.2, 1, -4.5)
-            camera.lookAt(0.2, 1, -6.5);
-            clicked = false
-        }
         //Click LivingRoom
         if (intersects[0].object.id == 62 && clicked == true) {
             camera.position.set(7, 1, -4.7)
             camera.lookAt(7, 1, -6.7);
             clicked = false
         }
-        //Click LivingRoom
+        //Click Diningroom
         if (intersects[0].object.id == 67 && clicked == true) {
             camera.position.set(6.9, 2, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
@@ -1099,9 +1098,86 @@ function animate() {
     renderer.render(scene, camera);
 }
 
+function cluedoLetters(){
 
-window.onkeydown = function handleKeyDown(event) {
-    key = event.key;
+    let geomBack = new THREE.BoxGeometry(2.75, 2, 0);
+
+    let matStair = new THREE.MeshPhongMaterial({ color: 0x000000 })
+
+    let back = new THREE.Mesh(geomBack, matStair);
+    back.position.set(0.35, 0, 1.1);
+    back.rotation.set(-1, 0, 0);
+    scene.add(back)
+
+    const loader = new THREE.FontLoader();
+
+    loader.load( 'fonts/Poppins Medium_Regular.json', function ( font ) {
+
+        const letterC = new THREE.TextGeometry( 'CL    E', {
+            font: font,
+            size: 0.8,
+            height: 0.2,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 0.2,
+            bevelSize: 0.05,
+        } );
+
+        const meshC = new THREE.Mesh(letterC, new THREE.MeshBasicMaterial({
+            color: 'white',
+            roughness: 0.5
+        }))
+
+        const letterU = new THREE.TextGeometry( 'U', {
+            font: font,
+            size: 0.8,
+            height: 0.2,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 0.2,
+            bevelSize: 0.05,
+        } );
+
+        const meshU = new THREE.Mesh(letterU, new THREE.MeshBasicMaterial({
+            color: 'red',
+            roughness: 0.5,
+            border: 'black'
+        }))
+
+        meshC.position.set(-1.25, 0.3, 1.1)
+        meshC.rotation.set(-1,0,0)
+        scene.add(meshC)
+
+        meshU.position.set(0.25, 0.3, 1.1)
+        meshU.rotation.set(-1,0,0)
+        scene.add(meshU)
+    } );
+
+    // invisible helper plane (big enough)
+    // for example, aligned with the XY-plane (Z=0)
+    plane = new THREE.Mesh(
+        new THREE.PlaneGeometry(2, 1, 10, 10),
+        new THREE.MeshBasicMaterial({
+        opacity: 0.1,
+        transparent: false,
+        visible: true
+        })
+    );
+    plane.position.set(-6.5, 0.65, -0.5)
+    plane.rotation.set(-1.58, 0, 0)
+    scene.add(plane);
+
+    // const controls = new THREE.DragControls( spheres, camera, renderer.domElement );
+
+    // // add event listener to highlight dragged objects
+
+    // controls.addEventListener( 'dragstart', function ( event ) {
+
+    // } );
+
+    // controls.addEventListener( 'dragend', function ( event ) {
+
+    // } );
 }
 
 const raycaster = new THREE.Raycaster();
@@ -1115,6 +1191,39 @@ function onMouseMove(event) {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
     clicked = true
+
+    if (selectedObject) {
+        // gets (again) the new ray intersection with the helper plane
+        let intersects = raycaster.intersectObject(plane);
+        // drag the intersect object around
+        selectedObject.position.copy(intersects[0].point.sub(offset));
+    }
 }
 
-window.addEventListener('click', onMouseMove, false);
+function onMouseDown() {
+    // check if ray intersects any of the objects’ array
+    let intersects = raycaster.intersectObjects(spheres);
+
+    if (intersects.length > 0) {
+        // gets closest intersected object (must be a global variable)
+        selectedObject = intersects[0].object;
+        // gets ray intersection with the helper plane
+        let intersectsPlane = raycaster.intersectObject(plane);
+        // calculates the offset (also a global variable):
+        // plane ray intersection – intersected object center
+        offset.copy(intersectsPlane[0].point).sub(selectedObject.position);
+    }
+}
+
+function onMouseUp(event) {
+    // finish drag & drop
+    selectedObject = null;
+}
+
+window.onkeydown = function handleKeyDown(event) {
+    key = event.key;
+}
+
+window.addEventListener( 'click', onMouseMove, false );
+window.addEventListener( 'mousedown', onMouseDown, false );
+window.addEventListener( 'mouseup', onMouseUp, false );
