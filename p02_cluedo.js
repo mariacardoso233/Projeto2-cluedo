@@ -33,6 +33,7 @@ window.onload = function init() {
     createHall();
     createLivingroom();
     createDiningroom();
+    createStairs();
 
     // start a loop that will update the objects' positions 
     // and render the scene on each frame
@@ -256,81 +257,93 @@ function createScene() {
 
     loader.load('handrail.glb',
 
-        function (gltf) {
-            console.log(gltf)
-            mesh = gltf.scene;
-            mesh.scale.set(0.2, 0.2, 0.2);
-            mesh.position.set(0.69, 0, 0)
-            mesh.rotation.set(0, 0, 0)
-            scene.add(mesh);
-        },
-        undefined,
-        function (err) {
-            console.log(err);
-        });
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.2, 0.2, 0.2);
+        mesh.position.set(0.64, 0, -0.02)
+        mesh.rotation.set(0, 0, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
 
     loader.load('handrail.glb',
 
-        function (gltf) {
-            console.log(gltf)
-            mesh = gltf.scene;
-            mesh.scale.set(0.2, 0.2, 0.2);
-            mesh.position.set(-0.15, 0, 0)
-            mesh.rotation.set(0, 0, 0)
-            scene.add(mesh);
-        },
-        undefined,
-        function (err) {
-            console.log(err);
-        });
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.2, 0.2, 0.2);
+        mesh.position.set(-0.2, 0, -0.02)
+        mesh.rotation.set(0, 0, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
+    
+    loader.load('handrail.glb',
+
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.2, 0.2, 0.2);
+        mesh.position.set(-0.7, 0, -0.36)
+        mesh.rotation.set(0, 1.58, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
 
     loader.load('handrail.glb',
 
-        function (gltf) {
-            console.log(gltf)
-            mesh = gltf.scene;
-            mesh.scale.set(0.2, 0.2, 0.2);
-            mesh.position.set(-0.99, 0, 0)
-            mesh.rotation.set(0, 0, 0)
-            scene.add(mesh);
-        },
-        undefined,
-        function (err) {
-            console.log(err);
-        });
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.2, 0.2, 0.2);
+        mesh.position.set(-0.71, 0, -1.2)
+        mesh.rotation.set(0, 1.58, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
 
     loader.load('handrail.glb',
 
-        function (gltf) {
-            console.log(gltf)
-            mesh = gltf.scene;
-            mesh.scale.set(0.2, 0.2, 0.2);
-            mesh.position.set(-1.35, 0, -0.5)
-            mesh.rotation.set(0, 1.6, 0)
-            scene.add(mesh);
-        },
-        undefined,
-        function (err) {
-            console.log(err);
-        });
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.2, 0.2, 0.2);
+        mesh.position.set(1.15, 0, -0.36)
+        mesh.rotation.set(0, 1.58, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
 
     loader.load('handrail.glb',
 
-        function (gltf) {
-            console.log(gltf)
-            mesh = gltf.scene;
-            mesh.scale.set(0.2, 0.2, 0.2);
-            mesh.position.set(-1.35, 0, -0.5)
-            mesh.rotation.set(0, 1.6, 0)
-            scene.add(mesh);
-        },
-        undefined,
-        function (err) {
-            console.log(err);
-        });
-
-
-
+    function (gltf) {
+        console.log(gltf)
+        mesh = gltf.scene;
+        mesh.scale.set(0.2, 0.2, 0.2);
+        mesh.position.set(1.15, 0, -1.2)
+        mesh.rotation.set(0, 1.58, 0)
+        scene.add(mesh);
+    }, 
+    undefined,
+    function (err) {
+        console.log(err);
+    });
 }
 
 function createLights() {
@@ -345,11 +358,22 @@ function createBoard() {
      * TABULEIRO 
      ***********************/
     //GEOMETRY
-    let geomBoard = new THREE.BoxGeometry(20, 0.1, 20);
+    let geomBoard = new THREE.BoxGeometry(9.5, 0.1, 9.5);
+    let geomBoard2 = new THREE.BoxGeometry(9.5, 0.1, 9.5);
+    let geomBoard3 = new THREE.BoxGeometry(8.85, 0.1, 8.85);
+    let geomBoard4 = new THREE.BoxGeometry(8.7, 0.1, 8.7);
 
     //TEXTURES
-    let textBoard = new THREE.TextureLoader().load('./textures/board.jpeg');
-    let normalBoard = new THREE.TextureLoader().load('./textures/board_normal.jpg');
+    // let textBoard = new THREE.TextureLoader().load('./textures/board.jpeg');
+    // let normalBoard = new THREE.TextureLoader().load('./textures/board_normal.jpg');
+
+    //TEXTURES
+    let textBoard = new THREE.TextureLoader().load('./textures/floor.jpg');
+    let normalBoard = new THREE.TextureLoader().load('./textures/floor_normal.jpg');
+
+    textBoard.wrapS = THREE.RepeatWrapping;
+    textBoard.wrapT = THREE.RepeatWrapping;
+    textBoard.repeat.set(4, 4);
 
     //Material Board
     let matBoard = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
@@ -357,9 +381,19 @@ function createBoard() {
     matBoard.normalMap = normalBoard;
 
     //Mesh Board
-    let board = new THREE.Mesh(geomBoard, matBoard);
-    board.position.set(0, 0, 0);
-    scene.add(board);
+    let board1 = new THREE.Mesh(geomBoard, matBoard);
+    board1.position.set(-4.5, 0, 4.58);
+
+    let board2 = new THREE.Mesh(geomBoard2, matBoard);
+    board2.position.set(5, 0, 4.58);
+
+    let board3 = new THREE.Mesh(geomBoard3, matBoard);
+    board3.position.set(5.5, 0, -4.58);
+
+    let board4 = new THREE.Mesh(geomBoard4, matBoard);
+    board4.position.set(-4.98, 0, -4.51);
+
+    scene.add(board1, board2, board3, board4);
 
 }
 
@@ -399,14 +433,8 @@ function createKitchen() {
     //GEOMETRY
     let geomFloor1 = new THREE.BoxGeometry(4.9, 0.1, 4.9);
 
-    //TEXTURES
-    let textFloor1 = new THREE.TextureLoader().load('./textures/floor.jpg');
-    let normalFloor1 = new THREE.TextureLoader().load('./textures/floor_normal.jpg');
-
     //Material floor
-    let matFloor1 = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    matFloor1.map = textFloor1;
-    matFloor1.normalMap = normalFloor1;
+    let matFloor1 = new THREE.MeshPhongMaterial({ color: 0xadadad });
 
     //Mesh floor
     let floor1 = new THREE.Mesh(geomFloor1, matFloor1);
@@ -906,6 +934,56 @@ function createDiningroom() {
     // let door1 = new THREE.Mesh(geomDoor, matDoor);
     // door1.position.set(3.3, 0.6, 1.4);
     // scene.add(door1);
+}
+
+function createStairs(){
+    let geomStair = new THREE.BoxGeometry(1.7, 0.5, 0.5);
+
+    let geomFloor = new THREE.BoxGeometry(1.72, 0.5, 1);
+    let geomFloor2 = new THREE.BoxGeometry(1.8, 0.5, 1);
+
+    let geomWall = new THREE.BoxGeometry(2, 1.2, 0.1);
+    let geomWall2 = new THREE.BoxGeometry(0.1, 1.2, 3);
+    let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 3);
+
+    let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+
+    let wall1 = new THREE.Mesh(geomWall, matWall);
+    wall1.position.set(0.3, -0.6, 0);
+
+    let wall2 = new THREE.Mesh(geomWall2, matWall);
+    wall2.position.set(1.15, -0.6, -1.5);
+
+    let wall3 = new THREE.Mesh(geomWall3, matWall);
+    wall3.position.set(-0.7, -0.6, -1.5);
+    
+    scene.add(wall1, wall2, wall3);
+
+    // Stairs
+    let matStair = new THREE.MeshPhongMaterial({ color: 0xa80f2e })
+
+    let floor = new THREE.Mesh(geomFloor, matStair);
+    floor.position.set(0.225, -0.2, -3.5);
+
+    let stair1 = new THREE.Mesh(geomStair, matStair);
+    stair1.position.set(0.225, -0.2, -3);
+
+    let stair2 = new THREE.Mesh(geomStair, matStair);
+    stair2.position.set(0.225, -0.45, -2.5);
+
+    let stair3 = new THREE.Mesh(geomStair, matStair);
+    stair3.position.set(0.225, -0.7, -2);
+
+    let stair4 = new THREE.Mesh(geomStair, matStair);
+    stair4.position.set(0.225, -0.95, -1.5);
+
+    let stair5 = new THREE.Mesh(geomStair, matStair);
+    stair5.position.set(0.225, -1.2, -1);
+
+    let stair6 = new THREE.Mesh(geomFloor2, matStair);
+    stair6.position.set(0.225, -1.45, -0.5);
+
+    scene.add(floor, stair1, stair2, stair3, stair4, stair5, stair6);
 }
 
 
