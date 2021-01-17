@@ -34,7 +34,10 @@ window.onload = function init() {
 
     //Divisões do tabuleiro
     createKitchen();
+
     createBallroom();
+    createPianoKeys();
+
     createConservatory();
 
     createBilliardroom();
@@ -78,8 +81,8 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    // let controls = new THREE.OrbitControls(camera);
-    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
+    let controls = new THREE.OrbitControls(camera);
+    controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
     /**********************
      * OBJETOS 
@@ -554,6 +557,50 @@ function createBallroom() {
     scene.add(door);
 }
 
+//Teclas Piano
+function createPianoKeys(){
+    let geomPiano = new THREE.BoxGeometry(1.5, 1.5, 0.05);
+    const matPiano = new THREE.MeshPhongMaterial({
+        color: 0xFFFFFF,
+        opacity: 0.0,
+        transparent: true,
+      });
+    
+    let piano = new THREE.Mesh(geomPiano, matPiano);
+    piano.position.set(1.7, 0.2, 7);
+    piano.rotation.set(1, 0, 0);
+    scene.add(piano)
+
+    let geomPianoKey = new THREE.BoxGeometry(0.01, 0.01, 0.1);
+    let matPianoKey = new THREE.MeshPhongMaterial({ color: 0xFFF00 });
+
+    let pianoKeyDo = new THREE.Mesh(geomPianoKey, matPianoKey);
+    pianoKeyDo.position.set(1.624, 0.52, 6.929);
+    pianoKeyDo.rotation.set(0, 0.435, 0);
+
+    let pianoKeyRe = new THREE.Mesh(geomPianoKey, matPianoKey);
+    pianoKeyRe.position.set(1.6135, 0.52, 6.9335);
+    pianoKeyRe.rotation.set(0, 0.435, 0);
+
+    let pianoKeyMi = new THREE.Mesh(geomPianoKey, matPianoKey);
+    pianoKeyMi.position.set(1.603, 0.52, 6.9382);
+    pianoKeyMi.rotation.set(0, 0.435, 0);
+
+    let pianoKeyFa = new THREE.Mesh(geomPianoKey, matPianoKey);
+    pianoKeyFa.position.set(1.572, 0.52, 6.9525);
+    pianoKeyFa.rotation.set(0, 0.435, 0);
+
+    let pianoKeySol = new THREE.Mesh(geomPianoKey, matPianoKey);
+    pianoKeySol.position.set(1.5615, 0.52, 6.957);
+    pianoKeySol.rotation.set(0, 0.435, 0);
+
+    let pianoKeyLa = new THREE.Mesh(geomPianoKey, matPianoKey);
+    pianoKeyLa.position.set(1.5515, 0.52, 6.9621);
+    pianoKeyLa.rotation.set(0, 0.435, 0);
+
+    scene.add(pianoKeyDo, pianoKeyRe, pianoKeyMi, pianoKeyFa, pianoKeySol, pianoKeyLa)
+}
+
 function createConservatory() {
 
     /* ----------------------------- FLOOR ----------------------------- */
@@ -975,8 +1022,8 @@ function animate() {
 
 	for ( let i = 0; i < intersects.length; i ++ ) {
 
-        // console.log(intersects[0]);
-        // console.log(intersects[0].object.id);
+        //console.log(intersects[0]);
+        console.log(intersects[0].object.id);
 
         //Click Kitchen
         if (intersects[0].object.id == 22 && clicked == true) {
@@ -991,32 +1038,81 @@ function animate() {
             camera.lookAt(0, 0, 10);
             clicked = false
         }
-        //Click Conservatory
+
+        //Click Piano
         if (intersects[0].object.id == 32 && clicked == true) {
+            camera.position.set(1.4, 0.8, 6.7)
+            camera.lookAt(2.9, -1, 10);
+            clicked = false
+        }
+        
+        //Click PianoKeyDO
+        if (intersects[0].object.id == 33 && clicked == true) {
+            let audio = new Audio('sounds/do.wav');
+            audio.play();
+            clicked = false
+        }
+
+        //Click PianoKeyRE
+        if (intersects[0].object.id == 34 && clicked == true) {
+            let audio = new Audio('sounds/re.wav');
+            audio.play();
+            clicked = false
+        }
+
+        //Click PianoKeyMI
+        if (intersects[0].object.id == 35 && clicked == true) {
+            let audio = new Audio('sounds/mi.wav');
+            audio.play();
+            clicked = false
+        }
+
+        //Click PianoKeyFA
+        if (intersects[0].object.id == 36 && clicked == true) {
+            let audio = new Audio('sounds/fa.wav');
+            audio.play();
+            clicked = false
+        }
+
+        //Click PianoKeySOL
+        if (intersects[0].object.id == 37 && clicked == true) {
+            let audio = new Audio('sounds/sol.wav');
+            audio.play();
+            clicked = false
+        }
+        //Click PianoKeyLA
+        if (intersects[0].object.id == 38 && clicked == true) {
+            let audio = new Audio('sounds/la.wav');
+            audio.play();
+            clicked = false
+        }
+      
+        //Click Conservatory
+        if (intersects[0].object.id == 39 && clicked == true) {
             camera.position.set(-6.85, 1, 5.7)
             camera.lookAt(-6.85, 1, 9);
             clicked = false
         }
         //Click Billiardroom
-        if (intersects[0].object.id == 35 && clicked == true) {
+        if (intersects[0].object.id == 40 && clicked == true) {
             camera.position.set(-6.5, 1.1, 0.8)
             camera.lookAt(-6.5, 1, 0);
             clicked = false
         }
         //Click Bedroom
-        if (intersects[0].object.id == 53 && clicked == true) {
+        if (intersects[0].object.id == 54 && clicked == true) {
             camera.position.set(-5.5, 1.1, -5.8)
             camera.lookAt(-10.5, 1, -7.9);
             clicked = false
         }
         //Click LivingRoom
-        if (intersects[0].object.id == 62 && clicked == true) {
+        if (intersects[0].object.id == 63 && clicked == true) {
             camera.position.set(7, 1, -4.7)
             camera.lookAt(7, 1, -6.7);
             clicked = false
         }
         //Click Diningroom
-        if (intersects[0].object.id == 67 && clicked == true) {
+        if (intersects[0].object.id == 68 && clicked == true) {
             camera.position.set(6.9, 2, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
