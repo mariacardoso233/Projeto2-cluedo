@@ -705,8 +705,11 @@ function createBilliardroom() {
         let ball9 = new THREE.Mesh(geomBall, matYellow);
         ball9.position.set(-6.35, 0.65, -0.41);
 
+        let ball11 = new THREE.Mesh(geomBall, matBlack);
+        ball11.position.set(-6.40, 0.65, -0.50);
 
-        scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9);
+
+        scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball11);
     }
 
     createBalls();
@@ -998,28 +1001,28 @@ function animate() {
     /********************************************
      * MOVIMENTO DA VISÃO COM AS TECLAS "WASD"
      *********************************************/
-    if (keyboard[87]) {     //W key
-        camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
-        camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
-    }
-    if (keyboard[83]) {     //S key
-        camera.position.x += Math.sin(camera.rotation.y) * player.speed;
-        camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
-    }
-    if (keyboard[65]) {     //A key
-        camera.rotation.y -= Math.PI * 0.01
-    }
-    if (keyboard[68]) {     //D key
-        camera.rotation.y += Math.PI * 0.01
-    }
+    // if (keyboard[87]) {     //W key
+    //     camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
+    //     camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
+    // }
+    // if (keyboard[83]) {     //S key
+    //     camera.position.x += Math.sin(camera.rotation.y) * player.speed;
+    //     camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
+    // }
+    // if (keyboard[65]) {     //A key
+    //     camera.rotation.y -= Math.PI * 0.01
+    // }
+    // if (keyboard[68]) {     //D key
+    //     camera.rotation.y += Math.PI * 0.01
+    // }
 }
-function keyDown(e) {
-    keyboard[e.keyCode] = true;
-}
+// function keyDown(e) {
+//     keyboard[e.keyCode] = true;
+// }
 
-function keyUp(e) {
-    keyboard[e.keyCode] = false;
-}
+// function keyUp(e) {
+//     keyboard[e.keyCode] = false;
+// }
 
-window.addEventListener('keydown', keyDown);
-window.addEventListener('keyup', keyUp)
+// window.addEventListener('keydown', keyDown);
+// window.addEventListener('keyup', keyUp)
