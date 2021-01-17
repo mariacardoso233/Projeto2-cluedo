@@ -707,11 +707,17 @@ function createBilliardroom() {
         let ball9 = new THREE.Mesh(geomBall, matYellow);
         ball9.position.set(-6.35, 0.65, -0.41);
 
+        let ball10 = new THREE.Mesh(geomBall, matOrange);
+        ball10.position.set(-6.40, 0.65, -0.56);
+
         let ball11 = new THREE.Mesh(geomBall, matBlack);
         ball11.position.set(-6.40, 0.65, -0.50);
 
+        let ball12 = new THREE.Mesh(geomBall, matDarkPink);
+        ball12.position.set(-6.40, 0.65, -0.44);
 
-        scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball11);
+
+        scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
     }
 
     createBalls();
