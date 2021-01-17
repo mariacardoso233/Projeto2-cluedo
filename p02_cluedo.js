@@ -699,35 +699,10 @@ function createBilliardroom() {
     scene.add(door1);
 }
 
-    //Bolas mesa de bilhar
-    function createBalls() {
-        //GEOMETRY
-        let geomBall = new THREE.SphereGeometry(0.03, 32, 32);
-
-        //MESH
-        let matRed = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
-        let matYellow = new THREE.MeshPhongMaterial({ color: 0xffff00 });
-        let matGreen = new THREE.MeshPhongMaterial({ color: 0x31A336 });
-        let matBlue = new THREE.MeshPhongMaterial({ color: 0x332CF0 });
-        let matPurple = new THREE.MeshPhongMaterial({ color: 0x50126B });
-        let matOrange = new THREE.MeshPhongMaterial({ color: 0xF7640B });
-        let matDarkPink = new THREE.MeshPhongMaterial({ color: 0xCC1D37 });
-        let matWhite = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-        let matBlack = new THREE.MeshPhongMaterial({ color: 0x000000 });
-
-
-        //BALLS
-        let ball1 = new THREE.Mesh(geomBall, matRed);
-        ball1.position.set(-6.3, 0.65, -0.5);
-
-        let ball2 = new THREE.Mesh(geomBall, matYellow);
-        ball2.position.set(-6.3, 0.65, -0.56);
-
-        let ball3 = new THREE.Mesh(geomBall, matGreen);
-        ball3.position.set(-6.3, 0.65, -0.44);
-
-        let ball4 = new THREE.Mesh(geomBall, matRed);
-        ball4.position.set(-6.3, 0.65, -0.62);
+//Bolas mesa de bilhar
+function createBalls() {
+    //GEOMETRY
+    let geomBall = new THREE.SphereGeometry(0.03, 32, 32);
 
     //MESH
     let matRed = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
@@ -739,7 +714,6 @@ function createBilliardroom() {
     let matDarkPink = new THREE.MeshPhongMaterial({color: 0x50126B});
     let matWhite = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
     let matBlack = new THREE.MeshPhongMaterial({color: 0x000000});
-
 
     //BALLS
     let ball1 = new THREE.Mesh(geomBall, matRed);
@@ -777,7 +751,6 @@ function createBilliardroom() {
 
     let ball12 = new THREE.Mesh(geomBall, matDarkPink);
     ball12.position.set(-6.40, 0.65, -0.44);
-
 
     scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
     spheres.push(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
@@ -1062,12 +1035,6 @@ function createStairs() {
     scene.add(floor, stair1, stair2, stair3, stair4, stair5, stair6);
 }
 
-function cluedoLetters() {
-
-}
-
-
-
 function animate() {
 
     // update the picking ray with the camera and mouse position
@@ -1150,25 +1117,25 @@ function animate() {
             clicked = false
         }
         //Click Billiardroom
-        if (intersects[0].object.id == 40 && clicked == true) {
+        if (intersects[0].object.id == 42 && clicked == true) {
             camera.position.set(-6.5, 1.1, 0.8)
             camera.lookAt(-6.5, 1, 0);
             clicked = false
         }
         //Click Bedroom
-        if (intersects[0].object.id == 54 && clicked == true) {
+        if (intersects[0].object.id == 60 && clicked == true) {
             camera.position.set(-5.5, 1.1, -5.8)
             camera.lookAt(-10.5, 1, -7.9);
             clicked = false
         }
         //Click LivingRoom
-        if (intersects[0].object.id == 63 && clicked == true) {
-            camera.position.set(7, 1, -4.7)
-            camera.lookAt(7, 1, -6.7);
+        if (intersects[0].object.id == 69 && clicked == true) {
+            camera.position.set(7, 1, -7.7)
+            camera.lookAt(7, 1, 6.7);
             clicked = false
         }
         //Click Diningroom
-        if (intersects[0].object.id == 68 && clicked == true) {
+        if (intersects[0].object.id == 76 && clicked == true) {
             camera.position.set(6.9, 2, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
@@ -1275,9 +1242,6 @@ function cluedoLetters(){
 
     // } );
 }
-
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
 
 function onMouseMove(event) {
 
