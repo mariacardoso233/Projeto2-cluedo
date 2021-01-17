@@ -35,6 +35,8 @@ window.onload = function init() {
     createDiningroom();
     createStairs();
 
+    cluedoLetters();
+
     // start a loop that will update the objects' positions 
     // and render the scene on each frame
     animate();
@@ -940,6 +942,7 @@ function createDiningroom() {
 }
 
 function createStairs(){
+
     let geomStair = new THREE.BoxGeometry(1.7, 0.5, 0.5);
 
     let geomFloor = new THREE.BoxGeometry(1.72, 0.5, 1);
@@ -987,6 +990,27 @@ function createStairs(){
     stair6.position.set(0.225, -1.45, -0.5);
 
     scene.add(floor, stair1, stair2, stair3, stair4, stair5, stair6);
+}
+
+function cluedoLetters(){
+    const loader = new THREE.FontLoader();
+
+    loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+
+        const geometry = new THREE.TextGeometry( 'Hello three.js!', {
+            font: font,
+            size: 80,
+            height: 5,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 10,
+            bevelSize: 8,
+            bevelOffset: 0,
+            bevelSegments: 5
+        } );
+        geometry.position.set(0,0,0)
+        scene.add(geometry)
+    } );
 }
 
 
