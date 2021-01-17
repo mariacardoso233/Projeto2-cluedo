@@ -15,6 +15,9 @@ let player = { height: 1, speed: 0.1 }
 const textDoor = new THREE.TextureLoader().load('./textures/door.jpg');
 const normalDoor = new THREE.TextureLoader().load('./textures/door_normal.jpg');
 
+//TV - LivingRoom
+let tvScreenOn
+
 
 const loader = new THREE.GLTFLoader().setPath('models/GLTF/');
 
@@ -262,123 +265,123 @@ function createScene() {
 
     loader.load('handrail.glb',
 
-    function (gltf) {
-        console.log(gltf)
-        mesh = gltf.scene;
-        mesh.scale.set(0.2, 0.2, 0.2);
-        mesh.position.set(0.64, 0, -0.02)
-        mesh.rotation.set(0, 0, 0)
-        scene.add(mesh);
-    }, 
-    undefined,
-    function (err) {
-        console.log(err);
-    });
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.2, 0.2, 0.2);
+            mesh.position.set(0.64, 0, -0.02)
+            mesh.rotation.set(0, 0, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
 
     loader.load('handrail.glb',
 
-    function (gltf) {
-        console.log(gltf)
-        mesh = gltf.scene;
-        mesh.scale.set(0.2, 0.2, 0.2);
-        mesh.position.set(-0.2, 0, -0.02)
-        mesh.rotation.set(0, 0, 0)
-        scene.add(mesh);
-    }, 
-    undefined,
-    function (err) {
-        console.log(err);
-    });
-    
-    loader.load('handrail.glb',
-
-    function (gltf) {
-        console.log(gltf)
-        mesh = gltf.scene;
-        mesh.scale.set(0.2, 0.2, 0.2);
-        mesh.position.set(-0.7, 0, -0.36)
-        mesh.rotation.set(0, 1.58, 0)
-        scene.add(mesh);
-    }, 
-    undefined,
-    function (err) {
-        console.log(err);
-    });
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.2, 0.2, 0.2);
+            mesh.position.set(-0.2, 0, -0.02)
+            mesh.rotation.set(0, 0, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
 
     loader.load('handrail.glb',
 
-    function (gltf) {
-        console.log(gltf)
-        mesh = gltf.scene;
-        mesh.scale.set(0.2, 0.2, 0.2);
-        mesh.position.set(-0.71, 0, -1.2)
-        mesh.rotation.set(0, 1.58, 0)
-        scene.add(mesh);
-    }, 
-    undefined,
-    function (err) {
-        console.log(err);
-    });
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.2, 0.2, 0.2);
+            mesh.position.set(-0.7, 0, -0.36)
+            mesh.rotation.set(0, 1.58, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
 
     loader.load('handrail.glb',
 
-    function (gltf) {
-        console.log(gltf)
-        mesh = gltf.scene;
-        mesh.scale.set(0.2, 0.2, 0.2);
-        mesh.position.set(1.15, 0, -0.36)
-        mesh.rotation.set(0, 1.58, 0)
-        scene.add(mesh);
-    }, 
-    undefined,
-    function (err) {
-        console.log(err);
-    });
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.2, 0.2, 0.2);
+            mesh.position.set(-0.71, 0, -1.2)
+            mesh.rotation.set(0, 1.58, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
 
     loader.load('handrail.glb',
 
-    function (gltf) {
-        console.log(gltf)
-        mesh = gltf.scene;
-        mesh.scale.set(0.2, 0.2, 0.2);
-        mesh.position.set(1.15, 0, -1.2)
-        mesh.rotation.set(0, 1.58, 0)
-        scene.add(mesh);
-    }, 
-    undefined,
-    function (err) {
-        console.log(err);
-    });
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.2, 0.2, 0.2);
+            mesh.position.set(1.15, 0, -0.36)
+            mesh.rotation.set(0, 1.58, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
+
+    loader.load('handrail.glb',
+
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.2, 0.2, 0.2);
+            mesh.position.set(1.15, 0, -1.2)
+            mesh.rotation.set(0, 1.58, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
 
     loader.load('Bookshelf.glb',
 
-    function (gltf) {
-        console.log(gltf)
-        mesh = gltf.scene;
-        mesh.scale.set(0.02, 0.04 , 0.05);
-        mesh.position.set(-2.5, 0, 8)
-        mesh.rotation.set(0, 1.58, 0)
-        scene.add(mesh);
-    }, 
-    undefined,
-    function (err) {
-        console.log(err);
-    });
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.02, 0.04, 0.05);
+            mesh.position.set(-2.5, 0, 8)
+            mesh.rotation.set(0, 1.58, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
 
     loader.load('Bookshelf.glb',
 
-    function (gltf) {
-        console.log(gltf)
-        mesh = gltf.scene;
-        mesh.scale.set(0.02, 0.04 , 0.05);
-        mesh.position.set(-2.5, 0, 7)
-        mesh.rotation.set(0, 1.58, 0)
-        scene.add(mesh);
-    }, 
-    undefined,
-    function (err) {
-        console.log(err);
-    });
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.02, 0.04, 0.05);
+            mesh.position.set(-2.5, 0, 7)
+            mesh.rotation.set(0, 1.58, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
 }
 
 function createLights() {
@@ -665,12 +668,12 @@ function createBilliardroom() {
         let matRed = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
         let matYellow = new THREE.MeshPhongMaterial({ color: 0xffff00 });
         let matGreen = new THREE.MeshPhongMaterial({ color: 0x31A336 });
-        let matBlue = new THREE.MeshPhongMaterial({color: 0x332CF0});
-        let matPurple = new THREE.MeshPhongMaterial({color: 0x50126B});
-        let matOrange = new THREE.MeshPhongMaterial({color: 0xF7640B});
-        let matDarkPink = new THREE.MeshPhongMaterial({color: 0xCC1D37});
-        let matWhite = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
-        let matBlack = new THREE.MeshPhongMaterial({color: 0x000000});
+        let matBlue = new THREE.MeshPhongMaterial({ color: 0x332CF0 });
+        let matPurple = new THREE.MeshPhongMaterial({ color: 0x50126B });
+        let matOrange = new THREE.MeshPhongMaterial({ color: 0xF7640B });
+        let matDarkPink = new THREE.MeshPhongMaterial({ color: 0xCC1D37 });
+        let matWhite = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+        let matBlack = new THREE.MeshPhongMaterial({ color: 0x000000 });
 
 
         //BALLS
@@ -682,7 +685,7 @@ function createBilliardroom() {
 
         let ball3 = new THREE.Mesh(geomBall, matGreen);
         ball3.position.set(-6.3, 0.65, -0.44);
-        
+
         let ball4 = new THREE.Mesh(geomBall, matRed);
         ball4.position.set(-6.3, 0.65, -0.62);
 
@@ -895,6 +898,26 @@ function createLivingroom() {
     let door2 = new THREE.Mesh(geomDoor2, matDoor);
     door2.position.set(5.8, 0.6, -4.25);
     scene.add(door2);
+
+    function createTv() {
+        //GEOMETRY
+        let geomScreen = new THREE.BoxGeometry(1.5, 1, .1);
+        let geomScreenOn = new THREE.BoxGeometry(1.4, 0.9, .001);
+
+        //Material Lounge
+        let matScreen = new THREE.MeshPhongMaterial({ color: 0x000000});
+        let matScreenOn = new THREE.MeshPhongMaterial({ color: 0xffffff});
+
+        let tvScreen = new THREE.Mesh(geomScreen, matScreen);
+        tvScreen.position.set(7.3, 0.9, -4.4);
+        tvScreenOn = new THREE.Mesh(geomScreenOn, matScreenOn);
+        tvScreenOn.position.set(7.3, 0.9, -4.43);   //7.3, 0.9, -4.45
+
+
+        scene.add(tvScreen, tvScreenOn)
+    }
+
+    createTv();
 }
 
 function createDiningroom() {
@@ -937,7 +960,7 @@ function createDiningroom() {
     scene.add(wall4);
 }
 
-function createStairs(){
+function createStairs() {
 
     let geomStair = new THREE.BoxGeometry(1.7, 0.5, 0.5);
 
@@ -958,7 +981,7 @@ function createStairs(){
 
     let wall3 = new THREE.Mesh(geomWall3, matWall);
     wall3.position.set(-0.7, -0.6, -1.5);
-    
+
     scene.add(wall1, wall2, wall3);
 
     // Stairs
@@ -988,7 +1011,7 @@ function createStairs(){
     scene.add(floor, stair1, stair2, stair3, stair4, stair5, stair6);
 }
 
-function cluedoLetters(){
+function cluedoLetters() {
 
 }
 
@@ -996,13 +1019,13 @@ function cluedoLetters(){
 
 function animate() {
 
-    	// update the picking ray with the camera and mouse position
-	raycaster.setFromCamera( mouse, camera );
+    // update the picking ray with the camera and mouse position
+    raycaster.setFromCamera(mouse, camera);
 
-	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(scene.children);
+    // calculate objects intersecting the picking ray
+    const intersects = raycaster.intersectObjects(scene.children);
 
-	for ( let i = 0; i < intersects.length; i ++ ) {
+    for (let i = 0; i < intersects.length; i++) {
 
         //console.log(intersects[0]);
 
@@ -1056,8 +1079,14 @@ function animate() {
             clicked = false
         }
 
+        //Click TV
+        if (intersects[0].object.id == 67 && clicked == true) {
+            tvScreenOn.position.set(-4.45)
+            clicked = false
+        }
+
     }
-    
+
     if (key == 'Escape') {     //ESC key
         camera.position.set(0, 20, 20); // eye
         camera.lookAt(0, 0, 0);
@@ -1078,14 +1107,14 @@ window.onkeydown = function handleKeyDown(event) {
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
-function onMouseMove( event ) {
+function onMouseMove(event) {
 
-	// calculate mouse position in normalized device coordinates
-	// (-1 to +1) for both components
+    // calculate mouse position in normalized device coordinates
+    // (-1 to +1) for both components
 
-	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
     clicked = true
 }
 
-window.addEventListener( 'click', onMouseMove, false );
+window.addEventListener('click', onMouseMove, false);
