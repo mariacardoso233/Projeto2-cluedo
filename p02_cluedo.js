@@ -1057,37 +1057,12 @@ function animate() {
 
     // render
     renderer.render(scene, camera);
-
-    /********************************************
-     * MOVIMENTO DA VISÃO COM AS TECLAS "WASD"
-     *********************************************/
-    // if (keyboard[87]) {     //W key
-    //     camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
-    //     camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
-    // }
-    // if (keyboard[83]) {     //S key
-    //     camera.position.x += Math.sin(camera.rotation.y) * player.speed;
-    //     camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
-    // }
-    // if (keyboard[65]) {     //A key
-    //     camera.rotation.y -= Math.PI * 0.01
-    // }
-    // if (keyboard[68]) {     //D key
-    //     camera.rotation.y += Math.PI * 0.01
-    // }
 }
 
 
 window.onkeydown = function handleKeyDown(event) {
     key = event.key;
 }
-
-// function keyUp(e) {
-//     keyboard[e.keyCode] = false;
-// }
-
-// window.addEventListener('keydown', keyDown);
-// window.addEventListener('keyup', keyUp)
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
