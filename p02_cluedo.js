@@ -4,6 +4,12 @@ let clicked = false
 
 let floor1
 
+let spheres = []
+let selectedObject, plane, offset
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
 // 3D MODELS
 let board
 
@@ -14,7 +20,6 @@ let player = { height: 1, speed: 0.1 }
 
 const textDoor = new THREE.TextureLoader().load('./textures/door.jpg');
 const normalDoor = new THREE.TextureLoader().load('./textures/door_normal.jpg');
-
 
 const loader = new THREE.GLTFLoader().setPath('models/GLTF/');
 
@@ -31,7 +36,10 @@ window.onload = function init() {
     createKitchen();
     createBallroom();
     createConservatory();
+
     createBilliardroom();
+    createBalls();
+
     createBedroom();
     createHall();
     createLivingroom();
@@ -83,8 +91,6 @@ function createScene() {
 
     let controls = new THREE.OrbitControls(camera);
     controls.addEventListener('change', function () { renderer.render(scene, camera); });
-
-
 
     /**********************
      * OBJETOS 
@@ -655,79 +661,67 @@ function createBilliardroom() {
     let door1 = new THREE.Mesh(geomDoor, matDoor);
     door1.position.set(-3.7, 0.6, -0.5);
     scene.add(door1);
-
-    //Bolas mesa de bilhar
-    function createBalls() {
-        //GEOMETRY
-        let geomBall = new THREE.SphereGeometry(0.03, 32, 32);
-
-        //MESH
-        let matRed = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
-        let matYellow = new THREE.MeshPhongMaterial({ color: 0xffff00 });
-        let matGreen = new THREE.MeshPhongMaterial({ color: 0x31A336 });
-        let matBlue = new THREE.MeshPhongMaterial({color: 0x332CF0});
-        let matPurple = new THREE.MeshPhongMaterial({color: 0x50126B});
-        let matOrange = new THREE.MeshPhongMaterial({color: 0xF7640B});
-        let matDarkPink = new THREE.MeshPhongMaterial({color: 0xCC1D37});
-        let matWhite = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
-        let matBlack = new THREE.MeshPhongMaterial({color: 0x000000});
-
-
-        //BALLS
-        let ball1 = new THREE.Mesh(geomBall, matRed);
-        ball1.position.set(-6.3, 0.65, -0.5);
-
-        let ball2 = new THREE.Mesh(geomBall, matYellow);
-        ball2.position.set(-6.3, 0.65, -0.56);
-
-        let ball3 = new THREE.Mesh(geomBall, matGreen);
-        ball3.position.set(-6.3, 0.65, -0.44);
-        
-        let ball4 = new THREE.Mesh(geomBall, matRed);
-        ball4.position.set(-6.3, 0.65, -0.62);
-
-        let ball5 = new THREE.Mesh(geomBall, matBlue);
-        ball5.position.set(-6.3, 0.65, -0.38);
-
-        let ball6 = new THREE.Mesh(geomBall, matBlue);
-        ball6.position.set(-6.35, 0.65, -0.59);
-
-        let ball7 = new THREE.Mesh(geomBall, matGreen);
-        ball7.position.set(-6.35, 0.65, -0.53);
-
-        let ball8 = new THREE.Mesh(geomBall, matPurple);
-        ball8.position.set(-6.35, 0.65, -0.47);
-
-        let ball9 = new THREE.Mesh(geomBall, matYellow);
-        ball9.position.set(-6.35, 0.65, -0.41);
-
-        let ball10 = new THREE.Mesh(geomBall, matOrange);
-        ball10.position.set(-6.40, 0.65, -0.56);
-
-        let ball11 = new THREE.Mesh(geomBall, matBlack);
-        ball11.position.set(-6.40, 0.65, -0.50);
-
-        let ball12 = new THREE.Mesh(geomBall, matDarkPink);
-        ball12.position.set(-6.40, 0.65, -0.44);
-
-        let ball13 = new THREE.Mesh(geomBall, matPurple);
-        ball13.position.set(-6.45, 0.65, -0.52);
-
-        let ball14 = new THREE.Mesh(geomBall, matOrange);
-        ball14.position.set(-6.45, 0.65, -0.46);
-
-        let ball15 = new THREE.Mesh(geomBall, matDarkPink);
-        ball15.position.set(-6.50, 0.65, -0.49);
-
-        let ballWhite = new THREE.Mesh(geomBall, matWhite);
-        ballWhite.position.set(-6.9, 0.65, -0.49);
-
-        scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12, ball13, ball14, ball15, ballWhite);
-    }
-
-    createBalls();
-
 }
+
+//Bolas mesa de bilhar
+function createBalls() {
+    //GEOMETRY
+    let geomBall = new THREE.SphereGeometry(0.03, 32, 32);
+
+    //MESH
+    let matRed = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
+    let matYellow = new THREE.MeshPhongMaterial({ color: 0xffff00 });
+    let matGreen = new THREE.MeshPhongMaterial({ color: 0x31A336 });
+    let matBlue = new THREE.MeshPhongMaterial({color: 0x332CF0});
+    let matPurple = new THREE.MeshPhongMaterial({color: 0x50126B});
+    let matOrange = new THREE.MeshPhongMaterial({color: 0xF7640B});
+    let matDarkPink = new THREE.MeshPhongMaterial({color: 0x50126B});
+    let matWhite = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
+    let matBlack = new THREE.MeshPhongMaterial({color: 0x000000});
+
+
+    //BALLS
+    let ball1 = new THREE.Mesh(geomBall, matRed);
+    ball1.position.set(-6.3, 0.65, -0.5);
+
+    let ball2 = new THREE.Mesh(geomBall, matYellow);
+    ball2.position.set(-6.3, 0.65, -0.56);
+
+    let ball3 = new THREE.Mesh(geomBall, matGreen);
+    ball3.position.set(-6.3, 0.65, -0.44);
+    
+    let ball4 = new THREE.Mesh(geomBall, matRed);
+    ball4.position.set(-6.3, 0.65, -0.62);
+
+    let ball5 = new THREE.Mesh(geomBall, matBlue);
+    ball5.position.set(-6.3, 0.65, -0.38);
+
+    let ball6 = new THREE.Mesh(geomBall, matBlue);
+    ball6.position.set(-6.35, 0.65, -0.59);
+
+    let ball7 = new THREE.Mesh(geomBall, matGreen);
+    ball7.position.set(-6.35, 0.65, -0.53);
+
+    let ball8 = new THREE.Mesh(geomBall, matPurple);
+    ball8.position.set(-6.35, 0.65, -0.47);
+
+    let ball9 = new THREE.Mesh(geomBall, matYellow);
+    ball9.position.set(-6.35, 0.65, -0.41);
+
+    let ball10 = new THREE.Mesh(geomBall, matOrange);
+    ball10.position.set(-6.40, 0.65, -0.56);
+
+    let ball11 = new THREE.Mesh(geomBall, matBlack);
+    ball11.position.set(-6.40, 0.65, -0.50);
+
+    let ball12 = new THREE.Mesh(geomBall, matDarkPink);
+    ball12.position.set(-6.40, 0.65, -0.44);
+
+
+    scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
+    spheres.push(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
+}
+
 
 function createBedroom() {
     /* ----------------------------- FLOOR ----------------------------- */
@@ -988,15 +982,8 @@ function createStairs(){
     scene.add(floor, stair1, stair2, stair3, stair4, stair5, stair6);
 }
 
-function cluedoLetters(){
-
-}
-
-
-
 function animate() {
-
-    	// update the picking ray with the camera and mouse position
+    // update the picking ray with the camera and mouse position
 	raycaster.setFromCamera( mouse, camera );
 
 	// calculate objects intersecting the picking ray
@@ -1004,7 +991,8 @@ function animate() {
 
 	for ( let i = 0; i < intersects.length; i ++ ) {
 
-        //console.log(intersects[0]);
+        // console.log(intersects[0]);
+        // console.log(intersects[0].object.id);
 
         //Click Kitchen
         if (intersects[0].object.id == 22 && clicked == true) {
@@ -1028,7 +1016,7 @@ function animate() {
         //Click Billiardroom
         if (intersects[0].object.id == 35 && clicked == true) {
             camera.position.set(-6.5, 1.1, 0.8)
-            camera.lookAt(20, 0, 12.5);
+            camera.lookAt(-6.5, 1, 0);
             clicked = false
         }
         //Click Bedroom
@@ -1037,25 +1025,18 @@ function animate() {
             camera.lookAt(-10.5, 1, -7.9);
             clicked = false
         }
-        //Click Hall
-        if (intersects[0].object.id == 6 && clicked == true) {
-            camera.position.set(0.2, 1, -4.5)
-            camera.lookAt(0.2, 1, -6.5);
-            clicked = false
-        }
         //Click LivingRoom
         if (intersects[0].object.id == 62 && clicked == true) {
             camera.position.set(7, 1, -4.7)
             camera.lookAt(7, 1, -6.7);
             clicked = false
         }
-        //Click LivingRoom
+        //Click Diningroom
         if (intersects[0].object.id == 67 && clicked == true) {
             camera.position.set(6.9, 2, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
         }
-
     }
     
     if (key == 'Escape') {     //ESC key
@@ -1070,22 +1051,119 @@ function animate() {
     renderer.render(scene, camera);
 }
 
+function cluedoLetters(){
+
+    const loader = new THREE.FontLoader();
+
+    loader.load( 'fonts/Poppins Medium_Regular.json', function ( font ) {
+
+        const letterC = new THREE.TextGeometry( 'CL    E', {
+            font: font,
+            size: 0.8,
+            height: 0.2,
+            curveSegments: 2,
+            bevelEnabled: true,
+            bevelThickness: 0.2,
+            bevelSize: 0.05,
+        } );
+
+        const meshC = new THREE.Mesh(letterC, new THREE.MeshBasicMaterial({
+            color: 'white',
+            roughness: 0.5
+        }))
+
+        const letterU = new THREE.TextGeometry( 'U', {
+            font: font,
+            size: 0.8,
+            height: 0.2,
+            curveSegments: 2,
+            bevelEnabled: true,
+            bevelThickness: 0.2,
+            bevelSize: 0.05,
+        } );
+
+        const meshU = new THREE.Mesh(letterU, new THREE.MeshBasicMaterial({
+            color: 'red',
+            roughness: 0.5,
+            border: 'black'
+        }))
+
+        meshC.position.set(-1.35, 0, 0.9)
+        meshC.rotation.set(-1,0,0)
+        scene.add(meshC)
+
+        meshU.position.set(0.25, 0, 0.9)
+        meshU.rotation.set(-1,0,0)
+        scene.add(meshU)
+    } );
+
+    // invisible helper plane (big enough)
+    // for example, aligned with the XY-plane (Z=0)
+    plane = new THREE.Mesh(
+        new THREE.PlaneGeometry(2, 1, 10, 10),
+        new THREE.MeshBasicMaterial({
+        opacity: 0.1,
+        transparent: false,
+        visible: true
+        })
+    );
+    plane.position.set(-6.5, 0.65, -0.5)
+    plane.rotation.set(-1.58, 0, 0)
+    scene.add(plane);
+
+    // const controls = new THREE.DragControls( spheres, camera, renderer.domElement );
+
+    // // add event listener to highlight dragged objects
+
+    // controls.addEventListener( 'dragstart', function ( event ) {
+
+    // } );
+
+    // controls.addEventListener( 'dragend', function ( event ) {
+
+    // } );
+}
+
+function onMouseMove( event ) {
+
+	// calculate mouse position in normalized device coordinates
+
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    clicked = true
+
+    if (selectedObject) {
+        // gets (again) the new ray intersection with the helper plane
+        let intersects = raycaster.intersectObject(plane);
+        // drag the intersect object around
+        selectedObject.position.copy(intersects[0].point.sub(offset));
+    }
+}
+
+function onMouseDown() {
+    // check if ray intersects any of the objects’ array
+    let intersects = raycaster.intersectObjects(spheres);
+
+    if (intersects.length > 0) {
+        // gets closest intersected object (must be a global variable)
+        selectedObject = intersects[0].object;
+        // gets ray intersection with the helper plane
+        let intersectsPlane = raycaster.intersectObject(plane);
+        // calculates the offset (also a global variable):
+        // plane ray intersection – intersected object center
+        offset.copy(intersectsPlane[0].point).sub(selectedObject.position);
+    }
+}
+
+function onMouseUp(event) {
+    // finish drag & drop
+    selectedObject = null;
+}
 
 window.onkeydown = function handleKeyDown(event) {
     key = event.key;
 }
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
-function onMouseMove( event ) {
-
-	// calculate mouse position in normalized device coordinates
-	// (-1 to +1) for both components
-
-	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    clicked = true
-}
-
 window.addEventListener( 'click', onMouseMove, false );
+window.addEventListener( 'mousedown', onMouseDown, false );
+window.addEventListener( 'mouseup', onMouseUp, false );
