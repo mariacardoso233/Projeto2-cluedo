@@ -1053,6 +1053,15 @@ function animate() {
 
 function cluedoLetters(){
 
+    let geomBack = new THREE.BoxGeometry(2.75, 2, 0);
+
+    let matStair = new THREE.MeshPhongMaterial({ color: 0x000000 })
+
+    let back = new THREE.Mesh(geomBack, matStair);
+    back.position.set(0.35, 0, 1.1);
+    back.rotation.set(-1, 0, 0);
+    scene.add(back)
+
     const loader = new THREE.FontLoader();
 
     loader.load( 'fonts/Poppins Medium_Regular.json', function ( font ) {
@@ -1061,7 +1070,7 @@ function cluedoLetters(){
             font: font,
             size: 0.8,
             height: 0.2,
-            curveSegments: 2,
+            curveSegments: 12,
             bevelEnabled: true,
             bevelThickness: 0.2,
             bevelSize: 0.05,
@@ -1076,7 +1085,7 @@ function cluedoLetters(){
             font: font,
             size: 0.8,
             height: 0.2,
-            curveSegments: 2,
+            curveSegments: 12,
             bevelEnabled: true,
             bevelThickness: 0.2,
             bevelSize: 0.05,
@@ -1088,11 +1097,11 @@ function cluedoLetters(){
             border: 'black'
         }))
 
-        meshC.position.set(-1.35, 0, 0.9)
+        meshC.position.set(-1.25, 0.3, 1.1)
         meshC.rotation.set(-1,0,0)
         scene.add(meshC)
 
-        meshU.position.set(0.25, 0, 0.9)
+        meshU.position.set(0.25, 0.3, 1.1)
         meshU.rotation.set(-1,0,0)
         scene.add(meshU)
     } );
