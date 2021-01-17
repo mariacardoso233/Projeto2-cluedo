@@ -1,5 +1,8 @@
 let scene, camera, renderer
-let controls, mesh
+let controls, mesh, key
+let clicked = false
+
+let floor1
 
 // 3D MODELS
 let board
@@ -78,8 +81,8 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    let controls = new THREE.OrbitControls(camera);
-    controls.addEventListener('change', function () { renderer.render(scene, camera); });
+    // let controls = new THREE.OrbitControls(camera);
+    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
 
 
@@ -469,7 +472,7 @@ function createKitchen() {
     let matFloor1 = new THREE.MeshPhongMaterial({ color: 0xadadad });
 
     //Mesh floor
-    let floor1 = new THREE.Mesh(geomFloor1, matFloor1);
+    floor1 = new THREE.Mesh(geomFloor1, matFloor1);
     floor1.position.set(7.2, 0.1, 6.7);
     scene.add(floor1);
 
@@ -477,21 +480,12 @@ function createKitchen() {
     //GEOMETRY
     let geomWall2 = new THREE.BoxGeometry(3, 1.2, 0.1);
     let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 3);
-    //let geomDoor = new THREE.BoxGeometry(0.1, 1, 1);
-    //let geomDoor2 = new THREE.BoxGeometry(0.75, 1.2, 0.1);
 
     //Mobilia
     let geomBalcao = new THREE.BoxGeometry(2, 0.3, 0.3);
 
-    //Mobilia
-    let geomTable = new THREE.BoxGeometry(2, 0.1, 1.3);
-
     // //Material Wall
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-
-    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    // matDoor.map = textDoor;
-    // matDoor.normalMap = normalDoor;
 
     // //WallsKitchen
     let wall2 = new THREE.Mesh(geomWall2, matWall);
@@ -505,19 +499,6 @@ function createKitchen() {
     let balcao = new THREE.Mesh(geomBalcao, matWall);
     balcao.position.set(7.2, 0.3, 8.9);
     scene.add(balcao);
-
-    //DoorsKitchen
-    //let door1 = new THREE.Mesh(geomDoor, matDoor);
-    //let door2 = new THREE.Mesh(geomDoor2, matDoor);
-    // door1.position.set(4.5, 2.4, 5);
-    //door2.position.set(5.18, 0.6, 4.3);
-    //scene.add(door2);
-
-    /*
-    let geomWall = new THREE.BoxGeometry(5, 1.2, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(4.2, 1.2, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 4.9);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 5);*/
 }
 
 function createBallroom() {
@@ -599,38 +580,21 @@ function createConservatory() {
 
     // /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(4.5, 1.2, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(4.5, 1.2, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 4.65);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 2);
-    let geomDoor = new THREE.BoxGeometry(0.1, 1.2, 1.1);
-    let geomDoor2 = new THREE.BoxGeometry(1, 1.2, 0.1);
-
-    // // //TEXTURES
-    // let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
-    // let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
+    let geomWall2 = new THREE.BoxGeometry(3.4, 0.3, 0.1);
+    let geomWall4 = new THREE.BoxGeometry(0.1, 0.3, 3.4);
 
     //Material Wall
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    // matWall.map = textWall;
-    // matWall.normalMap = normalWall;
-
-    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    // matDoor.map = textDoor;
-    // matDoor.normalMap = normalDoor;
 
     //Walls Conservatory
 
-    let wall4 = new THREE.Mesh(geomWall4, matWall);
-    wall4.position.set(-4.4, 0.6, 8.05);
-    scene.add(wall4);
+    let wall2 = new THREE.Mesh(geomWall2, matWall);
+    wall2.position.set(-7.5, 0.2, 4.3);
+    scene.add(wall2);
 
-    // // //Doors Conservatory
-    // let door1 = new THREE.Mesh(geomDoor, matDoor);
-    // let door2 = new THREE.Mesh(geomDoor2, matDoor);
-    // door1.position.set(-4.5, 2.4, 5.2);
-    // door2.position.set(-5, 2.4, 4.7);
-    // scene.add(door1, door2);
+    let wall4 = new THREE.Mesh(geomWall4, matWall);
+    wall4.position.set(-4.4, 0.2, 7.4);
+    scene.add(wall4);
 }
 
 function createBilliardroom() {
@@ -658,8 +622,8 @@ function createBilliardroom() {
     let geomWall = new THREE.BoxGeometry(5.5, 1.2, 0.1);
     let geomWall2 = new THREE.BoxGeometry(5.5, 1.2, 0.1);
     let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 1.7);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 1.1);
-    let geomDoor = new THREE.BoxGeometry(0.1, 1.2, 1.3);
+    let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 1.7);
+    let geomDoor = new THREE.BoxGeometry(0.1, 1.2, 0.7);
 
     // //TEXTURES
 
@@ -684,12 +648,12 @@ function createBilliardroom() {
     scene.add(wall3);
 
     let wall4 = new THREE.Mesh(geomWall4, matWall);
-    wall4.position.set(-3.7, 0.6, -2);
+    wall4.position.set(-3.7, 0.6, -1.7);
     scene.add(wall4);
 
     //Doors Billiardroom
     let door1 = new THREE.Mesh(geomDoor, matDoor);
-    door1.position.set(-3.7, 0.6, -0.8);
+    door1.position.set(-3.7, 0.6, -0.5);
     scene.add(door1);
 
     //Bolas mesa de bilhar
@@ -926,33 +890,23 @@ function createDiningroom() {
 
     /* ----------------------------- FLOOR ----------------------------- */
     //GEOMETRY
-    let geomFloor8 = new THREE.BoxGeometry(6.3, 0.2, 5);
-
-    // //TEXTURES
+    let geomFloor8 = new THREE.BoxGeometry(5.8, 0.2, 5);
 
     //Material
     let matFloor8 = new THREE.MeshPhongMaterial({ color: 0xd7ae85 });
     //Mesh
     let floor8 = new THREE.Mesh(geomFloor8, matFloor8);
-    floor8.position.set(6.5, 0, 0);
+    floor8.position.set(6.9, 0, 0);
     scene.add(floor8);
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(5, 1.2, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(6.4, 1.2, 0.1);
-    let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 5);
-    let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 3);
-    let geomDoor = new THREE.BoxGeometry(0.1, 1.2, 2.2);
-
-    // //TEXTURES
-    // let textWall = new THREE.TextureLoader().load('./textures/wall.jpg');
-    // let normalWall = new THREE.TextureLoader().load('./textures/wall_normal.jpg');
+    let geomWall = new THREE.BoxGeometry(4, 0.3, 0.1);
+    let geomWall2 = new THREE.BoxGeometry(5.8, 1.2, 0.1);
+    let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 3.5);
 
     //Material Wall
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    // matWall.map = textWall;
-    // matWall.normalMap = normalWall;
 
     let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
     matDoor.map = textDoor;
@@ -960,21 +914,16 @@ function createDiningroom() {
 
     //Walls Diningroom
     let wall1 = new THREE.Mesh(geomWall, matWall);
-    wall1.position.set(7.25, 0.6, 2.5);
+    wall1.position.set(7.8, 0.2, 2.5);
     scene.add(wall1);
 
-    // let wall2 = new THREE.Mesh(geomWall2, matWall);
-    // wall2.position.set(6.5, 0.6, -2.5);
-    // scene.add(wall2);
+    let wall2 = new THREE.Mesh(geomWall2, matWall);
+    wall2.position.set(6.9, 0.6, -2.5);
+    scene.add(wall2);
 
-    // let wall4 = new THREE.Mesh(geomWall4, matWall);
-    // wall4.position.set(3.3, 0.6, -1);
-    // scene.add(wall4);
-
-    // //Doors Diningroom
-    // let door1 = new THREE.Mesh(geomDoor, matDoor);
-    // door1.position.set(3.3, 0.6, 1.4);
-    // scene.add(door1);
+    let wall4 = new THREE.Mesh(geomWall4, matWall);
+    wall4.position.set(3.95, 0.6, -0.8);
+    scene.add(wall4);
 }
 
 function createStairs(){
@@ -1029,12 +978,80 @@ function createStairs(){
 }
 
 function cluedoLetters(){
- 
+
 }
 
 
 
 function animate() {
+
+    	// update the picking ray with the camera and mouse position
+	raycaster.setFromCamera( mouse, camera );
+
+	// calculate objects intersecting the picking ray
+	const intersects = raycaster.intersectObjects(scene.children);
+
+	for ( let i = 0; i < intersects.length; i ++ ) {
+
+        //console.log(intersects[0]);
+
+        //Click Kitchen
+        if (intersects[0].object.id == 22 && clicked == true) {
+            console.log(intersects[0]);
+            camera.position.set(7.2, 1.1, 4.7)
+            camera.lookAt(7.2, 0, 10);
+            clicked = false
+        }
+        //Click Ballroom
+        if (intersects[0].object.id == 26 && clicked == true) {
+            camera.position.set(0.2, 1.1, 4.7)
+            camera.lookAt(0, 0, 10);
+            clicked = false
+        }
+        //Click Conservatory
+        if (intersects[0].object.id == 32 && clicked == true) {
+            camera.position.set(-6.85, 1, 5.7)
+            camera.lookAt(-6.85, 1, 9);
+            clicked = false
+        }
+        //Click Billiardroom
+        if (intersects[0].object.id == 35 && clicked == true) {
+            camera.position.set(-6.5, 1.1, 0.8)
+            camera.lookAt(20, 0, 12.5);
+            clicked = false
+        }
+        //Click Bedroom
+        if (intersects[0].object.id == 53 && clicked == true) {
+            camera.position.set(-5.5, 1.1, -5.8)
+            camera.lookAt(-10.5, 1, -7.9);
+            clicked = false
+        }
+        //Click Hall
+        if (intersects[0].object.id == 6 && clicked == true) {
+            camera.position.set(0.2, 1, -4.5)
+            camera.lookAt(0.2, 1, -6.5);
+            clicked = false
+        }
+        //Click LivingRoom
+        if (intersects[0].object.id == 62 && clicked == true) {
+            camera.position.set(7, 1, -4.7)
+            camera.lookAt(7, 1, -6.7);
+            clicked = false
+        }
+        //Click LivingRoom
+        if (intersects[0].object.id == 67 && clicked == true) {
+            camera.position.set(6.9, 2, -1.5)
+            camera.lookAt(6.8, 0.5, 0.5);
+            clicked = false
+        }
+
+    }
+    
+    if (key == 'Escape') {     //ESC key
+        camera.position.set(0, 20, 20); // eye
+        camera.lookAt(0, 0, 0);
+        key = ''
+    }
 
     requestAnimationFrame(animate);
 
@@ -1059,9 +1076,11 @@ function animate() {
     //     camera.rotation.y += Math.PI * 0.01
     // }
 }
-// function keyDown(e) {
-//     keyboard[e.keyCode] = true;
-// }
+
+
+window.onkeydown = function handleKeyDown(event) {
+    key = event.key;
+}
 
 // function keyUp(e) {
 //     keyboard[e.keyCode] = false;
@@ -1069,3 +1088,18 @@ function animate() {
 
 // window.addEventListener('keydown', keyDown);
 // window.addEventListener('keyup', keyUp)
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function onMouseMove( event ) {
+
+	// calculate mouse position in normalized device coordinates
+	// (-1 to +1) for both components
+
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    clicked = true
+}
+
+window.addEventListener( 'click', onMouseMove, false );
