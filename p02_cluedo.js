@@ -22,7 +22,7 @@ const textDoor = new THREE.TextureLoader().load('./textures/door.jpg');
 const normalDoor = new THREE.TextureLoader().load('./textures/door_normal.jpg');
 
 //TV - LivingRoom
-let tvScreenOn
+let tvScreenOn, buttonOff, buttonOn
 
 
 const loader = new THREE.GLTFLoader().setPath('models/GLTF/');
@@ -562,14 +562,14 @@ function createBallroom() {
 }
 
 //Teclas Piano
-function createPianoKeys(){
+function createPianoKeys() {
     let geomPiano = new THREE.BoxGeometry(1.5, 1.5, 0.05);
     const matPiano = new THREE.MeshPhongMaterial({
         color: 0xFFFFFF,
         opacity: 0.0,
         transparent: true,
-      });
-    
+    });
+
     let piano = new THREE.Mesh(geomPiano, matPiano);
     piano.position.set(1.7, 0.2, 7);
     piano.rotation.set(1, 0, 0);
@@ -708,12 +708,12 @@ function createBalls() {
     let matRed = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
     let matYellow = new THREE.MeshPhongMaterial({ color: 0xffff00 });
     let matGreen = new THREE.MeshPhongMaterial({ color: 0x31A336 });
-    let matBlue = new THREE.MeshPhongMaterial({color: 0x332CF0});
-    let matPurple = new THREE.MeshPhongMaterial({color: 0x50126B});
-    let matOrange = new THREE.MeshPhongMaterial({color: 0xF7640B});
-    let matDarkPink = new THREE.MeshPhongMaterial({color: 0x50126B});
-    let matWhite = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
-    let matBlack = new THREE.MeshPhongMaterial({color: 0x000000});
+    let matBlue = new THREE.MeshPhongMaterial({ color: 0x332CF0 });
+    let matPurple = new THREE.MeshPhongMaterial({ color: 0x50126B });
+    let matOrange = new THREE.MeshPhongMaterial({ color: 0xF7640B });
+    let matDarkPink = new THREE.MeshPhongMaterial({ color: 0x50126B });
+    let matWhite = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+    let matBlack = new THREE.MeshPhongMaterial({ color: 0x000000 });
 
     //BALLS
     let ball1 = new THREE.Mesh(geomBall, matRed);
@@ -724,7 +724,7 @@ function createBalls() {
 
     let ball3 = new THREE.Mesh(geomBall, matGreen);
     ball3.position.set(-6.3, 0.65, -0.44);
-    
+
     let ball4 = new THREE.Mesh(geomBall, matRed);
     ball4.position.set(-6.3, 0.65, -0.62);
 
@@ -893,15 +893,10 @@ function createLivingroom() {
     let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 4.6);
     let geomDoor2 = new THREE.BoxGeometry(0.7, 1.2, 0.1);
 
-    // //TEXTURES
-    // // let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
-    // // let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
-
 
     //Material Lounge
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    // // matWall.map = textWall;
-    // // matWall.normalMap = normalWall;
+
 
     let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
     matDoor.map = textDoor;
@@ -925,20 +920,30 @@ function createLivingroom() {
 
     function createTv() {
         //GEOMETRY
-        let geomScreen = new THREE.BoxGeometry(1.5, 1, .1);
-        let geomScreenOn = new THREE.BoxGeometry(1.4, 0.9, .001);
+        let geomScreen = new THREE.BoxGeometry(1, .73, .1);
+        let geomScreenOn = new THREE.BoxGeometry(.9, .6, .001);
+        let geomButtonOff = new THREE.SphereGeometry( 0.02, 32, 32);
+        let geomButtonOn = new THREE.SphereGeometry( 0.02, 32, 32);
+
 
         //Material Lounge
-        let matScreen = new THREE.MeshPhongMaterial({ color: 0x000000});
-        let matScreenOn = new THREE.MeshPhongMaterial({ color: 0xffffff});
+        let matScreen = new THREE.MeshPhongMaterial({ color: 0x000000 });
+        let matScreenOn = new THREE.MeshPhongMaterial({ color: 0xffffff });
+        matScreenOn.map = new THREE.TextureLoader().load('./images/imgTv.jpg');
+        let matButtonOff = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+        let matButtonOn = new THREE.MeshPhongMaterial({ color: 0x008000 });
 
         let tvScreen = new THREE.Mesh(geomScreen, matScreen);
         tvScreen.position.set(7.3, 0.9, -4.4);
         tvScreenOn = new THREE.Mesh(geomScreenOn, matScreenOn);
-        tvScreenOn.position.set(7.3, 0.9, -4.43);   //7.3, 0.9, -4.45
+        tvScreenOn.position.set(7.3, 0.93, -4.3);
+        buttonOff = new THREE.Mesh(geomButtonOff, matButtonOff);
+        buttonOff.position.set(7.72, 0.59, -4.5);
+        buttonOn = new THREE.Mesh(geomButtonOn, matButtonOn);
+        buttonOn.position.set(7.7, 0.6, -4.4);
 
 
-        scene.add(tvScreen, tvScreenOn)
+        scene.add(tvScreen, tvScreenOn, buttonOff, buttonOn)
     }
 
     createTv();
@@ -1068,7 +1073,7 @@ function animate() {
             camera.lookAt(2.9, -1, 10);
             clicked = false
         }
-        
+
         //Click PianoKeyDO
         if (intersects[0].object.id == 33 && clicked == true) {
             let audio = new Audio('sounds/do.wav');
@@ -1109,7 +1114,7 @@ function animate() {
             audio.play();
             clicked = false
         }
-      
+
         //Click Conservatory
         if (intersects[0].object.id == 39 && clicked == true) {
             camera.position.set(-6.85, 1, 5.7)
@@ -1142,8 +1147,10 @@ function animate() {
         }
 
         //Click TV
-        if (intersects[0].object.id == 67 && clicked == true) {
-            tvScreenOn.position.set(-4.45)
+        if (intersects[0].object.id == 74 && clicked == true) {
+            tvScreenOn.position.set(7.3, 0.93, -4.5)
+            buttonOff.position.set(7.7,  0.6, -3.8)
+            buttonOn.position.set(7.7,  0.6, -4.6)
             clicked = false
         }
 
@@ -1161,7 +1168,7 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-function cluedoLetters(){
+function cluedoLetters() {
 
     let geomBack = new THREE.BoxGeometry(2.75, 2, 0);
 
@@ -1174,9 +1181,9 @@ function cluedoLetters(){
 
     const loader = new THREE.FontLoader();
 
-    loader.load( 'fonts/Poppins Medium_Regular.json', function ( font ) {
+    loader.load('fonts/Poppins Medium_Regular.json', function (font) {
 
-        const letterC = new THREE.TextGeometry( 'CL    E', {
+        const letterC = new THREE.TextGeometry('CL    E', {
             font: font,
             size: 0.8,
             height: 0.2,
@@ -1184,14 +1191,14 @@ function cluedoLetters(){
             bevelEnabled: true,
             bevelThickness: 0.2,
             bevelSize: 0.05,
-        } );
+        });
 
         const meshC = new THREE.Mesh(letterC, new THREE.MeshBasicMaterial({
             color: 'white',
             roughness: 0.5
         }))
 
-        const letterU = new THREE.TextGeometry( 'U', {
+        const letterU = new THREE.TextGeometry('U', {
             font: font,
             size: 0.8,
             height: 0.2,
@@ -1199,7 +1206,7 @@ function cluedoLetters(){
             bevelEnabled: true,
             bevelThickness: 0.2,
             bevelSize: 0.05,
-        } );
+        });
 
         const meshU = new THREE.Mesh(letterU, new THREE.MeshBasicMaterial({
             color: 'red',
@@ -1208,22 +1215,22 @@ function cluedoLetters(){
         }))
 
         meshC.position.set(-1.25, 0.3, 1.1)
-        meshC.rotation.set(-1,0,0)
+        meshC.rotation.set(-1, 0, 0)
         scene.add(meshC)
 
         meshU.position.set(0.25, 0.3, 1.1)
-        meshU.rotation.set(-1,0,0)
+        meshU.rotation.set(-1, 0, 0)
         scene.add(meshU)
-    } );
+    });
 
     // invisible helper plane (big enough)
     // for example, aligned with the XY-plane (Z=0)
     plane = new THREE.Mesh(
         new THREE.PlaneGeometry(2, 1, 10, 10),
         new THREE.MeshBasicMaterial({
-        opacity: 0.1,
-        transparent: false,
-        visible: true
+            opacity: 0.1,
+            transparent: false,
+            visible: true
         })
     );
     plane.position.set(-6.5, 0.65, -0.5)
@@ -1284,6 +1291,6 @@ window.onkeydown = function handleKeyDown(event) {
     key = event.key;
 }
 
-window.addEventListener( 'click', onMouseMove, false );
-window.addEventListener( 'mousedown', onMouseDown, false );
-window.addEventListener( 'mouseup', onMouseUp, false );
+window.addEventListener('click', onMouseMove, false);
+window.addEventListener('mousedown', onMouseDown, false);
+window.addEventListener('mouseup', onMouseUp, false);
