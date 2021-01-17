@@ -1183,9 +1183,7 @@ function animate() {
         if (sphere.position.z < -0.97) {
             sphere.position.z = -0.97
         }
-        
     }
-
     requestAnimationFrame(animate);
 
     // render
