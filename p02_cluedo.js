@@ -60,17 +60,6 @@ function createScene() {
     let axes = new THREE.AxesHelper(600);
     scene.add(axes);
 
-    /**********************
-     * CAMERA PARA MOVIMENTOS 
-     ***********************/
-    // // create a camera, which defines where we're looking at
-    // camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
-
-    // // position the camera
-    // camera.position.set(0, player.height, -1);
-    // camera.lookAt(new THREE.Vector3(0, player.height, 0));
-
-
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
     //set the camera's view transformation
     camera.position.set(0, 20, 20); // eye
@@ -89,8 +78,8 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    let controls = new THREE.OrbitControls(camera);
-    controls.addEventListener('change', function () { renderer.render(scene, camera); });
+    // let controls = new THREE.OrbitControls(camera);
+    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
     /**********************
      * OBJETOS 
@@ -117,9 +106,7 @@ function createScene() {
 
     loader.load('plant.glb',
 
-        // called when the resource is loaded
         function (gltf) {
-            //console.log('model loaded: ' + gltf.scene.children.length + ' scene children meshes');
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.6, 0.6, 0.6);
@@ -127,16 +114,14 @@ function createScene() {
             mesh.rotation.set(0, 2, 0)
             scene.add(mesh);
         },
-        undefined, // called while loading is progressing
-        function (err) { // called when loading has errors
+        undefined,
+        function (err) {
             console.log(err);
         });
 
     loader.load('piano.glb',
 
-        // called when the resource is loaded
         function (gltf) {
-            //console.log('model loaded: ' + gltf.scene.children.length + ' scene children meshes');
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.1, 0.1, 0.1);
@@ -144,8 +129,8 @@ function createScene() {
             mesh.rotation.set(0, 2, 0)
             scene.add(mesh);
         },
-        undefined, // called while loading is progressing
-        function (err) { // called when loading has errors
+        undefined,
+        function (err) {
             console.log(err);
         });
 
@@ -258,7 +243,7 @@ function createScene() {
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.05, 0.05, 0.05);
-            mesh.position.set(-9, 0.2, -8)
+            mesh.position.set(-9, 0, -8)
             scene.add(mesh);
         },
         undefined,
@@ -721,7 +706,6 @@ function createBalls() {
     scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
     spheres.push(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
 }
-
 
 function createBedroom() {
     /* ----------------------------- FLOOR ----------------------------- */
