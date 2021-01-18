@@ -776,32 +776,34 @@ function createBedroom() {
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
-    let geomWall = new THREE.BoxGeometry(4, 1.2, 0.1);
-    let geomWall2 = new THREE.BoxGeometry(0.1, 1.2, 3);
-    // let geomDoor = new THREE.BoxGeometry(0.1, 5, 2);
+    let geomWall = new THREE.BoxGeometry(2.91, 1.2, 0.1);
+    let geomWall1_2 = new THREE.BoxGeometry(1.395, 1.2, 0.1);
+    let geomWall2 = new THREE.BoxGeometry(0.1, 1.2, 4);
+    let geomDoor = new THREE.BoxGeometry(0.7, 1.2, 0.1);
 
     //TEXTURE
     //Material Wall
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
 
-
-    // let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
-    // matDoor.map = textDoor;
-    // matDoor.normalMap = normalDoor;
+    let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
+    matDoor.map = textDoor;
+    matDoor.normalMap = normalDoor;
 
     //Walls Bedroom
     let wall1 = new THREE.Mesh(geomWall, matWall);
-    wall1.position.set(-7.3, 0.6, -5);
-    scene.add(wall1);
+    let wall1_2 = new THREE.Mesh(geomWall1_2, matWall);
+    wall1.position.set(-7.9, 0.6, -5);
+    wall1_2.position.set(-5.047, 0.6, -5);
+    scene.add(wall1, wall1_2);
 
     let wall2 = new THREE.Mesh(geomWall2, matWall);
-    wall2.position.set(-4.4, 0.6, -7.5);
+    wall2.position.set(-4.4, 0.6, -7);
     scene.add(wall2);
 
-    // //Doors Bedroom
-    // let door1 = new THREE.Mesh(geomDoor, matDoor);
-    // door1.position.set(-3.5, 2.4, -2.3);
-    // scene.add(door1);
+    //Doors Bedroom
+    let door1 = new THREE.Mesh(geomDoor, matDoor);
+    door1.position.set(-6.09, 0.6, -5);
+    scene.add(door1);
 }
 
 function createHall() {
@@ -893,7 +895,6 @@ function createLivingroom() {
     let geomWall2_2 = new THREE.BoxGeometry(1.395, 1.2, 0.1);
     let geomWall3 = new THREE.BoxGeometry(0.1, 1.2, 4.6);
     let geomDoor2 = new THREE.BoxGeometry(0.7, 1.2, 0.1);
-
 
     //Material Lounge
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
