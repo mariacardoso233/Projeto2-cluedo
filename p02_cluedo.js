@@ -14,7 +14,7 @@ let mouse = new THREE.Vector2();
 let dice, fan, propeller, conect;
 
 // 3D MODELS
-let board
+let board, planeFan
 
 //Keys
 let keyboard = {};
@@ -150,6 +150,21 @@ function createScene() {
             mesh = gltf.scene;
             mesh.scale.set(0.003, 0.002, 0.003);
             mesh.position.set(6.9, 0, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
+
+    loader.load('Coffee_table.glb',
+
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.09, 0.09, 0.09);
+            mesh.position.set(9, 0.1, 7);
+            mesh.rotation.y = 5;
             scene.add(mesh);
         },
         undefined,
@@ -513,8 +528,10 @@ function createKitchen() {
     let balcao = new THREE.Mesh(geomBalcao, matWall);
     balcao.position.set(7.2, 0.3, 8.9);
     scene.add(balcao);
+
 }
 
+<<<<<<< HEAD
 function createFan(){
     /* ----------------------------- Ventoinha ----------------------------- */
     
@@ -588,6 +605,9 @@ function createFan(){
     });
 }
 
+=======
+/* ----------------------------- VENTOINHA ----------------------------- */
+>>>>>>> 9722f6c1e3805637c5886766aedbe91ede160ccd
 
 
 function createBallroom() {
@@ -852,10 +872,10 @@ function createBalls() {
         opacity: 0.0,
         transparent: true,
         visible: true,
-        side:THREE.DoubleSide
+        side: THREE.DoubleSide
     }));
     // a) auxiliary plane must be placed horizontally
-    plane.rotation.x = -Math.PI/2
+    plane.rotation.x = -Math.PI / 2
     plane.position.set(-6.5, 0.65, -0.5)
     //comment the above two lines for exercises b) and c)
     scene.add(plane);
@@ -930,7 +950,7 @@ function createBedroom() {
     let geomCube = new THREE.BoxGeometry(0.5, 0.5, 0.5);
 
     dice = new THREE.Mesh(geomCube, matArray);
-    
+
     dice.position.set(-7.9, 0.6, -6);
     scene.add(dice)
 
@@ -1432,7 +1452,7 @@ function onMouseDown(event) {
         //disable the orbit controller (drag the object around and not rotate the scene)
         //assign the first intersected object to the selectedObject global variable
         selectedObject = intersects[0].object;
-        
+
         // determine the offset between the point (in the plane) where we clicked and the center of the object
         let intersectsPlane = raycaster.intersectObject(plane);
         offset.copy(intersectsPlane[0].point).sub(selectedObject.position);
