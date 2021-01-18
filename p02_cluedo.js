@@ -510,13 +510,6 @@ function createKitchen() {
     floor1.position.set(7.2, 0.1, 6.7);
     scene.add(floor1);
 
-    /* //TEXTURES
-    let textFloor2 = new THREE.TextureLoader().load('./textures/floor2.jpg');
-    let normalFloor2 = new THREE.TextureLoader().load('./textures/floor2_normal.jpg');
-
-    //Material
-    let matFloor2 = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
-     */
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
