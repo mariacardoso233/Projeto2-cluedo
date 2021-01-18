@@ -11,11 +11,10 @@ let offset = new THREE.Vector3();
 let raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
 
-let dice, fan, propeller, conect;
-
 // 3D MODELS
-let board, planeFan
+let board
 
+let dice, fan, propeller, conect
 //Keys
 let keyboard = {};
 
@@ -41,7 +40,7 @@ window.onload = function init() {
 
     //Divisões do tabuleiro
     createKitchen();
-    createFan();
+    // createFan();
 
     createBallroom();
     createPianoKeys();
@@ -89,8 +88,8 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    controls = new THREE.OrbitControls(camera);
-    controls.addEventListener('change', function () { renderer.render(scene, camera); });
+    // controls = new THREE.OrbitControls(camera);
+    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
     /**********************
      * OBJETOS 
@@ -497,13 +496,27 @@ function createKitchen() {
     //GEOMETRY
     let geomFloor1 = new THREE.BoxGeometry(4.9, 0.1, 4.9);
 
+    //TEXTURES
+    let textFloor1 = new THREE.TextureLoader().load('./textures/floor1.jpg');
+    let normalFloor1 = new THREE.TextureLoader().load('./textures/floor1_normal.jpg');
+
     //Material floor
-    let matFloor1 = new THREE.MeshPhongMaterial({ color: 0xadadad });
+    let matFloor1 = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+    matFloor1.map = textFloor1;
+    matFloor1.normalMap = normalFloor1;
 
     //Mesh floor
     floor1 = new THREE.Mesh(geomFloor1, matFloor1);
     floor1.position.set(7.2, 0.1, 6.7);
     scene.add(floor1);
+
+    /* //TEXTURES
+    let textFloor2 = new THREE.TextureLoader().load('./textures/floor2.jpg');
+    let normalFloor2 = new THREE.TextureLoader().load('./textures/floor2_normal.jpg');
+
+    //Material
+    let matFloor2 = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
+     */
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
@@ -530,84 +543,6 @@ function createKitchen() {
     scene.add(balcao);
 
 }
-
-<<<<<<< HEAD
-function createFan(){
-    /* ----------------------------- Ventoinha ----------------------------- */
-    
-    fan = new THREE.Object3D();
-
-    const materialRed = new THREE.MeshPhongMaterial({ color: 0xf25346 });
-    const materialWhite = new THREE.MeshPhongMaterial({ color: 0xd8d0d1 });
-    const materialBrown = new THREE.MeshPhongMaterial({ color: 0x59332e });
-    const materialDarkBrown = new THREE.MeshPhongMaterial({ color: 0x23190f });
-
-    // Create the base
-    let geomBase = new THREE.CylinderGeometry( 1, 13.6, 8, 36, 1 );
-    let base = new THREE.Mesh( geomBase, materialWhite );
-    base.position.x = 45;
-    base.position.y = -30;
-    fan.add(base);
-
-    // Create the conect
-    let geomConect = new THREE.CylinderGeometry( 1, 1, 29, 32 );
-    conect = new THREE.Mesh( geomConect, materialWhite );
-    conect.position.x = 45;
-    conect.position.y = -12;
-    fan.add(conect);
-
-    // Create the torus
-    const geometry = new THREE.TorusGeometry( 18, 1.5, 3, 100 );
-    let torus = new THREE.Mesh( geometry, materialWhite );
-    torus.position.x = 7;
-    torus.position.y = 12;
-    torus.rotation.y = -Math.PI/2
-    conect.add(torus);
-
-    // propeller
-    let geomPropeller = new THREE.BoxGeometry(10, 3, 3);
-
-    propeller = new THREE.Mesh(geomPropeller, materialBrown);
-
-    // blades
-    let geomBlade = new THREE.BoxGeometry(0.5, 30, 5);
-    let geomBlade2 = new THREE.BoxGeometry(0.5, 30, 5);
-
-    let blade = new THREE.Mesh(geomBlade, materialWhite);
-    blade.position.set(4, 0, 0);
-
-    // SECOND propeller
-    let blade2 = new THREE.Mesh(geomBlade2, materialWhite);
-    blade2.rotation.x = Math.PI / 2;
-    blade2.position.set(4, 0, 0);
-    
-    propeller.add(blade);
-    propeller.add(blade2);
-
-    propeller.position.set(3.5, 12, 0);
-    conect.add(propeller);
-
-    fan.scale.set(0.25, 0.25, 0.25);
-    fan.position.y = 0;
-
-    console.log("Plane created")
-    scene.add(fan);
-
-    /*****************************
-    * SHADOWS 
-    ****************************/
-    // Plane meshes must cast and receive shadows
-    fan.traverse(function (child) {
-        if (child instanceof THREE.Mesh ) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-        }
-    });
-}
-
-=======
-/* ----------------------------- VENTOINHA ----------------------------- */
->>>>>>> 9722f6c1e3805637c5886766aedbe91ede160ccd
 
 
 function createBallroom() {
@@ -1192,29 +1127,7 @@ function createStairs() {
     scene.add(floor, stair1, stair2, stair3, stair4, stair5, stair6);
 }
 
-function checkCollisions(){
-
-    // for (let i = 0; i < spheres.length; i++) {
-    //     let sphere = spheres[i]
-    //     let BSphere = new THREE.Sphere().setFromPoints(sphere);
-    //     BSphere.applyMatrix4(sphere.matrixWorld);
-
-    //     let obstSphere = new THREE.Sphere().setFromPoints(sphere)
-    //     let collision = BSphere.intersectsSphere(obstSphere)
-    //     if (collision) {
-    //         alert('oi')
-    //         return true
-    //     }
-    // }
-    // return false
-}
-
 function animate() {
-
-    // rotate de fan blade
-    propeller.rotation.x += 0.3;
-    conect.rotation.y += 0.1;
-    checkCollisions();
 
     // calculate objects intersecting the picking ray
     const intersects = raycaster.intersectObjects(scene.children);
