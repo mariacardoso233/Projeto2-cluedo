@@ -1141,7 +1141,7 @@ function animate() {
             clicked = false
         }
         //Click Diningroom
-        if (intersects[0].object.id == 76 && clicked == true) {
+        if (intersects[0].object.id == 78 && clicked == true) {
             camera.position.set(6.9, 2, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
@@ -1165,7 +1165,6 @@ function animate() {
     // add event listener to highlight dragged objects
     for (let i = 0; i < spheres.length; i++) {
         const sphere = spheres[i];
-        console.log(sphere.position.z);
 
         if (sphere.position.x < -7.5) {
             sphere.position.x = -7.5
