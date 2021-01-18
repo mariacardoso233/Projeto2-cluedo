@@ -1148,7 +1148,7 @@ function animate() {
         }
 
         //Click TV
-        if (intersects[0].object.id == 75 && clicked == true) {
+        if (intersects[0].object.id == 76 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.5)
             buttonOff.position.set(7.7,  0.6, -3.8)
             buttonOn.position.set(7.7,  0.6, -4.6)
