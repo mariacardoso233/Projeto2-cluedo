@@ -86,14 +86,12 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    let controls = new THREE.OrbitControls(camera);
-    controls.addEventListener('change', function () { renderer.render(scene, camera); });
+    // let controls = new THREE.OrbitControls(camera);
+    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
     /**********************
      * OBJETOS 
      ***********************/
-    // LOAD THE MESH
-    let loader = new THREE.GLTFLoader().setPath('models/GLTF/');
 
     loader.load('plant.glb',
 
@@ -259,6 +257,21 @@ function createScene() {
             console.log(err);
         });
 
+    loader.load('fridge.glb',
+
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.3, 0.3, 0.3);
+            mesh.position.set(8.6, 0.1, 8.7)
+            mesh.rotation.set(0, 1.5, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
+
     loader.load('handrail.glb',
 
         function (gltf) {
@@ -266,7 +279,6 @@ function createScene() {
             mesh = gltf.scene;
             mesh.scale.set(0.2, 0.2, 0.2);
             mesh.position.set(0.64, 0, -0.02)
-            mesh.rotation.set(0, 0, 0)
             scene.add(mesh);
         },
         undefined,
@@ -924,8 +936,8 @@ function createLivingroom() {
         //GEOMETRY
         let geomScreen = new THREE.BoxGeometry(1, .73, .1);
         let geomScreenOn = new THREE.BoxGeometry(.9, .6, .001);
-        let geomButtonOff = new THREE.SphereGeometry( 0.02, 32, 32);
-        let geomButtonOn = new THREE.SphereGeometry( 0.02, 32, 32);
+        let geomButtonOff = new THREE.SphereGeometry(0.02, 32, 32);
+        let geomButtonOn = new THREE.SphereGeometry(0.02, 32, 32);
 
 
         //Material Lounge
@@ -940,7 +952,7 @@ function createLivingroom() {
         tvScreenOn = new THREE.Mesh(geomScreenOn, matScreenOn);
         tvScreenOn.position.set(7.3, 0.93, -4.3);
         buttonOff = new THREE.Mesh(geomButtonOff, matButtonOff);
-        buttonOff.position.set(7.7,  0.6, -4.5);
+        buttonOff.position.set(7.7, 0.6, -4.5);
         buttonOn = new THREE.Mesh(geomButtonOn, matButtonOn);
         buttonOn.position.set(7.7, 0.6, -4.4);
 
@@ -1151,15 +1163,15 @@ function animate() {
         //Click TV - ON
         if (intersects[0].object.id == 76 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.5)
-            buttonOff.position.set(7.7,  0.6, -4.4)
-            buttonOn.position.set(7.7,  0.6, -4.5)
+            buttonOff.position.set(7.7, 0.6, -4.4)
+            buttonOn.position.set(7.7, 0.6, -4.5)
             clicked = false
         }
         //Click TV - OFF
         if (intersects[0].object.id == 77 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.3)
-            buttonOff.position.set(7.7,  0.6, -4.5)
-            buttonOn.position.set(7.7,  0.6, -4.4)
+            buttonOff.position.set(7.7, 0.6, -4.5)
+            buttonOn.position.set(7.7, 0.6, -4.4)
             clicked = false
         }
     }
@@ -1273,15 +1285,15 @@ function cluedoLetters() {
     // plane.rotation.set(-1.58, 0, 0)
     // scene.add(plane);
 
-    const controls = new THREE.DragControls( spheres, camera, renderer.domElement );
+    const controls = new THREE.DragControls(spheres, camera, renderer.domElement);
 
-    controls.addEventListener( 'dragstart', function ( event ) {
+    controls.addEventListener('dragstart', function (event) {
 
-    } );
+    });
 
-    controls.addEventListener( 'dragend', function ( event ) {
+    controls.addEventListener('dragend', function (event) {
 
-    } );
+    });
 }
 
 function onMouseMove(event) {
@@ -1305,7 +1317,7 @@ function onMouseMove(event) {
         if (intersects.length > 0)
             plane.position.copy(intersects[0].object.position);
     }
-        
+
 }
 
 function onMouseDown() {
