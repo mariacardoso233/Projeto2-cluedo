@@ -11,7 +11,8 @@ let offset = new THREE.Vector3();
 let raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
 
-let dice, fan, propeller, conect;
+let dice, fan, propeller, propeller2, conect, torus;
+let ladoEsq = false, ladoDir = false
 
 // 3D MODELS
 let board, planeFan
@@ -531,61 +532,65 @@ function createKitchen() {
 
 }
 
-<<<<<<< HEAD
 function createFan(){
     /* ----------------------------- Ventoinha ----------------------------- */
     
     fan = new THREE.Object3D();
 
-    const materialRed = new THREE.MeshPhongMaterial({ color: 0xf25346 });
     const materialWhite = new THREE.MeshPhongMaterial({ color: 0xd8d0d1 });
     const materialBrown = new THREE.MeshPhongMaterial({ color: 0x59332e });
     const materialDarkBrown = new THREE.MeshPhongMaterial({ color: 0x23190f });
 
     // Create the base
-    let geomBase = new THREE.CylinderGeometry( 1, 13.6, 8, 36, 1 );
+    let geomBase = new THREE.CylinderGeometry( 0.2, 0.4, 0.2, 16, 1 );
     let base = new THREE.Mesh( geomBase, materialWhite );
-    base.position.x = 45;
-    base.position.y = -30;
+    base.position.set(35, 1.7, 26.5)
     fan.add(base);
 
     // Create the conect
-    let geomConect = new THREE.CylinderGeometry( 1, 1, 29, 32 );
+    let geomConect = new THREE.CylinderGeometry( 0.05, 0.05, 1.1, 32 );
     conect = new THREE.Mesh( geomConect, materialWhite );
-    conect.position.x = 45;
-    conect.position.y = -12;
+    conect.position.set(35, 2.3, 26.5)
+    conect.rotation.y = Math.PI / 2
     fan.add(conect);
 
     // Create the torus
-    const geometry = new THREE.TorusGeometry( 18, 1.5, 3, 100 );
-    let torus = new THREE.Mesh( geometry, materialWhite );
-    torus.position.x = 7;
-    torus.position.y = 12;
+    const geometry = new THREE.TorusGeometry( 0.48, 0.03, 3, 100 );
+    torus = new THREE.Mesh( geometry, materialWhite );
+    torus.position.x = 0.3;
+    torus.position.y = 0.39;
     torus.rotation.y = -Math.PI/2
     conect.add(torus);
 
     // propeller
-    let geomPropeller = new THREE.BoxGeometry(10, 3, 3);
+    let geomPropeller = new THREE.BoxGeometry(0.3, 0.08, 0.08);
 
-    propeller = new THREE.Mesh(geomPropeller, materialBrown);
+    propeller = new THREE.Mesh(geomPropeller, materialDarkBrown);
+
+    // propeller2
+    let geomPropeller2 = new THREE.BoxGeometry(0.45, 0.12, 0.12);
+
+    propeller2 = new THREE.Mesh(geomPropeller2, materialDarkBrown);
 
     // blades
-    let geomBlade = new THREE.BoxGeometry(0.5, 30, 5);
-    let geomBlade2 = new THREE.BoxGeometry(0.5, 30, 5);
+    let geomBlade = new THREE.BoxGeometry(0.01, 0.8, 0.1);
+    let geomBlade2 = new THREE.BoxGeometry(0.01, 0.8, 0.1);
 
     let blade = new THREE.Mesh(geomBlade, materialWhite);
-    blade.position.set(4, 0, 0);
+    blade.position.set(0.20, 0, 0);
 
     // SECOND propeller
     let blade2 = new THREE.Mesh(geomBlade2, materialWhite);
     blade2.rotation.x = Math.PI / 2;
-    blade2.position.set(4, 0, 0);
+    blade2.position.set(0.20, 0, 0);
     
     propeller.add(blade);
     propeller.add(blade2);
 
-    propeller.position.set(3.5, 12, 0);
+    propeller.position.set(0.1, 0.4, 0);
+    propeller2.position.set(0.1, 0.4, 0);
     conect.add(propeller);
+    conect.add(propeller2);
 
     fan.scale.set(0.25, 0.25, 0.25);
     fan.position.y = 0;
@@ -604,10 +609,6 @@ function createFan(){
         }
     });
 }
-
-=======
-/* ----------------------------- VENTOINHA ----------------------------- */
->>>>>>> 9722f6c1e3805637c5886766aedbe91ede160ccd
 
 
 function createBallroom() {
@@ -1211,9 +1212,26 @@ function checkCollisions(){
 
 function animate() {
 
+    if (ladoEsq == true) {
+        conect.rotation.y -= 0.02;
+    }
+
+    if (ladoEsq == false) {
+        conect.rotation.y += 0.02;
+    }
+
+    if (conect.rotation.y > 3.9) {
+        ladoEsq = true
+        ladoDir = false
+    }
+
+    if (conect.rotation.y < 1.5) {
+        ladoDir = true
+        ladoEsq = false
+    }
+
     // rotate de fan blade
     propeller.rotation.x += 0.3;
-    conect.rotation.y += 0.1;
     checkCollisions();
 
     // calculate objects intersecting the picking ray
@@ -1227,8 +1245,8 @@ function animate() {
         //Click Kitchen
         if (intersects[0].object.id == 22 && clicked == true) {
             console.log(intersects[0]);
-            camera.position.set(7.2, 1.1, 4.7)
-            camera.lookAt(7.2, 0, 10);
+            camera.position.set(7.2, 1, 5.7)
+            camera.lookAt(10, 0, 10);
             clicked = false
         }
         //Click Ballroom
