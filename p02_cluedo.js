@@ -15,7 +15,7 @@ let dice, fan, propeller, propeller2, conect, torus;
 let ladoEsq = false, ladoDir = false
 
 // 3D MODELS
-let board, planeFan
+let board
 
 //Keys
 let keyboard = {};
@@ -90,8 +90,8 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    controls = new THREE.OrbitControls(camera);
-    controls.addEventListener('change', function () { renderer.render(scene, camera); });
+    // controls = new THREE.OrbitControls(camera);
+    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
     /**********************
      * OBJETOS 
@@ -498,13 +498,20 @@ function createKitchen() {
     //GEOMETRY
     let geomFloor1 = new THREE.BoxGeometry(4.9, 0.1, 4.9);
 
+    //TEXTURES
+    let textFloor1 = new THREE.TextureLoader().load('./textures/floor1.jpg');
+    let normalFloor1 = new THREE.TextureLoader().load('./textures/floor1_normal.jpg');
+
     //Material floor
-    let matFloor1 = new THREE.MeshPhongMaterial({ color: 0xadadad });
+    let matFloor1 = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+    matFloor1.map = textFloor1;
+    matFloor1.normalMap = normalFloor1;
 
     //Mesh floor
     floor1 = new THREE.Mesh(geomFloor1, matFloor1);
     floor1.position.set(7.2, 0.1, 6.7);
     scene.add(floor1);
+
 
     /* ----------------------------- WALL ----------------------------- */
     //GEOMETRY
@@ -1193,23 +1200,6 @@ function createStairs() {
     scene.add(floor, stair1, stair2, stair3, stair4, stair5, stair6);
 }
 
-function checkCollisions(){
-
-    // for (let i = 0; i < spheres.length; i++) {
-    //     let sphere = spheres[i]
-    //     let BSphere = new THREE.Sphere().setFromPoints(sphere);
-    //     BSphere.applyMatrix4(sphere.matrixWorld);
-
-    //     let obstSphere = new THREE.Sphere().setFromPoints(sphere)
-    //     let collision = BSphere.intersectsSphere(obstSphere)
-    //     if (collision) {
-    //         alert('oi')
-    //         return true
-    //     }
-    // }
-    // return false
-}
-
 function animate() {
 
     if (ladoEsq == true) {
@@ -1232,7 +1222,6 @@ function animate() {
 
     // rotate de fan blade
     propeller.rotation.x += 0.3;
-    checkCollisions();
 
     // calculate objects intersecting the picking ray
     const intersects = raycaster.intersectObjects(scene.children);
@@ -1250,103 +1239,104 @@ function animate() {
             clicked = false
         }
         //Click Ballroom
-        if (intersects[0].object.id == 26 && clicked == true) {
+        if (intersects[0].object.id == 34 && clicked == true) {
             camera.position.set(0.2, 1.1, 4.7)
             camera.lookAt(0, 0, 10);
             clicked = false
         }
 
         //Click Piano
-        if (intersects[0].object.id == 32 && clicked == true) {
+        if (intersects[0].object.id == 40 && clicked == true) {
             camera.position.set(1.4, 0.8, 6.7)
             camera.lookAt(2.9, -1, 10);
             clicked = false
         }
 
         //Click PianoKeyDO
-        if (intersects[0].object.id == 33 && clicked == true) {
+        if (intersects[0].object.id == 41 && clicked == true) {
             let audio = new Audio('sounds/do.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeyRE
-        if (intersects[0].object.id == 34 && clicked == true) {
+        if (intersects[0].object.id == 42 && clicked == true) {
             let audio = new Audio('sounds/re.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeyMI
-        if (intersects[0].object.id == 35 && clicked == true) {
+        if (intersects[0].object.id == 43 && clicked == true) {
             let audio = new Audio('sounds/mi.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeyFA
-        if (intersects[0].object.id == 36 && clicked == true) {
+        if (intersects[0].object.id == 44 && clicked == true) {
             let audio = new Audio('sounds/fa.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeySOL
-        if (intersects[0].object.id == 37 && clicked == true) {
+        if (intersects[0].object.id == 45 && clicked == true) {
             let audio = new Audio('sounds/sol.wav');
             audio.play();
             clicked = false
         }
         //Click PianoKeyLA
-        if (intersects[0].object.id == 38 && clicked == true) {
+        if (intersects[0].object.id == 46 && clicked == true) {
             let audio = new Audio('sounds/la.wav');
             audio.play();
             clicked = false
         }
 
         //Click Conservatory
-        if (intersects[0].object.id == 39 && clicked == true) {
+        if (intersects[0].object.id == 47 && clicked == true) {
             camera.position.set(-6.85, 1, 5.7)
             camera.lookAt(-6.85, 1, 9);
             clicked = false
         }
         //Click Billiardroom
-        if (intersects[0].object.id == 42 && clicked == true) {
+        if (intersects[0].object.id == 50 && clicked == true) {
             camera.position.set(-6.5, 1.8, -1)
             camera.lookAt(-6.5, -1, 0.5);
             clicked = false
         }
         //Click Bedroom
-        if (intersects[0].object.id == 61 && clicked == true) {
+        if (intersects[0].object.id == 69 && clicked == true) {
             camera.position.set(-5.5, 1.1, -5.8)
             camera.lookAt(-10.5, 1, -7.9);
             clicked = false
         }
         //Click LivingRoom
-        if (intersects[0].object.id == 73 && clicked == true) {
+        if (intersects[0].object.id == 81 && clicked == true) {
             camera.position.set(7, 1, -7.7)
             camera.lookAt(7, 1, 6.7);
             clicked = false
         }
-        //Click Diningroom
-        if (intersects[0].object.id == 82 && clicked == true) {
-            camera.position.set(6.9, 2, -1.5)
-            camera.lookAt(6.8, 0.5, 0.5);
-            clicked = false
-        }
 
         //Click TV - ON
-        if (intersects[0].object.id == 80 && clicked == true) {
+        if (intersects[0].object.id == 88 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.5)
             buttonOff.position.set(7.7, 0.6, -4.4)
             buttonOn.position.set(7.7, 0.6, -4.5)
             clicked = false
         }
         //Click TV - OFF
-        if (intersects[0].object.id == 81 && clicked == true) {
+        if (intersects[0].object.id == 89 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.3)
             buttonOff.position.set(7.7, 0.6, -4.5)
             buttonOn.position.set(7.7, 0.6, -4.4)
+            clicked = false
+        }
+
+        //Click Diningroom
+        if (intersects[0].object.id == 90 && clicked == true) {
+            camera.position.set(6.9, 2, -1.5)
+            camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
         }
     }
