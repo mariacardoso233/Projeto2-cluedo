@@ -1147,11 +1147,18 @@ function animate() {
             clicked = false
         }
 
-        //Click TV
+        //Click TV - ON
         if (intersects[0].object.id == 76 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.5)
             buttonOff.position.set(7.7,  0.6, -3.8)
             buttonOn.position.set(7.7,  0.6, -4.6)
+            clicked = false
+        }
+        //Click TV - OFF
+        if (intersects[0].object.id == 77 && clicked == true) {
+            tvScreenOn.position.set(7.3, 0.93, -4.2)
+            buttonOff.position.set(7.7,  0.6, -4.6)
+            buttonOn.position.set(7.7,  0.6, -4.2)
             clicked = false
         }
     }
