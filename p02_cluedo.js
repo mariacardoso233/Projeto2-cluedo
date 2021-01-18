@@ -262,8 +262,8 @@ function createScene() {
         function (gltf) {
             console.log(gltf)
             mesh = gltf.scene;
-            mesh.scale.set(0.3, 0.3, 0.3);
-            mesh.position.set(8.6, 0.1, 8.7)
+            mesh.scale.set(0.19, 0.19, 0.19);
+            mesh.position.set(8.45, 0.1, 8.8)
             mesh.rotation.set(0, 1.5, 0)
             scene.add(mesh);
         },
