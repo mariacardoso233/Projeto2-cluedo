@@ -86,8 +86,8 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    // let controls = new THREE.OrbitControls(camera);
-    // controls.addEventListener('change', function () { renderer.render(scene, camera); });
+    let controls = new THREE.OrbitControls(camera);
+    controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
     /**********************
      * OBJETOS 
@@ -939,7 +939,7 @@ function createLivingroom() {
         tvScreenOn = new THREE.Mesh(geomScreenOn, matScreenOn);
         tvScreenOn.position.set(7.3, 0.93, -4.3);
         buttonOff = new THREE.Mesh(geomButtonOff, matButtonOff);
-        buttonOff.position.set(7.72, 0.59, -4.5);
+        buttonOff.position.set(7.7,  0.6, -4.5);
         buttonOn = new THREE.Mesh(geomButtonOn, matButtonOn);
         buttonOn.position.set(7.7, 0.6, -4.4);
 
@@ -1150,15 +1150,15 @@ function animate() {
         //Click TV - ON
         if (intersects[0].object.id == 76 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.5)
-            buttonOff.position.set(7.7,  0.6, -3.8)
-            buttonOn.position.set(7.7,  0.6, -4.6)
+            buttonOff.position.set(7.7,  0.6, -4.4)
+            buttonOn.position.set(7.7,  0.6, -4.5)
             clicked = false
         }
         //Click TV - OFF
         if (intersects[0].object.id == 77 && clicked == true) {
-            tvScreenOn.position.set(7.3, 0.93, -4.2)
-            buttonOff.position.set(7.7,  0.6, -4.6)
-            buttonOn.position.set(7.7,  0.6, -4.2)
+            tvScreenOn.position.set(7.3, 0.93, -4.3)
+            buttonOff.position.set(7.7,  0.6, -4.5)
+            buttonOn.position.set(7.7,  0.6, -4.4)
             clicked = false
         }
     }
