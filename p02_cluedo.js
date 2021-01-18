@@ -8,8 +8,10 @@ let spheres = []
 let selectedObject, plane;
 let offset = new THREE.Vector3();
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
+let raycaster = new THREE.Raycaster();
+let mouse = new THREE.Vector2();
+
+let dice;
 
 // 3D MODELS
 let board
@@ -86,7 +88,7 @@ function createScene() {
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
 
-    // let controls = new THREE.OrbitControls(camera);
+    // controls = new THREE.OrbitControls(camera);
     // controls.addEventListener('change', function () { renderer.render(scene, camera); });
 
     /**********************
@@ -767,6 +769,20 @@ function createBalls() {
 
     scene.add(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
     spheres.push(ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10, ball11, ball12);
+
+    // "invisible" helper plane
+    plane = new THREE.Mesh(new THREE.PlaneGeometry(2, 1, 10, 10), new THREE.MeshBasicMaterial({
+        color: 0x00ff00,
+        opacity: 0.0,
+        transparent: true,
+        visible: true,
+        side:THREE.DoubleSide
+    }));
+    // a) auxiliary plane must be placed horizontally
+    plane.rotation.x = -Math.PI/2
+    plane.position.set(-6.5, 0.65, -0.5)
+    //comment the above two lines for exercises b) and c)
+    scene.add(plane);
 }
 
 function createBedroom() {
@@ -816,6 +832,26 @@ function createBedroom() {
     let door1 = new THREE.Mesh(geomDoor, matDoor);
     door1.position.set(-6.09, 0.6, -5);
     scene.add(door1);
+
+    /* ----------------------------- DADO ----------------------------- */
+
+    let geomCube = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+    const loader = new THREE.CubeTextureLoader();
+    loader.setPath( './textures/' );
+    
+    const textureCube = loader.load( [
+        'lado1.jpg', 'lado2.jpg',
+        'lado3.jpg', 'lado4.jpg',
+        'lado5.jpg', 'lado6.jpg'
+    ] );
+    
+    const material = new THREE.MeshBasicMaterial( {map: textureCube } );
+
+    dice = new THREE.Mesh(geomCube, material);
+    
+    dice.position.set(-7.9, 0.6, -6);
+    scene.add(dice)
+
 }
 
 function createHall() {
@@ -1056,9 +1092,6 @@ function createStairs() {
 
 function animate() {
 
-    // update the picking ray with the camera and mouse position
-    raycaster.setFromCamera(mouse, camera);
-
     // calculate objects intersecting the picking ray
     const intersects = raycaster.intersectObjects(scene.children);
 
@@ -1142,33 +1175,33 @@ function animate() {
             clicked = false
         }
         //Click Bedroom
-        if (intersects[0].object.id == 60 && clicked == true) {
+        if (intersects[0].object.id == 61 && clicked == true) {
             camera.position.set(-5.5, 1.1, -5.8)
             camera.lookAt(-10.5, 1, -7.9);
             clicked = false
         }
         //Click LivingRoom
-        if (intersects[0].object.id == 69 && clicked == true) {
+        if (intersects[0].object.id == 73 && clicked == true) {
             camera.position.set(7, 1, -7.7)
             camera.lookAt(7, 1, 6.7);
             clicked = false
         }
         //Click Diningroom
-        if (intersects[0].object.id == 78 && clicked == true) {
+        if (intersects[0].object.id == 82 && clicked == true) {
             camera.position.set(6.9, 2, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
         }
 
         //Click TV - ON
-        if (intersects[0].object.id == 76 && clicked == true) {
+        if (intersects[0].object.id == 80 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.5)
             buttonOff.position.set(7.7, 0.6, -4.4)
             buttonOn.position.set(7.7, 0.6, -4.5)
             clicked = false
         }
         //Click TV - OFF
-        if (intersects[0].object.id == 77 && clicked == true) {
+        if (intersects[0].object.id == 81 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.3)
             buttonOff.position.set(7.7, 0.6, -4.5)
             buttonOn.position.set(7.7, 0.6, -4.4)
@@ -1182,34 +1215,10 @@ function animate() {
         key = ''
     }
 
-    // add event listener to highlight dragged objects
-    for (let i = 0; i < spheres.length; i++) {
-        const sphere = spheres[i];
+    dice.rotation.x += 0.01;
+    dice.rotation.y += 0.01;
+    dice.rotation.z += 0.01;
 
-        if (sphere.position.x < -7.5) {
-            sphere.position.x = -7.5
-        }
-
-        if (sphere.position.x > -5.5) {
-            sphere.position.x = -5.5
-        }
-
-        if (sphere.position.y > 0.65) {
-            sphere.position.y = 0.65
-        }
-
-        if (sphere.position.y < 0.65) {
-            sphere.position.y = 0.65
-        }
-
-        if (sphere.position.z > -0.03) {
-            sphere.position.z = -0.03
-        }
-
-        if (sphere.position.z < -0.97) {
-            sphere.position.z = -0.97
-        }
-    }
     requestAnimationFrame(animate);
 
     // render
@@ -1271,29 +1280,15 @@ function cluedoLetters() {
         scene.add(meshU)
     });
 
-    // // invisible helper plane (big enough)
-    // // for example, aligned with the XY-plane (Z=0)
-    // plane = new THREE.Mesh(
-    //     new THREE.PlaneGeometry(2, 1, 10, 10),
-    //     new THREE.MeshBasicMaterial({
-    //     opacity: 0.1,
-    //     transparent: false,
-    //     visible: true
-    //     })
-    // );
-    // plane.position.set(-6.5, 0.65, -0.5)
-    // plane.rotation.set(-1.58, 0, 0)
-    // scene.add(plane);
+    // const controls = new THREE.DragControls(spheres, camera, renderer.domElement);
 
-    const controls = new THREE.DragControls(spheres, camera, renderer.domElement);
+    // controls.addEventListener('dragstart', function (event) {
 
-    controls.addEventListener('dragstart', function (event) {
+    // });
 
-    });
+    // controls.addEventListener('dragend', function (event) {
 
-    controls.addEventListener('dragend', function (event) {
-
-    });
+    // });
 }
 
 function onMouseMove(event) {
@@ -1303,45 +1298,53 @@ function onMouseMove(event) {
 
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-    clicked = true
+
+    // create a raycaster and update the picking ray with the camera and current mouse position
+    raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, camera);
 
     if (selectedObject) {
         //drag an object around if we've already clicked on one
         let intersects = raycaster.intersectObject(plane);
         selectedObject.position.copy(intersects[0].point.sub(offset));
     }
-    //OPTIONAL: reposition the plane to the center of the object to be dragged
-    //on the next call of the mouse move event
-    else {
-        let intersects = raycaster.intersectObjects(spheres);
-        if (intersects.length > 0)
-            plane.position.copy(intersects[0].object.position);
-    }
 
 }
 
-function onMouseDown() {
-    // check if ray intersects any of the objects’ array
+function onMouseDown(event) {
+    event.preventDefault();
+
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+    // create a raycaster and update the picking ray with the camera and current mouse position
+    raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, camera);
+
+    // calculate objects intersecting the picking ray
     let intersects = raycaster.intersectObjects(spheres);
 
     if (intersects.length > 0) {
-        // gets closest intersected object (must be a global variable)
+        //disable the orbit controller (drag the object around and not rotate the scene)
+        //assign the first intersected object to the selectedObject global variable
         selectedObject = intersects[0].object;
-        // gets ray intersection with the helper plane
+        
+        // determine the offset between the point (in the plane) where we clicked and the center of the object
         let intersectsPlane = raycaster.intersectObject(plane);
         offset.copy(intersectsPlane[0].point).sub(selectedObject.position);
+        //console.log("object selected ", selectedObject.position, offset)
     }
 }
 
 function onMouseUp(event) {
-    // finish drag & drop
     selectedObject = null;
+    clicked = true
 }
 
 window.onkeydown = function handleKeyDown(event) {
     key = event.key;
 }
 
-window.addEventListener('click', onMouseMove, false);
+window.addEventListener('mousemove', onMouseMove, false);
 window.addEventListener('mousedown', onMouseDown, false);
 window.addEventListener('mouseup', onMouseUp, false);
