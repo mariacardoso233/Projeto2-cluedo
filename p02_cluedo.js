@@ -835,19 +835,25 @@ function createBedroom() {
 
     /* ----------------------------- DADO ----------------------------- */
 
-    let geomCube = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-    const loader = new THREE.CubeTextureLoader();
-    loader.setPath( './textures/' );
-    
-    const textureCube = loader.load( [
-        'lado1.jpg', 'lado2.jpg',
-        'lado3.jpg', 'lado4.jpg',
-        'lado5.jpg', 'lado6.jpg'
-    ] );
-    
-    const material = new THREE.MeshBasicMaterial( {map: textureCube } );
+    //TEXTURES
+    let lado1 = new THREE.TextureLoader().load('./textures/lado1.jpg');
+    let lado2 = new THREE.TextureLoader().load('./textures/lado2.jpg');
+    let lado3 = new THREE.TextureLoader().load('./textures/lado3.jpg');
+    let lado4 = new THREE.TextureLoader().load('./textures/lado4.jpg');
+    let lado5 = new THREE.TextureLoader().load('./textures/lado5.jpg');
+    let lado6 = new THREE.TextureLoader().load('./textures/lado6.jpg');
 
-    dice = new THREE.Mesh(geomCube, material);
+    let matArray = [];
+    matArray.push(new THREE.MeshBasicMaterial({ map: lado1 }));
+    matArray.push(new THREE.MeshBasicMaterial({ map: lado2 }));
+    matArray.push(new THREE.MeshBasicMaterial({ map: lado3 }));
+    matArray.push(new THREE.MeshBasicMaterial({ map: lado4 }));
+    matArray.push(new THREE.MeshBasicMaterial({ map: lado5 }));
+    matArray.push(new THREE.MeshBasicMaterial({ map: lado6 }));
+
+    let geomCube = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+
+    dice = new THREE.Mesh(geomCube, matArray);
     
     dice.position.set(-7.9, 0.6, -6);
     scene.add(dice)
