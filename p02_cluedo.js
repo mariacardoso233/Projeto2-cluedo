@@ -446,48 +446,48 @@ function createScene() {
 }
 
 function createLights() {
-    //Create a PointLight and turn on shadows for the light
-    let pointLight = new THREE.PointLight( 0xffd675, 1.5, 6 );
-    pointLight.position.set( 1.8, 2, 6.8);
-    pointLight.castShadow = true; // default false
-    scene.add(pointLight);
+    // //Create a PointLight and turn on shadows for the light
+    // let pointLight = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    // pointLight.position.set( 1.8, 2, 6.8);
+    // pointLight.castShadow = true; // default false
+    // scene.add(pointLight);
 
-    let pointLight2 = new THREE.PointLight( 0xffd675, 1.5, 6 );
-    pointLight2.position.set( -7.5, 2, 7);
-    pointLight2.castShadow = true; // default false
-    scene.add(pointLight2);
+    // let pointLight2 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    // pointLight2.position.set( -7.5, 2, 7);
+    // pointLight2.castShadow = true; // default false
+    // scene.add(pointLight2);
 
-    let pointLight3 = new THREE.PointLight( 0xffd675, 1.5, 6 );
-    pointLight3.position.set( -7.5, 2, 0);
-    pointLight3.castShadow = true; // default false
-    scene.add(pointLight3);
+    // let pointLight3 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    // pointLight3.position.set( -7.5, 2, 0);
+    // pointLight3.castShadow = true; // default false
+    // scene.add(pointLight3);
 
-    let pointLight4 = new THREE.PointLight( 0xffd675, 1.5, 6 );
-    pointLight4.position.set( -7.5, 2, -5);
-    pointLight4.castShadow = true; // default false
-    scene.add(pointLight4);
+    // let pointLight4 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    // pointLight4.position.set( -7.5, 2, -5);
+    // pointLight4.castShadow = true; // default false
+    // scene.add(pointLight4);
 
-    let pointLight5 = new THREE.PointLight( 0xffd675, 1.5, 6 );
-    pointLight5.position.set(-2, 2, -5);
-    pointLight5.castShadow = true; // default false
-    scene.add(pointLight5);
+    // let pointLight5 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    // pointLight5.position.set(-2, 2, -5);
+    // pointLight5.castShadow = true; // default false
+    // scene.add(pointLight5);
 
-    let pointLightCenter = new THREE.PointLight( 0xffd675, 0.8, 10);
-    pointLightCenter.position.set(0.5, 2, 0);
-    pointLightCenter.castShadow = true; // default false
-    scene.add(pointLightCenter);
+    // let pointLightCenter = new THREE.PointLight( 0xffd675, 0.8, 10);
+    // pointLightCenter.position.set(0.5, 2, 0);
+    // pointLightCenter.castShadow = true; // default false
+    // scene.add(pointLightCenter);
 
-    let pointLight6 = new THREE.PointLight( 0xffd675, 1.5, 6 );
-    pointLight6.position.set(7, 2, -6);
-    pointLight6.castShadow = true; // default false
-    scene.add(pointLight6);
+    // let pointLight6 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    // pointLight6.position.set(7, 2, -6);
+    // pointLight6.castShadow = true; // default false
+    // scene.add(pointLight6);
 
-    let pointLight7 = new THREE.PointLight( 0xffd675, 1, 6 );
-    pointLight7.position.set(7, 2, 0);
-    pointLight7.castShadow = true; // default false
-    scene.add(pointLight7);
+    // let pointLight7 = new THREE.PointLight( 0xffd675, 1, 6 );
+    // pointLight7.position.set(7, 2, 0);
+    // pointLight7.castShadow = true; // default false
+    // scene.add(pointLight7);
 
-    hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 0.5);
+    hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 1.5);
     scene.add(hemisphereLight);
 
     // white spotlight shining from the side, casting a shadow
@@ -1499,28 +1499,28 @@ function animate() {
         console.log(intersects[0].object.id);
 
         //Click Kitchen
-        if (intersects[0].object.id == 40 && clicked == true) {
+        if (intersects[0].object.id == 24 && clicked == true) {
             console.log(intersects[0]);
             camera.position.set(7.2, 1, 5.7)
             camera.lookAt(10, 0, 10);
             clicked = false
         }
         //Click Ballroom
-        if (intersects[0].object.id == 52 && clicked == true) {
+        if (intersects[0].object.id == 36 && clicked == true) {
             camera.position.set(0.2, 1.1, 4.7)
             camera.lookAt(0, 0, 10);
             clicked = false
         }
 
         //Click Piano
-        if (intersects[0].object.id == 58 && clicked == true) {
+        if (intersects[0].object.id == 42 && clicked == true) {
             camera.position.set(1.4, 0.8, 6.7)
             camera.lookAt(2.9, -1, 10);
             clicked = false
         }
 
         //Click PianoKeyDO
-        if (intersects[0].object.id == 59 && clicked == true) {
+        if (intersects[0].object.id == 43 && clicked == true) {
             let audio = new Audio('sounds/do.wav');
             audio.play();
             clicked = false
