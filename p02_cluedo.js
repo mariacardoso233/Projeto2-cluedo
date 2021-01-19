@@ -11,13 +11,18 @@ let offset = new THREE.Vector3();
 let raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
 
+let dices = [];
+let dice;
+let dragDice = false;
 
-let dices = []
-let dice, fan, propeller, propeller2, conect, torus;
+let fan, propeller, propeller2, conect, torus;
 let ladoEsq = false, ladoDir = false;
 
 let chairs = []; 
 let chair, chair2;
+
+let mouseXposition
+let mouseYposition
 
 // 3D MODELS
 let board
@@ -32,7 +37,6 @@ const normalDoor = new THREE.TextureLoader().load('./textures/door_normal.jpg');
 
 //TV - LivingRoom
 let tvScreenOn, buttonOff, buttonOn
-
 
 const loader = new THREE.GLTFLoader().setPath('models/GLTF/');
 
@@ -77,12 +81,12 @@ function createScene() {
     // create an empty scene, that will hold all our elements such as objects, cameras and lights
     scene = new THREE.Scene();
 
-    let axes = new THREE.AxesHelper(600);
-    scene.add(axes);
+    // let axes = new THREE.AxesHelper(600);
+    // scene.add(axes);
 
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
     //set the camera's view transformation
-    camera.position.set(0, 20, 20); // eye
+    camera.position.set(0, 20, 18); // eye
     camera.lookAt(0, 0, 0);
 
 
@@ -983,12 +987,24 @@ function createBedroom() {
     matArray.push(new THREE.MeshBasicMaterial({ map: lado5 }));
     matArray.push(new THREE.MeshBasicMaterial({ map: lado6 }));
 
-    let geomCube = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+    let geomCube = new THREE.BoxGeometry(0.25, 0.25, 0.25);
 
     dice = new THREE.Mesh(geomCube, matArray);
 
-    dice.position.set(-7.9, 0.6, -6);
+    dice.position.set(-8, 0.8, -6.8);
     scene.add(dice)
+
+    dices.push(dice)
+
+    controls = new THREE.DragControls(dices, camera, renderer.domElement);
+
+    controls.addEventListener('dragstart', function (event) {
+        dragDice = true
+    });
+
+    controls.addEventListener('dragend', function (event) {
+        dragDice = false
+    });
 
 }
 
@@ -1313,6 +1329,36 @@ function cluedoLetters() {
 
 function animate() {
 
+    //Movimento Dado
+
+    if (dice.position.x > -8 || dice.position.x < -8) {
+        dice.position.x = -8
+    }
+
+    if (dice.position.z > -6.8 || dice.position.z < -6.8) {
+        dice.position.z = -6.8
+    }
+
+    if (dice.position.y > 0.8 || dice.position.y < 0.8) {
+        dice.position.y = 0.8
+    }
+
+    if (mouseXposition < -0.26 && dragDice == true) {
+        dice.rotation.y -= 0.26
+    }
+
+    if (mouseXposition > -0.16 && dragDice == true) {
+        dice.rotation.y += 0.4
+    }
+
+    if (mouseYposition > -0.07 && dragDice == true) {
+        dice.rotation.z += 0.4
+    }
+
+    if (mouseYposition < -0.7 && dragDice == true) {
+        dice.rotation.z -= 0.4
+    }
+
     //Movimento Cadeiras
 
     //Chair 1
@@ -1334,8 +1380,6 @@ function animate() {
     }
 
     //Chair 2
-
-    console.log(chair2.position.x);
 
     if (chair2.position.y < 0 || chair2.position.y > 0) {
         chair2.position.y = 0
@@ -1384,101 +1428,101 @@ function animate() {
         console.log(intersects[0].object.id);
 
         //Click Kitchen
-        if (intersects[0].object.id == 22 && clicked == true) {
+        if (intersects[0].object.id == 21 && clicked == true) {
             console.log(intersects[0]);
             camera.position.set(7.2, 1, 5.7)
             camera.lookAt(10, 0, 10);
             clicked = false
         }
         //Click Ballroom
-        if (intersects[0].object.id == 34 && clicked == true) {
+        if (intersects[0].object.id == 33 && clicked == true) {
             camera.position.set(0.2, 1.1, 4.7)
             camera.lookAt(0, 0, 10);
             clicked = false
         }
 
         //Click Piano
-        if (intersects[0].object.id == 40 && clicked == true) {
+        if (intersects[0].object.id == 39 && clicked == true) {
             camera.position.set(1.4, 0.8, 6.7)
             camera.lookAt(2.9, -1, 10);
             clicked = false
         }
 
         //Click PianoKeyDO
-        if (intersects[0].object.id == 41 && clicked == true) {
+        if (intersects[0].object.id == 40 && clicked == true) {
             let audio = new Audio('sounds/do.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeyRE
-        if (intersects[0].object.id == 42 && clicked == true) {
+        if (intersects[0].object.id == 41 && clicked == true) {
             let audio = new Audio('sounds/re.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeyMI
-        if (intersects[0].object.id == 43 && clicked == true) {
+        if (intersects[0].object.id == 42 && clicked == true) {
             let audio = new Audio('sounds/mi.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeyFA
-        if (intersects[0].object.id == 44 && clicked == true) {
+        if (intersects[0].object.id == 43 && clicked == true) {
             let audio = new Audio('sounds/fa.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeySOL
-        if (intersects[0].object.id == 45 && clicked == true) {
+        if (intersects[0].object.id == 44 && clicked == true) {
             let audio = new Audio('sounds/sol.wav');
             audio.play();
             clicked = false
         }
         //Click PianoKeyLA
-        if (intersects[0].object.id == 46 && clicked == true) {
+        if (intersects[0].object.id == 45 && clicked == true) {
             let audio = new Audio('sounds/la.wav');
             audio.play();
             clicked = false
         }
 
         //Click Conservatory
-        if (intersects[0].object.id == 47 && clicked == true) {
+        if (intersects[0].object.id == 46 && clicked == true) {
             camera.position.set(-6.85, 1, 5.7)
             camera.lookAt(-6.85, 1, 9);
             clicked = false
         }
         //Click Billiardroom
-        if (intersects[0].object.id == 50 && clicked == true) {
+        if (intersects[0].object.id == 49 && clicked == true) {
             camera.position.set(-6.5, 1.8, -1)
             camera.lookAt(-6.5, -1, 0.5);
             clicked = false
         }
         //Click Bedroom
-        if (intersects[0].object.id == 69 && clicked == true) {
-            camera.position.set(-5.5, 1.1, -5.8)
-            camera.lookAt(-10.5, 1, -7.9);
+        if (intersects[0].object.id == 68 && clicked == true) {
+            camera.position.set(-7.5, 1.1, -5.8)
+            camera.lookAt(-8.5, 1, -7.9);
             clicked = false
         }
         //Click LivingRoom
-        if (intersects[0].object.id == 81 && clicked == true) {
+        if (intersects[0].object.id == 80 && clicked == true) {
             camera.position.set(7, 1, -7.7)
             camera.lookAt(7, 1, 6.7);
             clicked = false
         }
 
         //Click TV - ON
-        if (intersects[0].object.id == 88 && clicked == true) {
+        if (intersects[0].object.id == 87 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.5)
             buttonOff.position.set(7.7, 0.6, -4.4)
             buttonOn.position.set(7.7, 0.6, -4.5)
             clicked = false
         }
         //Click TV - OFF
-        if (intersects[0].object.id == 89 && clicked == true) {
+        if (intersects[0].object.id == 88 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.3)
             buttonOff.position.set(7.7, 0.6, -4.5)
             buttonOn.position.set(7.7, 0.6, -4.4)
@@ -1486,22 +1530,20 @@ function animate() {
         }
 
         //Click Diningroom
-        if (intersects[0].object.id == 92 && clicked == true) {
+        if (intersects[0].object.id == 91 && clicked == true) {
             camera.position.set(6.9, 3, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
         }
+        clicked = false
     }
 
     if (key == 'Escape') {     //ESC key
         camera.position.set(0, 20, 20); // eye
         camera.lookAt(0, 0, 0);
         key = ''
+        clicked = false
     }
-
-    dice.rotation.x += 0.01;
-    dice.rotation.y += 0.01;
-    dice.rotation.z += 0.01;
 
     requestAnimationFrame(animate);
 
@@ -1516,6 +1558,9 @@ function onMouseMove(event) {
 
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+    mouseXposition = mouse.x
+    mouseYposition = mouse.y
 
     // create a raycaster and update the picking ray with the camera and current mouse position
     raycaster = new THREE.Raycaster();
