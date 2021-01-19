@@ -1,6 +1,7 @@
 let scene, camera, renderer
 let controls, mesh, key
 let clicked = false
+let board
 
 let floor1
 
@@ -24,8 +25,8 @@ let chair, chair2;
 let mouseXposition
 let mouseYposition
 
-// 3D MODELS
-let board
+//Lights
+let spotLight;
 
 //Keys
 let keyboard = {};
@@ -94,8 +95,14 @@ function createScene() {
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // configure renderer clear color
-    renderer.setClearColor("#e4e0ba");
+    // // configure renderer clear color
+    // renderer.setClearColor("#e4e0ba");
+
+    /*****************************
+    * SHADOWS 
+    ****************************/
+    // enable shadow rendering
+    renderer.shadowMap.enabled = true;
 
     // renderer.shadowMap.enabled = true;
     // add the output of the renderer to the DIV with id "world"
@@ -439,9 +446,67 @@ function createScene() {
 }
 
 function createLights() {
-    const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1.1);
-    light.position.set(0, 5, 0)
-    scene.add(light);
+    //Create a PointLight and turn on shadows for the light
+    let pointLight = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    pointLight.position.set( 1.8, 2, 6.8);
+    pointLight.castShadow = true; // default false
+    scene.add(pointLight);
+
+    let pointLight2 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    pointLight2.position.set( -7.5, 2, 7);
+    pointLight2.castShadow = true; // default false
+    scene.add(pointLight2);
+
+    let pointLight3 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    pointLight3.position.set( -7.5, 2, 0);
+    pointLight3.castShadow = true; // default false
+    scene.add(pointLight3);
+
+    let pointLight4 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    pointLight4.position.set( -7.5, 2, -5);
+    pointLight4.castShadow = true; // default false
+    scene.add(pointLight4);
+
+    let pointLight5 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    pointLight5.position.set(-2, 2, -5);
+    pointLight5.castShadow = true; // default false
+    scene.add(pointLight5);
+
+    let pointLightCenter = new THREE.PointLight( 0xffd675, 0.8, 10);
+    pointLightCenter.position.set(0.5, 2, 0);
+    pointLightCenter.castShadow = true; // default false
+    scene.add(pointLightCenter);
+
+    let pointLight6 = new THREE.PointLight( 0xffd675, 1.5, 6 );
+    pointLight6.position.set(7, 2, -6);
+    pointLight6.castShadow = true; // default false
+    scene.add(pointLight6);
+
+    let pointLight7 = new THREE.PointLight( 0xffd675, 1, 6 );
+    pointLight7.position.set(7, 2, 0);
+    pointLight7.castShadow = true; // default false
+    scene.add(pointLight7);
+
+    hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 0.5);
+    scene.add(hemisphereLight);
+
+    // white spotlight shining from the side, casting a shadow
+
+    const spotLight = new THREE.SpotLight( 0xffd675, 1, 0, 0.5);
+    spotLight.position.set(7, 1, 6);
+    spotLight.target.position.set(10.5, 0, 9)
+
+    spotLight.castShadow = true;
+
+    spotLight.shadow.mapSize.width = 1024;
+    spotLight.shadow.mapSize.height = 1024;
+
+    spotLight.shadow.camera.near = 0.5;
+    spotLight.shadow.camera.far = 500;
+    spotLight.shadow.camera.fov = 30;
+
+    scene.add(spotLight);
+    scene.add( spotLight.target);
 }
 
 function createBoard() {
@@ -491,6 +556,10 @@ function createBoard() {
 
 function createBorder() {
 
+    //TEXTURES
+    let textFloor4 = new THREE.TextureLoader().load('./textures/floor4.jpg');
+    let normalFloor4 = new THREE.TextureLoader().load('./textures/floor4_normal.jpg');
+
     //GEOMETRY
     let geomBorder1 = new THREE.BoxGeometry(18.9, 1.5, 0.3);
     let geomBorder2 = new THREE.BoxGeometry(9, 1.5, 0.3);
@@ -499,6 +568,8 @@ function createBorder() {
 
     //Material Board
     let matBoard = new THREE.MeshPhongMaterial({ color: 0xf0e0d0 });
+    matBoard.map = textFloor4;
+    matBoard.normalMap = normalFloor4;
 
     //Border positions
     let border1 = new THREE.Mesh(geomBorder1, matBoard);
@@ -514,6 +585,8 @@ function createBorder() {
     border3.position.set(-9.35, 0.6, 0.25);
     let border4 = new THREE.Mesh(geomBorder4, matBoard);
     border4.position.set(9.8, 0.6, 0.1);
+    
+    border4.receiveShadow = true;
 
     scene.add(border1, border3, border4);
 
@@ -573,7 +646,6 @@ function createFan(){
     fan = new THREE.Object3D();
 
     const materialWhite = new THREE.MeshPhongMaterial({ color: 0xd8d0d1 });
-    const materialBrown = new THREE.MeshPhongMaterial({ color: 0x59332e });
     const materialDarkBrown = new THREE.MeshPhongMaterial({ color: 0x23190f });
 
     // Create the base
@@ -630,7 +702,6 @@ function createFan(){
     fan.scale.set(0.25, 0.25, 0.25);
     fan.position.y = 0;
 
-    console.log("Plane created")
     scene.add(fan);
 
     /*****************************
@@ -1428,101 +1499,101 @@ function animate() {
         console.log(intersects[0].object.id);
 
         //Click Kitchen
-        if (intersects[0].object.id == 21 && clicked == true) {
+        if (intersects[0].object.id == 40 && clicked == true) {
             console.log(intersects[0]);
             camera.position.set(7.2, 1, 5.7)
             camera.lookAt(10, 0, 10);
             clicked = false
         }
         //Click Ballroom
-        if (intersects[0].object.id == 33 && clicked == true) {
+        if (intersects[0].object.id == 52 && clicked == true) {
             camera.position.set(0.2, 1.1, 4.7)
             camera.lookAt(0, 0, 10);
             clicked = false
         }
 
         //Click Piano
-        if (intersects[0].object.id == 39 && clicked == true) {
+        if (intersects[0].object.id == 58 && clicked == true) {
             camera.position.set(1.4, 0.8, 6.7)
             camera.lookAt(2.9, -1, 10);
             clicked = false
         }
 
         //Click PianoKeyDO
-        if (intersects[0].object.id == 40 && clicked == true) {
+        if (intersects[0].object.id == 59 && clicked == true) {
             let audio = new Audio('sounds/do.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeyRE
-        if (intersects[0].object.id == 41 && clicked == true) {
+        if (intersects[0].object.id == 60 && clicked == true) {
             let audio = new Audio('sounds/re.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeyMI
-        if (intersects[0].object.id == 42 && clicked == true) {
+        if (intersects[0].object.id == 61 && clicked == true) {
             let audio = new Audio('sounds/mi.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeyFA
-        if (intersects[0].object.id == 43 && clicked == true) {
+        if (intersects[0].object.id == 62 && clicked == true) {
             let audio = new Audio('sounds/fa.wav');
             audio.play();
             clicked = false
         }
 
         //Click PianoKeySOL
-        if (intersects[0].object.id == 44 && clicked == true) {
+        if (intersects[0].object.id == 63 && clicked == true) {
             let audio = new Audio('sounds/sol.wav');
             audio.play();
             clicked = false
         }
         //Click PianoKeyLA
-        if (intersects[0].object.id == 45 && clicked == true) {
+        if (intersects[0].object.id == 64 && clicked == true) {
             let audio = new Audio('sounds/la.wav');
             audio.play();
             clicked = false
         }
 
         //Click Conservatory
-        if (intersects[0].object.id == 46 && clicked == true) {
+        if (intersects[0].object.id == 65 && clicked == true) {
             camera.position.set(-6.85, 1, 5.7)
             camera.lookAt(-6.85, 1, 9);
             clicked = false
         }
         //Click Billiardroom
-        if (intersects[0].object.id == 49 && clicked == true) {
+        if (intersects[0].object.id == 68 && clicked == true) {
             camera.position.set(-6.5, 1.8, -1)
             camera.lookAt(-6.5, -1, 0.5);
             clicked = false
         }
         //Click Bedroom
-        if (intersects[0].object.id == 68 && clicked == true) {
+        if (intersects[0].object.id == 87 && clicked == true) {
             camera.position.set(-7.5, 1.1, -5.8)
             camera.lookAt(-8.5, 1, -7.9);
             clicked = false
         }
         //Click LivingRoom
-        if (intersects[0].object.id == 80 && clicked == true) {
+        if (intersects[0].object.id == 99 && clicked == true) {
             camera.position.set(7, 1, -7.7)
             camera.lookAt(7, 1, 6.7);
             clicked = false
         }
 
         //Click TV - ON
-        if (intersects[0].object.id == 87 && clicked == true) {
+        if (intersects[0].object.id == 106 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.5)
             buttonOff.position.set(7.7, 0.6, -4.4)
             buttonOn.position.set(7.7, 0.6, -4.5)
             clicked = false
         }
         //Click TV - OFF
-        if (intersects[0].object.id == 88 && clicked == true) {
+        if (intersects[0].object.id == 107 && clicked == true) {
             tvScreenOn.position.set(7.3, 0.93, -4.3)
             buttonOff.position.set(7.7, 0.6, -4.5)
             buttonOn.position.set(7.7, 0.6, -4.4)
@@ -1530,7 +1601,7 @@ function animate() {
         }
 
         //Click Diningroom
-        if (intersects[0].object.id == 91 && clicked == true) {
+        if (intersects[0].object.id == 110 && clicked == true) {
             camera.position.set(6.9, 3, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
