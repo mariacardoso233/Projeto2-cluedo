@@ -636,7 +636,7 @@ function createFan(){
     /*****************************
     * SHADOWS 
     ****************************/
-    // Plane meshes must cast and receive shadows
+    // fan meshes must cast and receive shadows
     fan.traverse(function (child) {
         if (child instanceof THREE.Mesh) {
             child.castShadow = true;
