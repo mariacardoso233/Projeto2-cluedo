@@ -299,6 +299,21 @@ function createScene() {
             console.log(err);
         });
 
+    loader.load('sink.glb',
+
+        function (gltf) {
+            console.log(gltf)
+            mesh = gltf.scene;
+            mesh.scale.set(0.0003, 0.0003, 0.0003);
+            mesh.position.set(7.2, 0.45, 8.9)
+            // mesh.rotation.set(0, 1.5, 0)
+            scene.add(mesh);
+        },
+        undefined,
+        function (err) {
+            console.log(err);
+        });
+
     loader.load('handrail.glb',
 
         function (gltf) {
@@ -550,7 +565,7 @@ function createKitchen() {
 //Ventoinha
 function createFan(){
     /* ----------------------------- Ventoinha ----------------------------- */
-    
+
     fan = new THREE.Object3D();
 
     const materialWhite = new THREE.MeshPhongMaterial({ color: 0xd8d0d1 });
@@ -558,24 +573,24 @@ function createFan(){
     const materialDarkBrown = new THREE.MeshPhongMaterial({ color: 0x23190f });
 
     // Create the base
-    let geomBase = new THREE.CylinderGeometry( 0.2, 0.4, 0.2, 16, 1 );
-    let base = new THREE.Mesh( geomBase, materialWhite );
+    let geomBase = new THREE.CylinderGeometry(0.2, 0.4, 0.2, 16, 1);
+    let base = new THREE.Mesh(geomBase, materialWhite);
     base.position.set(35, 1.7, 26.5)
     fan.add(base);
 
     // Create the conect
-    let geomConect = new THREE.CylinderGeometry( 0.05, 0.05, 1.1, 32 );
-    conect = new THREE.Mesh( geomConect, materialWhite );
+    let geomConect = new THREE.CylinderGeometry(0.05, 0.05, 1.1, 32);
+    conect = new THREE.Mesh(geomConect, materialWhite);
     conect.position.set(35, 2.3, 26.5)
     conect.rotation.y = Math.PI / 2
     fan.add(conect);
 
     // Create the torus
-    const geometry = new THREE.TorusGeometry( 0.48, 0.03, 3, 100 );
-    torus = new THREE.Mesh( geometry, materialWhite );
+    const geometry = new THREE.TorusGeometry(0.48, 0.03, 3, 100);
+    torus = new THREE.Mesh(geometry, materialWhite);
     torus.position.x = 0.3;
     torus.position.y = 0.39;
-    torus.rotation.y = -Math.PI/2
+    torus.rotation.y = -Math.PI / 2
     conect.add(torus);
 
     // propeller
@@ -599,7 +614,7 @@ function createFan(){
     let blade2 = new THREE.Mesh(geomBlade2, materialWhite);
     blade2.rotation.x = Math.PI / 2;
     blade2.position.set(0.20, 0, 0);
-    
+
     propeller.add(blade);
     propeller.add(blade2);
 
@@ -619,7 +634,7 @@ function createFan(){
     ****************************/
     // Plane meshes must cast and receive shadows
     fan.traverse(function (child) {
-        if (child instanceof THREE.Mesh ) {
+        if (child instanceof THREE.Mesh) {
             child.castShadow = true;
             child.receiveShadow = true;
         }
@@ -739,8 +754,13 @@ function createConservatory() {
     let geomFloor3 = new THREE.BoxGeometry(4.8, 0.2, 4.7);
 
     //TEXTURES
-    //Material
-    let matFloor3 = new THREE.MeshPhongMaterial({ color: 0xb2b2ff });
+    let textFloor3 = new THREE.TextureLoader().load('./textures/floor3.jpg');
+    let normalFloor3 = new THREE.TextureLoader().load('./textures/floor3_normal.jpg');
+
+    //Material floor
+    let matFloor3 = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+    matFloor3.map = textFloor3;
+    matFloor3.normalMap = normalFloor3;
 
     // //Mesh
     let floor3 = new THREE.Mesh(geomFloor3, matFloor3);
