@@ -11,8 +11,13 @@ let offset = new THREE.Vector3();
 let raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
 
+
+let dices = []
 let dice, fan, propeller, propeller2, conect, torus;
-let ladoEsq = false, ladoDir = false
+let ladoEsq = false, ladoDir = false;
+
+let chairs = []; 
+let chair, chair2;
 
 // 3D MODELS
 let board
@@ -54,7 +59,10 @@ window.onload = function init() {
 
     createBedroom();
     createHall();
+
     createLivingroom();
+    createChairs();
+
     createDiningroom();
     createStairs();
 
@@ -193,9 +201,9 @@ function createScene() {
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.08, 0.08, 0.08);
-            mesh.position.set(6.5, 0, 1)
             mesh.rotation.set(0, 1.55, 0)
-            scene.add(mesh);
+            chair.add(mesh)
+            chairs.push(chair)
         },
         undefined,
         function (err) {
@@ -208,9 +216,9 @@ function createScene() {
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.08, 0.08, 0.08);
-            mesh.position.set(8.4, 0, -0.2)
             mesh.rotation.set(0, 3.1, 0)
-            scene.add(mesh);
+            chair2.add(mesh)
+            chairs.push(chair2)
         },
         undefined,
         function (err) {
@@ -385,8 +393,8 @@ function createScene() {
         function (gltf) {
             console.log(gltf)
             mesh = gltf.scene;
-            mesh.scale.set(0.02, 0.04, 0.05);
-            mesh.position.set(-2.5, 0, 8)
+            mesh.scale.set(0.02, 0.02, 0.02);
+            mesh.position.set(-2.5, 0.45, 8)
             mesh.rotation.set(0, 1.58, 0)
             scene.add(mesh);
         },
@@ -400,8 +408,8 @@ function createScene() {
         function (gltf) {
             console.log(gltf)
             mesh = gltf.scene;
-            mesh.scale.set(0.02, 0.04, 0.05);
-            mesh.position.set(-2.5, 0, 7)
+            mesh.scale.set(0.02, 0.02, 0.02);
+            mesh.position.set(-2.5, 0.45, 7.2)
             mesh.rotation.set(0, 1.58, 0)
             scene.add(mesh);
         },
@@ -539,6 +547,7 @@ function createKitchen() {
 
 }
 
+//Ventoinha
 function createFan(){
     /* ----------------------------- Ventoinha ----------------------------- */
     
@@ -616,7 +625,6 @@ function createFan(){
         }
     });
 }
-
 
 function createBallroom() {
 
@@ -1149,6 +1157,33 @@ function createDiningroom() {
     scene.add(wall4);
 }
 
+function createChairs(){
+    let geomChair = new THREE.BoxGeometry(0.8, 2.1, 1.3);
+    const matChair = new THREE.MeshPhongMaterial({
+        color: 0xFFFFFF,
+        opacity: 0.0,
+        transparent: true,
+    });
+
+    chair = new THREE.Mesh(geomChair, matChair);
+    chair.position.set(6.5, 0, 1)
+    scene.add(chair)
+
+    chair2 = new THREE.Mesh(geomChair, matChair);
+    chair2.position.set(8.4, 0, -0.2)
+    scene.add(chair2)
+
+    controls = new THREE.DragControls(chairs, camera, renderer.domElement);
+
+    controls.addEventListener('dragstart', function (event) {
+
+    });
+
+    controls.addEventListener('dragend', function (event) {
+
+    });
+}
+
 function createStairs() {
 
     let geomStair = new THREE.BoxGeometry(1.7, 0.5, 0.5);
@@ -1200,8 +1235,105 @@ function createStairs() {
     scene.add(floor, stair1, stair2, stair3, stair4, stair5, stair6);
 }
 
+function cluedoLetters() {
+
+    let geomBack = new THREE.BoxGeometry(2.75, 2, 0);
+
+    let matStair = new THREE.MeshPhongMaterial({ color: 0x000000 })
+
+    let back = new THREE.Mesh(geomBack, matStair);
+    back.position.set(0.35, 0, 1.1);
+    back.rotation.set(-1, 0, 0);
+    scene.add(back)
+
+    const loader = new THREE.FontLoader();
+
+    loader.load('fonts/Poppins Medium_Regular.json', function (font) {
+
+        const letterC = new THREE.TextGeometry('CL    E', {
+            font: font,
+            size: 0.8,
+            height: 0.2,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 0.2,
+            bevelSize: 0.05,
+        });
+
+        const meshC = new THREE.Mesh(letterC, new THREE.MeshBasicMaterial({
+            color: 'white',
+            roughness: 0.5
+        }))
+
+        const letterU = new THREE.TextGeometry('U', {
+            font: font,
+            size: 0.8,
+            height: 0.2,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 0.2,
+            bevelSize: 0.05,
+        });
+
+        const meshU = new THREE.Mesh(letterU, new THREE.MeshBasicMaterial({
+            color: 'red',
+            roughness: 0.5,
+            border: 'black'
+        }))
+
+        meshC.position.set(-1.25, 0.3, 1.1)
+        meshC.rotation.set(-1, 0, 0)
+        scene.add(meshC)
+
+        meshU.position.set(0.25, 0.3, 1.1)
+        meshU.rotation.set(-1, 0, 0)
+        scene.add(meshU)
+    });
+}
+
 function animate() {
 
+    //Movimento Cadeiras
+
+    //Chair 1
+
+    if (chair.position.y < 0 || chair.position.y > 0) {
+        chair.position.y = 0
+    }
+
+    if (chair.position.x < 6.5 || chair.position.x > 6.5) {
+        chair.position.x = 6.5
+    }
+
+    if (chair.position.z < 0.32) {
+        chair.position.z = 0.32
+    }
+
+    if (chair.position.z > 1.5) {
+        chair.position.z = 1.5
+    }
+
+    //Chair 2
+
+    console.log(chair2.position.x);
+
+    if (chair2.position.y < 0 || chair2.position.y > 0) {
+        chair2.position.y = 0
+    }
+
+    if (chair2.position.z < -0.2 || chair2.position.z > -0.2) {
+        chair2.position.z = -0.2
+    }
+
+    if (chair2.position.x > 9.28) {
+        chair2.position.x = 9.28
+    }
+
+    if (chair2.position.x < 7.74) {
+        chair2.position.x = 7.74
+    }
+
+    //Movimento Ventoinha
     if (ladoEsq == true) {
         conect.rotation.y -= 0.02;
     }
@@ -1334,8 +1466,8 @@ function animate() {
         }
 
         //Click Diningroom
-        if (intersects[0].object.id == 90 && clicked == true) {
-            camera.position.set(6.9, 2, -1.5)
+        if (intersects[0].object.id == 92 && clicked == true) {
+            camera.position.set(6.9, 3, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
         }
@@ -1355,72 +1487,6 @@ function animate() {
 
     // render
     renderer.render(scene, camera);
-}
-
-function cluedoLetters() {
-
-    let geomBack = new THREE.BoxGeometry(2.75, 2, 0);
-
-    let matStair = new THREE.MeshPhongMaterial({ color: 0x000000 })
-
-    let back = new THREE.Mesh(geomBack, matStair);
-    back.position.set(0.35, 0, 1.1);
-    back.rotation.set(-1, 0, 0);
-    scene.add(back)
-
-    const loader = new THREE.FontLoader();
-
-    loader.load('fonts/Poppins Medium_Regular.json', function (font) {
-
-        const letterC = new THREE.TextGeometry('CL    E', {
-            font: font,
-            size: 0.8,
-            height: 0.2,
-            curveSegments: 12,
-            bevelEnabled: true,
-            bevelThickness: 0.2,
-            bevelSize: 0.05,
-        });
-
-        const meshC = new THREE.Mesh(letterC, new THREE.MeshBasicMaterial({
-            color: 'white',
-            roughness: 0.5
-        }))
-
-        const letterU = new THREE.TextGeometry('U', {
-            font: font,
-            size: 0.8,
-            height: 0.2,
-            curveSegments: 12,
-            bevelEnabled: true,
-            bevelThickness: 0.2,
-            bevelSize: 0.05,
-        });
-
-        const meshU = new THREE.Mesh(letterU, new THREE.MeshBasicMaterial({
-            color: 'red',
-            roughness: 0.5,
-            border: 'black'
-        }))
-
-        meshC.position.set(-1.25, 0.3, 1.1)
-        meshC.rotation.set(-1, 0, 0)
-        scene.add(meshC)
-
-        meshU.position.set(0.25, 0.3, 1.1)
-        meshU.rotation.set(-1, 0, 0)
-        scene.add(meshU)
-    });
-
-    // const controls = new THREE.DragControls(spheres, camera, renderer.domElement);
-
-    // controls.addEventListener('dragstart', function (event) {
-
-    // });
-
-    // controls.addEventListener('dragend', function (event) {
-
-    // });
 }
 
 function onMouseMove(event) {
