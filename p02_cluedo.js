@@ -41,11 +41,7 @@ let tvScreenOn, buttonOff, buttonOn
 //Globe
 let base2, globe, earth
 
-//Fogueira funções
-let fireBalls = [];
-
 const loader = new THREE.GLTFLoader().setPath('models/GLTF/');
-
 
 // once everything is loaded, we run our Three.js stuff
 window.onload = function init() {
@@ -65,7 +61,6 @@ window.onload = function init() {
 
     createConservatory();
     createGlobe();
-    createFire();
 
     createBilliardroom();
     createBalls();
@@ -229,7 +224,7 @@ function createScene() {
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.0007, 0.0007, 0.0007);
-            mesh.position.set(-5, 0, 8.5)
+            mesh.position.set(-5.5, 0, 8.5)
             scene.add(mesh);
         },
         undefined,
@@ -243,7 +238,7 @@ function createScene() {
             console.log(gltf)
             mesh = gltf.scene;
             mesh.scale.set(0.03, 0.03, 0.03);
-            mesh.position.set(-5, 0.25, 8.5)
+            mesh.position.set(-5.5, 0.25, 8.5)
             scene.add(mesh);
         },
         undefined,
@@ -930,12 +925,9 @@ function createGlobe() {
     let geomEarth = new THREE.SphereGeometry(0.16, 32, 32);
 
     let mapTexture = new THREE.TextureLoader().load('textures/no_clouds_4k.jpg');
-    let bumpmapTexture = new THREE.TextureLoader().load("textures/elev_bump_4k.jpg")
 
     let materialEarth = new THREE.MeshPhongMaterial({
         map: mapTexture,
-        bumpMap: bumpmapTexture,
-        bumpScale: 0.05
     });
 
 
@@ -958,23 +950,9 @@ function createGlobe() {
     earth.rotation.y = Math.PI / 2
     globe.add(earth);
 
-
-
-    console.log("Plane created")
     scene.add(globe);
 
-    /*****************************
-    * SHADOWS 
-    ****************************/
-    // globe meshes must cast and receive shadows
-    globe.traverse(function (child) {
-        if (child instanceof THREE.Mesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-        }
-    });
 }
-
 
 function createBilliardroom() {
 
@@ -1255,30 +1233,6 @@ function createHall() {
     scene.add(door);
 }
 
-//Fogueira
-function createFire() {
-
-    // //TEXTURES
-    // let textFire = new THREE.TextureLoader().load('./textures/fire.png');
-
-    // let matFire = new THREE.MeshBasicMaterial({ color: 0xffa500, wireframe: true })
-    // matFire.map = textFire;
-
-    // let geomBall = new THREE.SphereGeometry(0.03, 32, 32);
-
-    // //MESH
-    // let ball, pos = -66.3
-
-    // for (let i = 0; i < 10; i++) {
-    //     pos += 0.5
-    //     ball = new THREE.Mesh(geomBall, matFire);
-    //     ball.position.set(pos*0.1, 0.65, 7);
-    //     scene.add(ball)
-    //     fireBalls.push(ball)
-    // }
-
-}
-
 function createLivingroom() {
 
     /* ----------------------------- FLOOR ----------------------------- */
@@ -1533,9 +1487,37 @@ function cluedoLetters() {
         meshU.rotation.set(-1, 0, 0)
         scene.add(meshU)
     });
+} 
+
+function checkCollisions(){
+    let BSphere
+    
+
+    spheres.forEach(ball => {
+        BSphere = new THREE.Box3().setFromObject(ball);
+        let obstSphere = new THREE.Box3().setFromObject(ball);
+        let collision = BSphere.intersectsBox(obstSphere)
+        if (collision) {
+            console.log('oi');
+            return true
+        }
+    });
+    
+    return false
 }
+  
 
 function animate() {
+
+    checkCollisions()
+
+    spheres.forEach(ball => {
+        console.log(ball.position.x);
+        if(ball.position.x > -5.57 && ball.position.z < -0.95 ||
+            ball.position.x > -6.52 && ball.position.z < -0.95 && ball.position.x < -6.48){
+            ball.position.y= -10
+        }
+    });
 
     //Movimento Dado
 
