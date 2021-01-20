@@ -145,21 +145,6 @@ function createScene() {
             console.log(err);
         });
 
-    loader.load('photo.glb',
-
-        function (gltf) {
-            console.log(gltf)
-            mesh = gltf.scene;
-            mesh.scale.set(0.009, 0.009, 0.009);
-            mesh.position.set(2.7, 1, -8);
-            mesh.rotation.set(0, 4.7, 0);
-            scene.add(mesh);
-        },
-        undefined,
-        function (err) {
-            console.log(err);
-        });
-
     loader.load('piano.glb',
 
         function (gltf) {
@@ -1197,15 +1182,8 @@ function createHall() {
     let geomWall4 = new THREE.BoxGeometry(0.1, 1.2, 5.15);
     let geomDoor = new THREE.BoxGeometry(1.5, 1.2, 0.1);
 
-    // //TEXTURES
-    // // let textWall = new THREE.TextureLoader().load('./textures/wall3.jpg');
-    // // let normalWall = new THREE.TextureLoader().load('./textures/wall3_normal.jpg');
-
-
     //Material Wall
     let matWall = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-    // // matWall.map = textWall;
-    // // matWall.normalMap = normalWall;
 
     let matDoor = new THREE.MeshPhongMaterial({ color: 0xa06a34 });
     matDoor.map = textDoor;
