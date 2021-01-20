@@ -1629,13 +1629,13 @@ function animate() {
             clicked = false
         }
         //Click Billiardroom
-        if (intersects[0].object.id == 49 && clicked == true) {
+        if (intersects[0].object.id == 53 && clicked == true) {
             camera.position.set(-6.5, 1.8, -1)
             camera.lookAt(-6.5, -1, 0.5);
             clicked = false
         }
         //Click Hall
-        if (intersects[0].object.id == 74 && clicked == true) {
+        if (intersects[0].object.id == 78 && clicked == true) {
             camera.position.set(0.2, 1.8, -5)
             camera.lookAt(0, 1, -7.9);
             clicked = false
@@ -1649,7 +1649,7 @@ function animate() {
         }
 
         //Click LivingRoom
-        if (intersects[0].object.id == 80 && clicked == true) {
+        if (intersects[0].object.id == 84 && clicked == true) {
             camera.position.set(7, 1, -7.7)
             camera.lookAt(7, 1, 6.7);
             clicked = false
@@ -1671,7 +1671,7 @@ function animate() {
         }
 
         //Click Diningroom
-        if (intersects[0].object.id == 91 && clicked == true) {
+        if (intersects[0].object.id == 95 && clicked == true) {
             camera.position.set(6.9, 3, -1.5)
             camera.lookAt(6.8, 0.5, 0.5);
             clicked = false
