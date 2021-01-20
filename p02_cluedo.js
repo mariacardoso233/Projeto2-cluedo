@@ -1642,7 +1642,7 @@ function animate() {
         }
 
         //Click Bedroom
-        if (intersects[0].object.id == 74 && clicked == true) {
+        if (intersects[0].object.id == 72 && clicked == true) {
             camera.position.set(-7.5, 1.1, -5.8)
             camera.lookAt(-8.5, 1, -7.9);
             clicked = false
